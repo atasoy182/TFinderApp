@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'T-Finder',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.orange,
         fontFamily: "Raleway",
         textTheme: TextTheme(
           headline6: TextStyle(fontFamily: 'Raleway'),
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
           bodyText1: TextStyle(
             fontFamily: 'Raleway',
             fontSize: 17,
+            color: Colors.black,
           ),
         ),
       ),

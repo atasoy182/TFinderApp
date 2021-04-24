@@ -25,12 +25,7 @@ class _StartPageState extends State<StartPage> {
                 color: topViewColor,
               ),
             ),
-            Center(
-              child: SizedBox(
-                  height: size.height * .45,
-                  child:
-                      Image(image: AssetImage('assets/images/professor.png'))),
-            ),
+            imageShow(size),
           ]),
           Spacer(),
           Center(
@@ -92,6 +87,15 @@ class _StartPageState extends State<StartPage> {
         ],
       ),
     ));
+  }
+
+  Center imageShow(Size size) {
+    return Center(
+      child: Container(
+          padding: EdgeInsets.only(top: 20),
+          height: size.height * .40,
+          child: Image(image: AssetImage('assets/images/professor.png'))),
+    );
   }
 }
 
