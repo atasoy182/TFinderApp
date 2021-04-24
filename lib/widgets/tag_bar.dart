@@ -49,28 +49,46 @@ class tagBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 110.0,
-          padding: EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: isActive ? defaultThemeColor : widgetBackgroundColor,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(15),
+      child: Row(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: 110.0,
+                padding: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: isActive ? defaultThemeColor : widgetBackgroundColor,
+                ),
+                child: Align(
+                  child: Text(
+                    tagText,
+                    style: TextStyle(
+                        fontFamily: "Raleway",
+                        color: isActive ? Colors.white : textDisabledColor),
+                  ),
+                ),
+              ),
+              Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () {},
+                  child: Positioned(
+                    child: Container(
+                      width: 110.0,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
-          child: Align(
-            child: Text(
-              tagText,
-              style: TextStyle(
-                  fontFamily: "Raleway",
-                  color: isActive ? Colors.white : textDisabledColor),
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        )
-      ],
+          SizedBox(
+            width: 10,
+          )
+        ],
+      ),
     );
   }
 }
