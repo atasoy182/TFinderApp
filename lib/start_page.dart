@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/search_page.dart';
