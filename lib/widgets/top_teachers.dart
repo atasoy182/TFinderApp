@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 
@@ -18,26 +19,26 @@ class TopTeachers extends StatelessWidget {
               children: <Widget>[
                 TopTeachersItem(
                   teacherName: "Ahmet",
+                  teacherSurname: "Sabancı",
                   teacherDepartment: "İngilizce",
-                  teacherPrice: "100 - 150 tl",
                   teacherProfileImg: "assets/images/top_teacher_1.jpg",
                 ),
                 TopTeachersItem(
                   teacherName: "Mehmet",
+                  teacherSurname: "Koç",
                   teacherDepartment: "Programlama",
-                  teacherPrice: "100 - 150 tl",
                   teacherProfileImg: "assets/images/top_teacher_2.png",
                 ),
                 TopTeachersItem(
                   teacherName: "Ayşe",
+                  teacherSurname: "Yılmaz",
                   teacherDepartment: "Matematik",
-                  teacherPrice: "100 - 150 tl",
                   teacherProfileImg: "assets/images/top_teacher_3.jpg",
                 ),
                 TopTeachersItem(
                   teacherName: "Leyla",
                   teacherDepartment: "Psikoloji",
-                  teacherPrice: "100 - 150 tl",
+                  teacherSurname: "Akrep",
                   teacherProfileImg: "assets/images/top_teacher_4.jpg",
                 ),
               ],
@@ -64,15 +65,15 @@ class TopTeachers extends StatelessWidget {
 
 class TopTeachersItem extends StatelessWidget {
   final String teacherName;
+  final String teacherSurname;
   final String teacherDepartment;
-  final String teacherPrice;
   final String teacherProfileImg;
 
   const TopTeachersItem({
     Key key,
     this.teacherName,
     this.teacherDepartment,
-    this.teacherPrice,
+    this.teacherSurname,
     this.teacherProfileImg,
   }) : super(key: key);
 
@@ -81,93 +82,88 @@ class TopTeachersItem extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
-      child: Row(
-        // Dıştaki row sağdan boşluk vermek için
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: size.width / 2.5,
-                padding: EdgeInsets.all(10),
-                decoration: BoxDecoration(
+      child: Padding(
+        padding: const EdgeInsets.all(0),
+        child: Stack(
+          children: [
+            Container(
+              width: size.width / 2.5,
+              //padding: EdgeInsets.all(2),
+              margin: EdgeInsets.all(10),
+              decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   //border: Border.all(width: 0.5),
-                  color: topViewColor,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 10),
+                      blurRadius: 33,
+                      color: kShadowColor,
+                    )
+                  ]
                   //image: DecorationImage(image: AssetImage(teacherProfileImg)),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            teacherProfileImg,
-                            width: size.width / 2.5,
-                            height: size.height / 5,
-                            fit: BoxFit.cover,
-                          ),
+                  ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Stack(
+                    alignment: AlignmentDirectional.bottomCenter,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Image.asset(
+                          teacherProfileImg,
+                          width: size.width / 2.5,
+                          height: size.height / 5,
+                          fit: BoxFit.cover,
                         ),
-                        Container(
-                          margin: EdgeInsets.only(top: 10),
-                          decoration: BoxDecoration(
-                              color: Colors.black,
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Column(
-                            children: [
-                              Align(
-                                child: Text(
-                                  teacherName,
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      color: Colors.white),
-                                ),
+                      ),
+                      Container(
+                        //margin: EdgeInsets.only(top: 10),
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Align(
+                              child: Text(
+                                teacherName + " " + teacherSurname,
+                                style: TextStyle(
+                                    fontFamily: "Raleway", color: Colors.white),
                               ),
-                              Align(
-                                child: Text(
-                                  teacherDepartment,
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      color: Colors.white),
-                                ),
+                            ),
+                            Align(
+                              child: Text(
+                                teacherDepartment,
+                                style: TextStyle(
+                                    fontFamily: "Raleway", color: Colors.white),
                               ),
-                              Align(
-                                child: Text(
-                                  teacherPrice,
-                                  style: TextStyle(
-                                      fontFamily: "Raleway",
-                                      color: Colors.white),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              Positioned(
-                child: Material(
-                  type: MaterialType.transparency,
-                  child: InkWell(
-                    onTap: () {
-                      print("Top Teacher Item Cliked");
-                    },
-                    child: Container(
-                      width: size.width / 2.5,
-                    ),
+            ),
+            Positioned(
+              child: Material(
+                type: MaterialType.transparency,
+                child: InkWell(
+                  onTap: () {
+                    print("Top Teacher Item Cliked");
+                  },
+                  child: Container(
+                    width: size.width / 2.5,
                   ),
                 ),
-              )
-            ],
-          ),
-          SizedBox(
-            width: 10,
-          )
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

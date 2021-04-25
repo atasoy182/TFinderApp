@@ -10,3 +10,4 @@ const defaultThemeColor = Color.fromRGBO(250, 151, 93, 1);
 const topViewColor = Color(0xFFF5CEB8);
 const widgetBackgroundColor = Color.fromRGBO(240, 240, 240, 1);
 const textDisabledColor = Color.fromRGBO(126, 126, 126, 1);
+final kBoxShadowColor = Color(0xFFD3D3D3).withOpacity(.84);
