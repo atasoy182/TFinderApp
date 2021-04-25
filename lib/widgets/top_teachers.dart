@@ -83,13 +83,12 @@ class TopTeachersItem extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Padding(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.all(8.0),
         child: Stack(
           children: [
             Container(
               width: size.width / 2.5,
               //padding: EdgeInsets.all(2),
-              margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   //border: Border.all(width: 0.5),
@@ -105,7 +104,6 @@ class TopTeachersItem extends StatelessWidget {
                   ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                mainAxisSize: MainAxisSize.max,
                 children: [
                   Stack(
                     alignment: AlignmentDirectional.bottomCenter,
