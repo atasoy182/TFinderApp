@@ -24,7 +24,7 @@ class _SearchPageState extends State<SearchPage> {
                   //baslikText(context),
                   aramaSatiri(size),
                   TagBar(),
-                  TopTeachers(),
+                  TopTeacher2(),
                 ],
               ),
             ),
