@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
+import 'package:tfinder_app/constants.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _obscureText = true;
+
+  String _password;
+
+  // Toggles the password show status
+  void _toggle() {
+    print("toggled");
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +46,7 @@ class LoginPage extends StatelessWidget {
                     FadeAnimation(
                         1,
                         Text(
-                          "Login",
+                          "Oturum Açın",
                           style: TextStyle(color: Colors.white, fontSize: 40),
                         )),
                     SizedBox(
@@ -37,7 +55,7 @@ class LoginPage extends StatelessWidget {
                     FadeAnimation(
                         1.3,
                         Text(
-                          "Welcome Back",
+                          "Hoş geldiniz",
                           style: TextStyle(color: Colors.white, fontSize: 18),
                         )),
                   ],
@@ -57,7 +75,7 @@ class LoginPage extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 60,
+                            height: 30,
                           ),
                           FadeAnimation(
                               1.4,
@@ -81,8 +99,10 @@ class LoginPage extends StatelessWidget {
                                               bottom: BorderSide(
                                                   color: Colors.grey[200]))),
                                       child: TextField(
+                                        keyboardType:
+                                            TextInputType.emailAddress,
                                         decoration: InputDecoration(
-                                            hintText: "Email or Phone number",
+                                            hintText: "Email",
                                             hintStyle:
                                                 TextStyle(color: Colors.grey),
                                             border: InputBorder.none),
@@ -94,102 +114,98 @@ class LoginPage extends StatelessWidget {
                                           border: Border(
                                               bottom: BorderSide(
                                                   color: Colors.grey[200]))),
-                                      child: TextField(
+                                      child: TextFormField(
                                         decoration: InputDecoration(
-                                            hintText: "Password",
+                                            hintText: "Şifre",
                                             hintStyle:
                                                 TextStyle(color: Colors.grey),
                                             border: InputBorder.none),
+                                        obscureText: _obscureText,
+                                        validator: (val) => val.length < 6
+                                            ? 'Şifre Çok Kısa'
+                                            : null,
+                                        onSaved: (val) => _password = val,
                                       ),
                                     ),
+                                    TextButton(
+                                        onPressed: _toggle,
+                                        child: new Text(_obscureText
+                                            ? "Şifreyi Göster"
+                                            : "Şifreyi Gizle"))
                                   ],
                                 ),
                               )),
                           SizedBox(
-                            height: 40,
+                            height: 15,
                           ),
                           FadeAnimation(
                               1.5,
-                              Text(
-                                "Forgot Password?",
-                                style: TextStyle(color: Colors.grey),
-                              )),
-                          SizedBox(
-                            height: 40,
-                          ),
-                          FadeAnimation(
-                              1.6,
-                              Container(
-                                height: 50,
-                                margin: EdgeInsets.symmetric(horizontal: 50),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(50),
-                                    color: Colors.orange[900]),
-                                child: Center(
+                              TextButton(
+                                  onPressed: _toggle,
                                   child: Text(
-                                    "Login",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              )),
+                                    "Şifrenizi mi unuttunuz ?",
+                                    style: TextStyle(color: Colors.grey),
+                                  ))),
                           SizedBox(
-                            height: 50,
+                            height: 10,
                           ),
                           FadeAnimation(
-                              1.7,
-                              Text(
-                                "Continue with social media",
-                                style: TextStyle(color: Colors.grey),
-                              )),
+                            1.6,
+                            SizedBox(
+                              height: 50,
+                              width: 250,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.orange[900])),
+                                onPressed: () {},
+                                child: Text(
+                                  "Giriş Yap",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                            ),
+                          ),
                           SizedBox(
                             height: 30,
                           ),
-                          Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: FadeAnimation(
-                                    1.8,
-                                    Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          color: Colors.blue),
-                                      child: Center(
-                                        child: Text(
-                                          "Facebook",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    )),
+                          FadeAnimation(
+                            1.6,
+                            Container(
+                              height: 50,
+                              width: 250,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                    backgroundColor:
+                                        MaterialStateProperty.all<Color>(
+                                            Colors.orange[900])),
+                                onPressed: () {},
+                                child: Row(
+                                  children: [
+                                    Spacer(),
+                                    Image.asset(
+                                      "assets/images/google.png",
+                                      width: 40,
+                                      height: 40,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Google ile giriş",
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Spacer(),
+                                  ],
+                                ),
                               ),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Expanded(
-                                child: FadeAnimation(
-                                    1.9,
-                                    Container(
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          color: Colors.black),
-                                      child: Center(
-                                        child: Text(
-                                          "Github",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    )),
-                              )
-                            ],
+                            ),
                           )
                         ],
                       ),
