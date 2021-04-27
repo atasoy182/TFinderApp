@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/login_page.dart';
 import 'package:tfinder_app/search_page.dart';
 
 class StartPage extends StatefulWidget {
@@ -66,7 +67,7 @@ class _StartPageState extends State<StartPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {
-                      return SearchPage();
+                      return LoginPage();
                     }),
                   );
                 },
