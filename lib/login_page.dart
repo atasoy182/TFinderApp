@@ -46,6 +46,14 @@ class _LoginPageState extends State<LoginPage> {
           style: TextStyle(color: Colors.white),
         ),
         elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+            Color.fromRGBO(65, 202, 198, 1),
+            Color.fromRGBO(65, 202, 198, 0.7),
+            Color.fromRGBO(65, 202, 198, 0.5),
+          ])),
+        ),
       ),
       body: Container(
         width: double.infinity,
