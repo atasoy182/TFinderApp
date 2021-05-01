@@ -92,11 +92,10 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(height: 20),
             Expanded(
               child: Container(
+                margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
                 decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(60),
-                        topRight: Radius.circular(60))),
+                    borderRadius: BorderRadius.all(Radius.circular(60))),
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.only(left: 30, right: 30, top: 10),
@@ -110,14 +109,12 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _pageController,
                             itemCount: 2,
                             onPageChanged: (ix) {
-                              print(" changed index" + ix.toString());
                               setState(() {
                                 _currentPageIndex = ix;
                               });
                             },
                             itemBuilder: (ctx, ix) {
                               if (ix == 1) animateBody = false;
-                              _currentPageIndex = ix;
                               return ix == 0
                                   ? loginPageBody()
                                   : registerPageBody();
