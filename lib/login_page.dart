@@ -7,22 +7,38 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+bool animateBody = true;
+
 class _LoginPageState extends State<LoginPage> {
-  bool _obscureText = true;
+  PageController _pageController = PageController(initialPage: 0);
 
-  String _password;
-
-  // Toggles the password show status
-  void _toggle() {
-    print("toggled");
-    setState(() {
-      _obscureText = !_obscureText;
+  @override
+  void initState() {
+    animateBody = true;
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      animateBody = false;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: turkuazRenk,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            return Navigator.of(context).pop();
+          },
+        ),
+        centerTitle: true,
+        title: Text(
+          "Hoş Geldiniz",
+          style: TextStyle(color: Colors.white),
+        ),
+        elevation: 0,
+      ),
       body: Container(
         width: double.infinity,
         decoration: BoxDecoration(
@@ -34,29 +50,23 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(
-              height: 25,
-            ),
             Padding(
-              padding: EdgeInsets.all(20),
+              padding: EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  FadeAnimation(
-                      1,
-                      Text(
-                        "Oturum Açın",
-                        style: TextStyle(color: Colors.white, fontSize: 40),
-                      )),
                   SizedBox(
                     height: 10,
                   ),
                   FadeAnimation(
-                      1.3,
-                      Text(
-                        "Hoş geldiniz",
-                        style: TextStyle(color: Colors.white, fontSize: 18),
-                      )),
+                      1,
+                      Center(
+                        child: Text(
+                          "Oturum Açın",
+                          style: TextStyle(color: Colors.white, fontSize: 40),
+                        ),
+                      ),
+                      animateBody),
                 ],
               ),
             ),
@@ -71,145 +81,18 @@ class _LoginPageState extends State<LoginPage> {
                 child: SingleChildScrollView(
                   child: Padding(
                     padding: EdgeInsets.all(30),
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 30,
-                        ),
-                        FadeAnimation(
-                            1.4,
-                            Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: turkuazWithOpacity3,
-                                        blurRadius: 20,
-                                        offset: Offset(0, 10))
-                                  ]),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey[200]))),
-                                    child: TextField(
-                                      keyboardType: TextInputType.emailAddress,
-                                      decoration: InputDecoration(
-                                          hintText: "Email",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                                color: Colors.grey[200]))),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                          hintText: "Şifre",
-                                          hintStyle:
-                                              TextStyle(color: Colors.grey),
-                                          border: InputBorder.none),
-                                      obscureText: _obscureText,
-                                      validator: (val) => val.length < 6
-                                          ? 'Şifre Çok Kısa'
-                                          : null,
-                                      onSaved: (val) => _password = val,
-                                    ),
-                                  ),
-                                  TextButton(
-                                      onPressed: _toggle,
-                                      child: new Text(
-                                        _obscureText
-                                            ? "Şifreyi Göster"
-                                            : "Şifreyi Gizle",
-                                        style: TextStyle(
-                                          color: turkuazDefault,
-                                        ),
-                                      ))
-                                ],
-                              ),
-                            )),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        FadeAnimation(
-                            1.5,
-                            TextButton(
-                                onPressed: _toggle,
-                                child: Text(
-                                  "Şifrenizi mi unuttunuz ?",
-                                  style: TextStyle(color: Colors.grey),
-                                ))),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        FadeAnimation(
-                          1.6,
-                          SizedBox(
-                            height: 50,
-                            width: 250,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          turkuazDefault)),
-                              onPressed: () {},
-                              child: Text(
-                                "Giriş Yap",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        FadeAnimation(
-                          1.6,
-                          Container(
-                            height: 50,
-                            width: 250,
-                            child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor:
-                                      MaterialStateProperty.all<Color>(
-                                          turkuazDefault)),
-                              onPressed: () {},
-                              child: Row(
-                                children: [
-                                  Spacer(),
-                                  Image.asset(
-                                    "assets/images/google.png",
-                                    width: 40,
-                                    height: 40,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Google ile giriş",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Spacer(),
-                                ],
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 7 / 10,
+                      child: PageView.builder(
+                        scrollDirection: Axis.horizontal,
+                        controller: _pageController,
+                        itemCount: 2,
+                        itemBuilder: (ctx, ix) {
+                          print("Index : " + ix.toString());
+                          if (ix == 1) animateBody = false;
+                          return ix == 0 ? loginPageBody() : registerPageBody();
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -217,6 +100,178 @@ class _LoginPageState extends State<LoginPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+}
+
+class loginPageBody extends StatefulWidget {
+  @override
+  _loginPageBodyState createState() => _loginPageBodyState();
+}
+
+class _loginPageBodyState extends State<loginPageBody> {
+  bool _obscureText = true;
+  String _password;
+
+  // Toggles the password show status
+  void _toggle() {
+    print("toggled");
+    setState(() {
+      _obscureText = !_obscureText;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        SizedBox(
+          height: 30,
+        ),
+        FadeAnimation(
+            1.4,
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                        color: turkuazWithOpacity3,
+                        blurRadius: 20,
+                        offset: Offset(0, 10))
+                  ]),
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[200]))),
+                    child: TextField(
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: InputDecoration(
+                          hintText: "Email",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                        border: Border(
+                            bottom: BorderSide(color: Colors.grey[200]))),
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                          hintText: "Şifre",
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none),
+                      obscureText: _obscureText,
+                      validator: (val) =>
+                          val.length < 6 ? 'Şifre Çok Kısa' : null,
+                      onSaved: (val) => _password = val,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            animateBody),
+        SizedBox(
+          height: 15,
+        ),
+        FadeAnimation(
+            1.5,
+            TextButton(
+                onPressed: _toggle,
+                child: Text(
+                  "Şifrenizi mi unuttunuz ?",
+                  style: TextStyle(color: Colors.grey),
+                )),
+            animateBody),
+        SizedBox(
+          height: 10,
+        ),
+        FadeAnimation(
+          1.6,
+          SizedBox(
+            height: 50,
+            width: 250,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(turkuazDefault)),
+              onPressed: () {},
+              child: Text(
+                "Giriş Yap",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          animateBody,
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        FadeAnimation(
+            1.6,
+            Container(
+              height: 50,
+              width: 250,
+              child: ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(turkuazDefault)),
+                onPressed: () {},
+                child: Row(
+                  children: [
+                    Spacer(),
+                    Image.asset(
+                      "assets/images/google-logo.png",
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.cover,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "Google ile giriş",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            ),
+            animateBody),
+        SizedBox(
+          height: 20,
+        ),
+        FadeAnimation(
+            1.5,
+            TextButton(
+                onPressed: _toggle,
+                child: Text(
+                  "Hesabınız yok mu ? Kayıt Olun",
+                  style: TextStyle(color: Colors.grey),
+                )),
+            animateBody),
+      ],
+    );
+  }
+}
+
+class registerPageBody extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: 50,
+        height: 50,
+        color: Colors.red,
       ),
     );
   }

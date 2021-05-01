@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'T-Finder',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.orange,
+        primarySwatch: Colors.cyan,
         fontFamily: "Raleway",
         textTheme: TextTheme(
           headline6: TextStyle(fontFamily: 'Raleway'),
