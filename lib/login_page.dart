@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
@@ -25,10 +26,10 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: turkuazRenk,
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
+            animateBody = true;
             return Navigator.of(context).pop();
           },
         ),
@@ -128,17 +129,18 @@ class _loginPageBodyState extends State<loginPageBody> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: <Widget>[
         SizedBox(
-          height: 30,
+          height: 20,
         ),
         FadeAnimation(
             1.4,
             Container(
+              margin: EdgeInsets.all(5),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                        color: turkuazWithOpacity3,
+                        color: turkuazWithOpacity4,
                         blurRadius: 20,
                         offset: Offset(0, 10))
                   ]),
@@ -177,6 +179,7 @@ class _loginPageBodyState extends State<loginPageBody> {
               ),
             ),
             animateBody),
+        Spacer(),
         SizedBox(
           height: 15,
         ),
@@ -237,7 +240,7 @@ class _loginPageBodyState extends State<loginPageBody> {
                       width: 10,
                     ),
                     Text(
-                      "Google ile giriş",
+                      "Gmail ile giriş",
                       style: TextStyle(
                           color: Colors.white, fontWeight: FontWeight.bold),
                     ),
@@ -248,17 +251,16 @@ class _loginPageBodyState extends State<loginPageBody> {
             ),
             animateBody),
         SizedBox(
-          height: 20,
+          height: 30,
         ),
         FadeAnimation(
             1.5,
-            TextButton(
-                onPressed: _toggle,
-                child: Text(
-                  "Hesabınız yok mu ? Kayıt Olun",
-                  style: TextStyle(color: Colors.grey),
-                )),
+            Text(
+              "Hesabınız yok mu ? Sola Kaydırın",
+              style: TextStyle(color: Colors.grey),
+            ),
             animateBody),
+        Spacer(),
       ],
     );
   }

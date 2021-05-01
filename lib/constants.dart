@@ -18,3 +18,20 @@ const turkuazDefault = Color.fromRGBO(65, 202, 198, 1);
 const turkuazWithOpacity = Color.fromRGBO(65, 202, 198, 0.8);
 const turkuazWithOpacity2 = Color.fromRGBO(65, 202, 198, 0.6);
 const turkuazWithOpacity3 = Color.fromRGBO(65, 202, 198, 0.4);
+const turkuazWithOpacity4 = Color.fromRGBO(65, 202, 198, 0.2);
+
+const MaterialColor turkuazMaterialColor = const MaterialColor(
+  0xFF41CAC6,
+  const <int, Color>{
+    50: Color.fromRGBO(65, 202, 198, .1),
+    100: Color.fromRGBO(65, 202, 198, .2),
+    200: Color.fromRGBO(65, 202, 198, .3),
+    300: Color.fromRGBO(65, 202, 198, .4),
+    400: Color.fromRGBO(65, 202, 198, .5),
+    500: Color.fromRGBO(65, 202, 198, .6),
+    600: Color.fromRGBO(65, 202, 198, .7),
+    700: Color.fromRGBO(65, 202, 198, .8),
+    800: Color.fromRGBO(65, 202, 198, .9),
+    900: Color.fromRGBO(65, 202, 198, 1),
+  },
+);

@@ -21,10 +21,10 @@ class _StartPageState extends State<StartPage> {
             Container(
               height: size.height * .45,
               decoration: BoxDecoration(
-                color: topViewColor,
+                color: Theme.of(context).primaryColor.withOpacity(.7),
               ),
             ),
-            imageShow(size),
+            //imageShow(size),
           ]),
           Spacer(),
           Center(
@@ -58,7 +58,8 @@ class _StartPageState extends State<StartPage> {
             padding: const EdgeInsets.all(2.0),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(color: defaultThemeColor),
+              border: Border.all(
+                  color: Theme.of(context).primaryColor.withOpacity(.5)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -71,7 +72,7 @@ class _StartPageState extends State<StartPage> {
                     }),
                   );
                 },
-                color: defaultThemeColor,
+                color: Theme.of(context).primaryColor,
                 textColor: Colors.white,
                 child: Icon(
                   Icons.arrow_forward,
