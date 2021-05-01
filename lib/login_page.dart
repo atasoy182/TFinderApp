@@ -12,6 +12,7 @@ bool animateBody = true;
 
 class _LoginPageState extends State<LoginPage> {
   PageController _pageController = PageController(initialPage: 0);
+  int _currentPageIndex = 0;
 
   @override
   void initState() {
@@ -20,6 +21,12 @@ class _LoginPageState extends State<LoginPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       animateBody = false;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _pageController.dispose();
   }
 
   @override
@@ -68,6 +75,9 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                       animateBody),
+                  SizedBox(
+                    height: 5,
+                  ),
                 ],
               ),
             ),
@@ -81,18 +91,31 @@ class _LoginPageState extends State<LoginPage> {
                         topRight: Radius.circular(60))),
                 child: SingleChildScrollView(
                   child: Padding(
-                    padding: EdgeInsets.all(30),
+                    padding: EdgeInsets.only(left: 30, right: 30, top: 10),
                     child: SizedBox(
                       height: MediaQuery.of(context).size.height * 7 / 10,
-                      child: PageView.builder(
-                        scrollDirection: Axis.horizontal,
-                        controller: _pageController,
-                        itemCount: 2,
-                        itemBuilder: (ctx, ix) {
-                          print("Index : " + ix.toString());
-                          if (ix == 1) animateBody = false;
-                          return ix == 0 ? loginPageBody() : registerPageBody();
-                        },
+                      child: Stack(
+                        children: [
+                          pageDots(_currentPageIndex, context),
+                          PageView.builder(
+                            scrollDirection: Axis.horizontal,
+                            controller: _pageController,
+                            itemCount: 2,
+                            onPageChanged: (ix) {
+                              print(" changed index" + ix.toString());
+                              setState(() {
+                                _currentPageIndex = ix;
+                              });
+                            },
+                            itemBuilder: (ctx, ix) {
+                              if (ix == 1) animateBody = false;
+                              _currentPageIndex = ix;
+                              return ix == 0
+                                  ? loginPageBody()
+                                  : registerPageBody();
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -269,12 +292,67 @@ class _loginPageBodyState extends State<loginPageBody> {
 class registerPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 50,
-        height: 50,
-        color: Colors.red,
-      ),
+    return Column(
+      children: [
+        Center(
+          child: Container(
+            margin: EdgeInsets.all(50),
+            width: 50,
+            height: 50,
+            color: Colors.red,
+          ),
+        ),
+      ],
     );
   }
+}
+
+Widget pageDots(int currentPageIx, BuildContext context) {
+  double _pasifBoyut = 10;
+  double _aktifBoyut = 15;
+  int _currentPageIndex = currentPageIx;
+
+  return _currentPageIndex == 0
+      ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: _aktifBoyut,
+              width: _aktifBoyut,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).primaryColor),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              height: _pasifBoyut,
+              width: _pasifBoyut,
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+            )
+          ],
+        )
+      : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: _pasifBoyut,
+              width: _pasifBoyut,
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
+            ),
+            SizedBox(
+              width: 15,
+            ),
+            Container(
+              height: _aktifBoyut,
+              width: _aktifBoyut,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Theme.of(context).primaryColor),
+            )
+          ],
+        );
 }
