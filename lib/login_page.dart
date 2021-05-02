@@ -142,10 +142,11 @@ class loginPageBody extends StatefulWidget {
 class _loginPageBodyState extends State<loginPageBody> {
   bool _obscureText = true;
   String _password;
+  final _formPasswordKey = GlobalKey<FormState>();
+  final _formEmailKey = GlobalKey<FormState>();
 
   // Toggles the password show status
   void _toggle() {
-    print("toggled");
     setState(() {
       _obscureText = !_obscureText;
     });
@@ -154,15 +155,16 @@ class _loginPageBodyState extends State<loginPageBody> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         SizedBox(
           height: 20,
         ),
+        Spacer(),
         FadeAnimation(
             1.4,
             Container(
-              margin: EdgeInsets.all(5),
+              margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -173,34 +175,47 @@ class _loginPageBodyState extends State<loginPageBody> {
                         offset: Offset(0, 10))
                   ]),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(color: Colors.grey[200]))),
-                    child: TextField(
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                          hintText: "Email",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          border: InputBorder.none),
+                  Form(
+                    key: _formEmailKey,
+                    child: Container(
+                      //decoration: BoxDecoration(border: Border.all()),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: Center(
+                        child: TextFormField(
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                                hintText: "Email",
+                                hintStyle: TextStyle(color: Colors.grey),
+                                border: InputBorder.none),
+                            validator: (val) {
+                              if (!val.contains("@")) {
+                                return 'Geçerli bir email adresi giriniz';
+                              } else
+                                return null;
+                            }),
+                      ),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                        border: Border(
-                            bottom: BorderSide(color: Colors.grey[200]))),
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                          hintText: "Şifre",
-                          hintStyle: TextStyle(color: Colors.grey),
-                          border: InputBorder.none),
-                      obscureText: _obscureText,
-                      validator: (val) =>
-                          val.length < 6 ? 'Şifre Çok Kısa' : null,
-                      onSaved: (val) => _password = val,
+                  Form(
+                    key: _formPasswordKey,
+                    child: Container(
+                      //decoration: BoxDecoration(border: Border.all()),
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                            suffix: IconButton(
+                                icon: Icon(Icons.remove_red_eye_sharp),
+                                color: Colors.grey,
+                                onPressed: _toggle),
+                            hintText: "Şifre",
+                            hintStyle: TextStyle(color: Colors.grey),
+                            border: InputBorder.none),
+                        obscureText: _obscureText,
+                        validator: (val) =>
+                            val.length < 6 ? 'Şifre Çok Kısa' : null,
+                      ),
                     ),
                   ),
                 ],
@@ -214,7 +229,7 @@ class _loginPageBodyState extends State<loginPageBody> {
         FadeAnimation(
             1.5,
             TextButton(
-                onPressed: _toggle,
+                onPressed: () => print("Şifremi unuttum"),
                 child: Text(
                   "Şifrenizi mi unuttunuz ?",
                   style: TextStyle(color: Colors.grey),
@@ -232,7 +247,16 @@ class _loginPageBodyState extends State<loginPageBody> {
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all<Color>(turkuazDefault)),
-              onPressed: () {},
+              onPressed: () {
+                bool validateEmail = _formEmailKey.currentState.validate();
+                bool validatePassword =
+                    _formPasswordKey.currentState.validate();
+
+                if (validateEmail && validatePassword) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text('Giriş Yapılıyor')));
+                }
+              },
               child: Text(
                 "Giriş Yap",
                 style:
@@ -297,17 +321,51 @@ class _loginPageBodyState extends State<loginPageBody> {
 class registerPageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Center(
-          child: Container(
-            margin: EdgeInsets.all(50),
-            width: 50,
-            height: 50,
-            color: Colors.red,
+    return Container(
+      margin: EdgeInsets.only(left: 5, right: 5, top: 25, bottom: 5),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+                color: turkuazWithOpacity4,
+                blurRadius: 20,
+                offset: Offset(0, 10))
+          ]),
+      child: Column(
+        children: <Widget>[
+          Form(
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: "Email",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none),
+                  validator: (val) {
+                    if (!val.contains("@")) {
+                      return 'Geçerli bir email adresi giriniz';
+                    } else
+                      return null;
+                  }),
+            ),
           ),
-        ),
-      ],
+          Divider(),
+          Form(
+            child: Container(
+              padding: EdgeInsets.all(5),
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: "Şifre",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none),
+                validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
