@@ -79,10 +79,17 @@ class _LoginPageState extends State<LoginPage> {
                   FadeAnimation(
                       1,
                       Center(
-                        child: Text(
-                          "Oturum Açın",
-                          style: TextStyle(color: Colors.white, fontSize: 40),
-                        ),
+                        child: _currentPageIndex == 0
+                            ? Text(
+                                "Oturum Açın",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 40),
+                              )
+                            : Text(
+                                "Kayıt Olun",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 40),
+                              ),
                       ),
                       animateBody),
                   SizedBox(

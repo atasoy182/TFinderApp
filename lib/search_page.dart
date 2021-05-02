@@ -39,16 +39,21 @@ class _SearchPageState extends State<SearchPage> {
           ])),
         ),
       ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            //baslikText(context),
-            aramaSatiri(size),
-            TagBar(),
-            TopTeachers(),
-            TeacherList(),
-          ],
+      body: RawScrollbar(
+        thumbColor: turkuazWithOpacity2,
+        isAlwaysShown: true,
+        thickness: 7,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              //baslikText(context),
+              aramaSatiri(size),
+              TagBar(),
+              TopTeachers(),
+              TeacherList(),
+            ],
+          ),
         ),
       ),
     );
