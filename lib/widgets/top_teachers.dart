@@ -32,7 +32,8 @@ class TopTeachers extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               TopTeachersItem(
-                teacherName: "Ahmet",
+                teacherName:
+                    "AhmetXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
                 teacherSurname: "Sabancı",
                 teacherDepartment: "İngilizce",
                 teacherProfileImg: "assets/images/top_teacher_1.jpg",
@@ -120,7 +121,7 @@ class TopTeachersItem extends StatelessWidget {
               left: 0,
               child: Container(
                 decoration: BoxDecoration(
-                  color: defaultThemeColor,
+                  color: turkuazDefault,
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
@@ -129,11 +130,13 @@ class TopTeachersItem extends StatelessWidget {
                       teacherName + " " + teacherSurname,
                       style:
                           TextStyle(fontFamily: "Raleway", color: Colors.white),
+                      maxLines: 1,
                     ),
                     Text(
                       teacherDepartment,
                       style:
                           TextStyle(fontFamily: "Raleway", color: Colors.white),
+                      maxLines: 1,
                     ),
                   ],
                 ),

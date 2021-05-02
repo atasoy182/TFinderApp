@@ -15,21 +15,35 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Align(
-              child: Column(
-                children: [
-                  //baslikText(context),
-                  aramaSatiri(size),
-                  TagBar(),
-                  TopTeachers(),
-                ],
-              ),
-            ),
-          ],
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            return Navigator.of(context).pop();
+          },
         ),
+        centerTitle: true,
+        title: Text(
+          "Özel Ders Bul",
+          style: TextStyle(color: Colors.white),
+        ),
+        elevation: 0,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+            Color.fromRGBO(65, 202, 198, 1),
+            Color.fromRGBO(65, 202, 198, 0.7),
+            Color.fromRGBO(65, 202, 198, 0.5),
+          ])),
+        ),
+      ),
+      body: Column(
+        children: [
+          //baslikText(context),
+          aramaSatiri(size),
+          TagBar(),
+          TopTeachers(),
+        ],
       ),
     );
   }
@@ -48,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
             height: 52,
             width: 52,
             decoration: BoxDecoration(
-              color: defaultThemeColor,
+              color: turkuazDefault,
               borderRadius: BorderRadius.circular(10),
             ),
           ),

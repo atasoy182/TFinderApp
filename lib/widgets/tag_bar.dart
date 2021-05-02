@@ -61,7 +61,7 @@ class tagBarItem extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: isActive ? defaultThemeColor : widgetBackgroundColor,
+                  color: isActive ? turkuazDefault : widgetBackgroundColor,
                 ),
                 child: Align(
                   child: Text(
