@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/widgets/base_button.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -142,8 +143,8 @@ class loginPageBody extends StatefulWidget {
 class _loginPageBodyState extends State<loginPageBody> {
   bool _obscureText = true;
   String _password;
-  final _formPasswordKey = GlobalKey<FormState>();
-  final _formEmailKey = GlobalKey<FormState>();
+  final _formLoginPasswordKey = GlobalKey<FormState>();
+  final _formLoginEmailKey = GlobalKey<FormState>();
 
   // Toggles the password show status
   void _toggle() {
@@ -178,7 +179,7 @@ class _loginPageBodyState extends State<loginPageBody> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Form(
-                    key: _formEmailKey,
+                    key: _formLoginEmailKey,
                     child: Container(
                       //decoration: BoxDecoration(border: Border.all()),
                       padding: EdgeInsets.only(left: 10, right: 10),
@@ -199,7 +200,7 @@ class _loginPageBodyState extends State<loginPageBody> {
                     ),
                   ),
                   Form(
-                    key: _formPasswordKey,
+                    key: _formLoginPasswordKey,
                     child: Container(
                       //decoration: BoxDecoration(border: Border.all()),
                       padding: EdgeInsets.only(left: 10, right: 10),
@@ -222,10 +223,6 @@ class _loginPageBodyState extends State<loginPageBody> {
               ),
             ),
             animateBody),
-        Spacer(),
-        SizedBox(
-          height: 15,
-        ),
         FadeAnimation(
             1.5,
             TextButton(
@@ -235,9 +232,7 @@ class _loginPageBodyState extends State<loginPageBody> {
                   style: TextStyle(color: Colors.grey),
                 )),
             animateBody),
-        SizedBox(
-          height: 10,
-        ),
+        Spacer(),
         FadeAnimation(
           1.6,
           SizedBox(
@@ -248,9 +243,9 @@ class _loginPageBodyState extends State<loginPageBody> {
                   backgroundColor:
                       MaterialStateProperty.all<Color>(turkuazDefault)),
               onPressed: () {
-                bool validateEmail = _formEmailKey.currentState.validate();
+                bool validateEmail = _formLoginEmailKey.currentState.validate();
                 bool validatePassword =
-                    _formPasswordKey.currentState.validate();
+                    _formLoginPasswordKey.currentState.validate();
 
                 if (validateEmail && validatePassword) {
                   ScaffoldMessenger.of(context)
@@ -318,53 +313,135 @@ class _loginPageBodyState extends State<loginPageBody> {
   }
 }
 
-class registerPageBody extends StatelessWidget {
+class registerPageBody extends StatefulWidget {
+  @override
+  _registerPageBodyState createState() => _registerPageBodyState();
+}
+
+class _registerPageBodyState extends State<registerPageBody> {
+  final _formRegisterPasswordKey = GlobalKey<FormState>();
+  final _formRegisterEmailKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(left: 5, right: 5, top: 25, bottom: 5),
-      decoration: BoxDecoration(
+    return SingleChildScrollView(
+      child: Container(
+        margin: EdgeInsets.only(left: 5, right: 5, top: 25, bottom: 5),
+        decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-                color: turkuazWithOpacity4,
-                blurRadius: 20,
-                offset: Offset(0, 10))
-          ]),
-      child: Column(
-        children: <Widget>[
-          Form(
-            child: Container(
-              padding: EdgeInsets.all(5),
-              child: TextFormField(
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 15,
+            ),
+            Form(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueGrey, width: 0.4),
+                    borderRadius: BorderRadius.circular(15)),
+                padding: EdgeInsets.all(5),
+                child: TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
-                      hintText: "Email",
+                      hintText: "Adınız",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none),
-                  validator: (val) {
-                    if (!val.contains("@")) {
-                      return 'Geçerli bir email adresi giriniz';
-                    } else
-                      return null;
-                  }),
-            ),
-          ),
-          Divider(),
-          Form(
-            child: Container(
-              padding: EdgeInsets.all(5),
-              child: TextFormField(
-                decoration: InputDecoration(
-                    hintText: "Şifre",
-                    hintStyle: TextStyle(color: Colors.grey),
-                    border: InputBorder.none),
-                validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                ),
               ),
             ),
-          )
-        ],
+            SizedBox(
+              height: 5,
+            ),
+            Form(
+              child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blueGrey, width: 0.4),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                padding: EdgeInsets.all(5),
+                child: TextFormField(
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: "Soy Adınız",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Form(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueGrey, width: 0.4),
+                    borderRadius: BorderRadius.circular(15)),
+                padding: EdgeInsets.all(5),
+                child: TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                        hintText: "Email",
+                        hintStyle: TextStyle(color: Colors.grey),
+                        border: InputBorder.none),
+                    validator: (val) {
+                      if (!val.contains("@")) {
+                        return 'Geçerli bir email adresi giriniz';
+                      } else
+                        return null;
+                    }),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Form(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueGrey, width: 0.4),
+                    borderRadius: BorderRadius.circular(15)),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: "Şifre",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none),
+                  validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            Form(
+              child: Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blueGrey, width: 0.4),
+                    borderRadius: BorderRadius.circular(15)),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                      hintText: "Şifre Tekrar",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none),
+                  validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+            SizedBox(
+              height: 50,
+              child: DefaultButton(
+                btnText: "Kayıt Ol",
+                btnCliked: () {},
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
