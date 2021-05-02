@@ -9,7 +9,6 @@ class TagBar extends StatelessWidget {
       child: ListView(
         // This next line does the trick.
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 10),
         children: <Widget>[
           tagBarItem(
             tagText: "İngilizce",

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
+import 'package:tfinder_app/widgets/teacher_list.dart';
 import 'package:tfinder_app/widgets/top_teachers.dart';
 
 class SearchPage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -37,13 +39,17 @@ class _SearchPageState extends State<SearchPage> {
           ])),
         ),
       ),
-      body: Column(
-        children: [
-          //baslikText(context),
-          aramaSatiri(size),
-          TagBar(),
-          TopTeachers(),
-        ],
+      body: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            //baslikText(context),
+            aramaSatiri(size),
+            TagBar(),
+            TopTeachers(),
+            TeacherList(),
+          ],
+        ),
       ),
     );
   }
@@ -52,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(width: size.width * 3 / 4, child: SearchBar()),
+        SizedBox(width: size.width * 3 / 4 - 20, child: SearchBar()),
         SizedBox(
           width: 5,
         ),
@@ -82,7 +88,7 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget baslikText(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10),
       child: Text(
         "Öğretmen Ara",
         style: Theme.of(context)

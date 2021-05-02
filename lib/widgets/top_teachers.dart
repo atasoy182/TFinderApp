@@ -4,7 +4,7 @@ import 'package:tfinder_app/constants.dart';
 
 Widget TopTeacherHeader(BuildContext context) {
   return Container(
-    margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+    margin: EdgeInsets.only(top: 15),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -28,7 +28,7 @@ class TopTeachers extends StatelessWidget {
         SizedBox(
           height: size.height / 4.2,
           child: ListView(
-            padding: EdgeInsets.only(right: 15),
+            padding: EdgeInsets.only(right: 10),
             scrollDirection: Axis.horizontal,
             children: <Widget>[
               TopTeachersItem(
@@ -83,7 +83,7 @@ class TopTeachersItem extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     return ClipRRect(
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+        margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         height: size.height / 4,
         width: size.width / 2.5,
         child: Stack(
@@ -107,12 +107,14 @@ class TopTeachersItem extends StatelessWidget {
               ),
             ),
             ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.asset(
-                teacherProfileImg,
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
+              borderRadius: BorderRadius.circular(10),
+              child: Center(
+                child: Image.asset(
+                  teacherProfileImg,
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             Positioned(
