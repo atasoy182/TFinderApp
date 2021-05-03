@@ -173,7 +173,7 @@ class _loginPageBodyState extends State<loginPageBody> {
         FadeAnimation(
             1.4,
             Container(
-              margin: EdgeInsets.all(10),
+              margin: EdgeInsets.only(top: 10, left: 10, right: 10),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(10),
@@ -233,14 +233,16 @@ class _loginPageBodyState extends State<loginPageBody> {
             animateBody),
         FadeAnimation(
             1.5,
-            TextButton(
-                onPressed: () => print("Şifremi unuttum"),
-                child: Text(
-                  "Şifrenizi mi unuttunuz ?",
-                  style: TextStyle(color: Colors.grey),
-                )),
+            Align(
+              alignment: Alignment.topRight,
+              child: TextButton(
+                  onPressed: () => print("Şifremi unuttum"),
+                  child: Text(
+                    "Şifrenizi mi unuttunuz ?",
+                    style: TextStyle(color: Colors.grey),
+                  )),
+            ),
             animateBody),
-        Spacer(),
         FadeAnimation(
           1.6,
           SizedBox(
@@ -249,7 +251,11 @@ class _loginPageBodyState extends State<loginPageBody> {
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(turkuazDefault)),
+                      MaterialStateProperty.all<Color>(turkuazDefault),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ))),
               onPressed: () {
                 bool validateEmail = _formLoginEmailKey.currentState.validate();
                 bool validatePassword =
@@ -280,41 +286,62 @@ class _loginPageBodyState extends State<loginPageBody> {
           height: 30,
         ),
         FadeAnimation(
+            1.5,
+            Text(
+              "-Veya-",
+              style: TextStyle(color: Colors.grey),
+            ),
+            animateBody),
+        SizedBox(
+          height: 10,
+        ),
+        FadeAnimation(
             1.6,
-            Container(
-              height: 50,
-              width: 250,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(turkuazDefault)),
-                onPressed: () {},
-                child: Row(
-                  children: [
-                    Spacer(),
-                    Image.asset(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MaterialButton(
+                  color: Colors.white,
+                  shape: CircleBorder(),
+                  onPressed: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Image.asset(
                       "assets/images/google-logo.png",
                       width: 30,
                       height: 30,
                       fit: BoxFit.cover,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "Gmail ile giriş",
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                    Spacer(),
-                  ],
+                  ),
                 ),
-              ),
+                MaterialButton(
+                  color: Colors.white,
+                  shape: CircleBorder(),
+                  onPressed: () {},
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Image.asset(
+                      "assets/images/facebook-logo.png",
+                      width: 30,
+                      height: 30,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
             ),
             animateBody),
         SizedBox(
-          height: 30,
+          height: 10,
         ),
+        FadeAnimation(
+            1.5,
+            Text(
+              "ile oturum aç",
+              style: TextStyle(color: Colors.grey),
+            ),
+            animateBody),
+        Spacer(),
         FadeAnimation(
             1.5,
             Text(
@@ -322,7 +349,6 @@ class _loginPageBodyState extends State<loginPageBody> {
               style: TextStyle(color: Colors.grey),
             ),
             animateBody),
-        Spacer(),
       ],
     );
   }
