@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/search_page.dart';
+import 'package:tfinder_app/search_page_2.dart';
 import 'package:tfinder_app/widgets/base_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -251,7 +252,7 @@ class _loginPageBodyState extends State<loginPageBody> {
             child: ElevatedButton(
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(turkuazDefault),
+                      MaterialStateProperty.all<Color>(turuncuDefault),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
@@ -269,7 +270,7 @@ class _loginPageBodyState extends State<loginPageBody> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return SearchPage();
+                    return SearchPage2();
                   }),
                 );
               },
@@ -479,6 +480,7 @@ class _registerPageBodyState extends State<registerPageBody> {
               child: DefaultButton(
                 btnText: "Kayıt Ol",
                 btnCliked: () {},
+                btnColor: turuncuDefault,
               ),
             ),
           ],

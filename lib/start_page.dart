@@ -58,8 +58,7 @@ class _StartPageState extends State<StartPage> {
             padding: const EdgeInsets.all(2.0),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(
-                  color: Theme.of(context).primaryColor.withOpacity(.5)),
+              border: Border.all(color: turuncuDefault.withOpacity(.5)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -72,7 +71,7 @@ class _StartPageState extends State<StartPage> {
                     }),
                   );
                 },
-                color: Theme.of(context).primaryColor,
+                color: turuncuDefault,
                 textColor: Colors.white,
                 child: Icon(
                   Icons.arrow_forward,
