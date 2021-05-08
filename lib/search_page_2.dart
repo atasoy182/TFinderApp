@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
+import 'package:tfinder_app/widgets/tag_bar.dart';
+import 'package:tfinder_app/widgets/top_teachers_view.dart';
 
 class SearchPage2 extends StatefulWidget {
   @override
@@ -31,9 +33,9 @@ class _SearchPage2State extends State<SearchPage2> {
             actions: [
               IconButton(
                 icon: Icon(
-                  Icons.search,
+                  Icons.search_sharp,
                   color: Colors.white,
-                  size: 35,
+                  size: 32,
                 ),
                 onPressed: () {},
               ),
@@ -43,14 +45,39 @@ class _SearchPage2State extends State<SearchPage2> {
                   icon: Icon(
                     Icons.filter_list,
                     color: Colors.white,
-                    size: 40,
+                    size: 35,
                   ),
                   onPressed: () {},
                 ),
               ),
             ],
           ),
-          SliverToBoxAdapter(child: Container()),
+          SliverToBoxAdapter(
+              child: Container(
+                  margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                  child: TagBar())),
+          SliverToBoxAdapter(
+              child:
+                  Container(margin: EdgeInsets.all(15), child: TopTeachers2())),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return Card(
+                  margin: EdgeInsets.all(15),
+                  child: Container(
+                    color: Colors.blue[100 * (index % 9 + 1)],
+                    height: 80,
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Item $index",
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ),
+                );
+              },
+              childCount: 1000, // 1000 list items
+            ),
+          ),
         ],
       ),
     );

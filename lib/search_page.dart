@@ -4,7 +4,6 @@ import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
 import 'package:tfinder_app/widgets/teacher_list.dart';
-import 'package:tfinder_app/widgets/top_teachers.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -50,7 +49,6 @@ class _SearchPageState extends State<SearchPage> {
               //baslikText(context),
               aramaSatiri(size),
               TagBar(),
-              TopTeachers(),
               TeacherList(),
             ],
           ),
