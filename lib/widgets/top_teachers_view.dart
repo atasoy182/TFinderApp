@@ -18,7 +18,7 @@ Widget TopTeacherHeader(BuildContext context) {
   );
 }
 
-class TopTeachers2 extends StatelessWidget {
+class TopTeachers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(

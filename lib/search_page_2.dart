@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
-import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
 import 'package:tfinder_app/widgets/top_teachers_view.dart';
 
@@ -58,7 +57,7 @@ class _SearchPage2State extends State<SearchPage2> {
                   child: TagBar())),
           SliverToBoxAdapter(
               child:
-                  Container(margin: EdgeInsets.all(15), child: TopTeachers2())),
+                  Container(margin: EdgeInsets.all(15), child: TopTeachers())),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
