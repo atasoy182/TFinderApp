@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
-import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
-import 'package:tfinder_app/widgets/teacher_list.dart';
+import 'package:tfinder_app/widgets/teaher_list_view.dart';
+import 'package:tfinder_app/widgets/top_teachers_view.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -15,97 +14,68 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            return Navigator.of(context).pop();
-          },
-        ),
-        centerTitle: true,
-        title: Text(
-          "Özel Ders Bul",
-          style: TextStyle(color: Colors.white),
-        ),
-        elevation: 0,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Color.fromRGBO(65, 202, 198, 1),
-            Color.fromRGBO(65, 202, 198, 0.7),
-            Color.fromRGBO(65, 202, 198, 0.5),
-          ])),
-        ),
-      ),
-      body: RawScrollbar(
-        thumbColor: turkuazWithOpacity2,
-        isAlwaysShown: true,
-        thickness: 7,
-        child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Column(
-            children: [
-              //baslikText(context),
-              aramaSatiri(size),
-              TagBar(),
-              TeacherList(),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            brightness: Brightness.light,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+                Color.fromRGBO(65, 202, 198, 1),
+                Color.fromRGBO(65, 202, 198, 0.7),
+                Color.fromRGBO(65, 202, 198, 0.5),
+              ])),
+            ),
+            title: Text(
+              "Bul",
+              style: TextStyle(color: Colors.white),
+            ),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white),
+              onPressed: () {
+                return Navigator.of(context).pop();
+              },
+            ),
+            floating: true,
+            actions: [
+              IconButton(
+                icon: Icon(
+                  Icons.search_sharp,
+                  color: Colors.white,
+                  size: 32,
+                ),
+                onPressed: () {},
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 10),
+                child: IconButton(
+                  icon: Icon(
+                    Icons.filter_list,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Row aramaSatiri(Size size) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(width: size.width * 3 / 4 - 20, child: SearchBar()),
-        SizedBox(
-          width: 5,
-        ),
-        Stack(children: [
-          Container(
-            alignment: Alignment.center,
-            height: 52,
-            width: 52,
-            decoration: BoxDecoration(
-              color: turkuazDefault,
-              borderRadius: BorderRadius.circular(10),
+          SliverToBoxAdapter(
+              child:
+                  Container(margin: EdgeInsets.all(15), child: TopTeachers())),
+          SliverToBoxAdapter(
+              child: Container(
+                  margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+                  child: TagBar())),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return TeacherListItem(index: index);
+              },
+              childCount: 1000, // 1000 list items
             ),
           ),
-          Positioned.fill(
-              child: Icon(
-            Icons.filter_list_sharp,
-            size: 45,
-            color: Colors.white,
-          ))
-        ]),
-        SizedBox(
-          height: 10,
-        ),
-      ],
-    );
-  }
-
-  Widget baslikText(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      child: Text(
-        "Öğretmen Ara",
-        style: Theme.of(context)
-            .textTheme
-            .headline3
-            .copyWith(fontWeight: FontWeight.w700),
-        textAlign: TextAlign.center,
+        ],
       ),
     );
   }
 }
-
-//Text(
-//"En iyi öğretmenler ile tanışmak artık çok kolay !",
-//style: Theme.of(context).textTheme.bodyText1,
-//textAlign: TextAlign.center,
-//)

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/search_page.dart';
-import 'package:tfinder_app/search_page_2.dart';
 import 'package:tfinder_app/widgets/base_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -270,7 +269,7 @@ class _loginPageBodyState extends State<loginPageBody> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) {
-                    return SearchPage2();
+                    return SearchPage();
                   }),
                 );
               },

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/login_page.dart';
-import 'package:tfinder_app/search_page.dart';
 
 class StartPage extends StatefulWidget {
   @override

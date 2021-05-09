@@ -48,7 +48,6 @@ class tagBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return ClipRRect(
       borderRadius: BorderRadius.circular(15),
       child: Row(
@@ -56,7 +55,7 @@ class tagBarItem extends StatelessWidget {
           Stack(
             children: [
               Container(
-                width: size.width / 3,
+                width: 120,
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
@@ -79,7 +78,7 @@ class tagBarItem extends StatelessWidget {
                       print("Tag item Cliked");
                     },
                     child: Container(
-                      width: size.width / 3,
+                      width: 20,
                     ),
                   ),
                 ),

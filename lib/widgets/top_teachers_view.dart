@@ -41,8 +41,8 @@ class TopTeachers extends StatelessWidget {
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 250,
             childAspectRatio: 3.5 / 2.5,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10),
         children: [
           TopTeacherCardItem(
             teacherName: "Berkay",
@@ -101,20 +101,11 @@ class TopTeacherCardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      height: 175,
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(29),
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 10),
-              blurRadius: 33,
-              color: golgeDefault,
-              spreadRadius: -25,
-            )
-          ]),
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
