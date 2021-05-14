@@ -4,7 +4,8 @@ import 'package:tfinder_app/constants.dart';
 class TagBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      margin: EdgeInsets.only(right: 10, bottom: 10),
       height: 50,
       child: ListView(
         // This next line does the trick.
@@ -59,7 +60,7 @@ class tagBarItem extends StatelessWidget {
                 padding: EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
-                  color: isActive ? turkuazDefault : widgetBackgroundColor,
+                  color: isActive ? turuncuDefault : widgetBackgroundColor,
                 ),
                 child: Align(
                   child: Text(

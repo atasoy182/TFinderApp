@@ -15,6 +15,7 @@ const widgetBackgroundColor = Color.fromRGBO(240, 240, 240, 1);
 const textDisabledColor = Color.fromRGBO(126, 126, 126, 1);
 const turkuazRenk = Color.fromRGBO(65, 202, 198, 1);
 final kBoxShadowColor = Color(0xFFD3D3D3).withOpacity(.84);
+const profilRenk = Color.fromRGBO(158, 146, 134, 1);
 
 const turkuazDefault = Color.fromRGBO(65, 202, 198, 1);
 const turkuazWithOpacity = Color.fromRGBO(65, 202, 198, 0.8);
