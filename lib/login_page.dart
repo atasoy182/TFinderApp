@@ -34,110 +34,120 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            animateBody = true;
-            return Navigator.of(context).pop();
-          },
-        ),
-        centerTitle: true,
-        title: Text(
-          "Hoş Geldiniz",
-          style: TextStyle(color: Colors.white),
-        ),
-        elevation: 0,
-        flexibleSpace: Container(
+      //appBar: buildAppBar(context),
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
           decoration: BoxDecoration(
               gradient: LinearGradient(begin: Alignment.topCenter, colors: [
             Color.fromRGBO(65, 202, 198, 1),
-            Color.fromRGBO(65, 202, 198, 0.7),
-            Color.fromRGBO(65, 202, 198, 0.5),
+            Color.fromRGBO(65, 202, 198, 0.8),
+            Color.fromRGBO(65, 202, 198, 0.6),
           ])),
-        ),
-      ),
-      body: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-          Color.fromRGBO(65, 202, 198, 1),
-          Color.fromRGBO(65, 202, 198, 0.8),
-          Color.fromRGBO(65, 202, 198, 0.6),
-        ])),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(
-                    height: 10,
-                  ),
-                  FadeAnimation(
-                      1,
-                      Center(
-                        child: _currentPageIndex == 0
-                            ? Text(
-                                "Oturum Açın",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 40),
-                              )
-                            : Text(
-                                "Kayıt Olun",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 40),
-                              ),
-                      ),
-                      animateBody),
-                  SizedBox(
-                    height: 5,
-                  ),
-                ],
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(60))),
-                child: SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 30, right: 30, top: 10),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height * 7 / 10,
-                      child: Stack(
-                        children: [
-                          pageDots(_currentPageIndex, context),
-                          PageView.builder(
-                            scrollDirection: Axis.horizontal,
-                            controller: _pageController,
-                            itemCount: 2,
-                            onPageChanged: (ix) {
-                              setState(() {
-                                _currentPageIndex = ix;
-                              });
-                            },
-                            itemBuilder: (ctx, ix) {
-                              if (ix == 1) animateBody = false;
-                              return ix == 0
-                                  ? loginPageBody()
-                                  : registerPageBody();
-                            },
-                          ),
-                        ],
+              Padding(
+                padding: EdgeInsets.all(15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FadeAnimation(
+                        1,
+                        Center(
+                          child: _currentPageIndex == 0
+                              ? Text(
+                                  "Oturum Açın",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 40),
+                                )
+                              : Text(
+                                  "Kayıt Olun",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 40),
+                                ),
+                        ),
+                        animateBody),
+                    SizedBox(
+                      height: 5,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 40),
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(bottom: 10, right: 10, left: 10),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(60))),
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 30, right: 30, top: 10),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 7 / 10,
+                        child: Stack(
+                          children: [
+                            pageDots(_currentPageIndex, context),
+                            PageView.builder(
+                              scrollDirection: Axis.horizontal,
+                              controller: _pageController,
+                              itemCount: 2,
+                              onPageChanged: (ix) {
+                                setState(() {
+                                  _currentPageIndex = ix;
+                                });
+                              },
+                              itemBuilder: (ctx, ix) {
+                                if (ix == 1) animateBody = false;
+                                return ix == 0
+                                    ? loginPageBody()
+                                    : registerPageBody();
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
+      ),
+    );
+  }
+
+  AppBar buildAppBar(BuildContext context) {
+    return AppBar(
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.black),
+        onPressed: () {
+          animateBody = true;
+          return Navigator.of(context).pop();
+        },
+      ),
+      centerTitle: true,
+      title: Text(
+        "Hoş Geldiniz",
+        //style: TextStyle(color: Colors.white),
+      ),
+      elevation: 0,
+      flexibleSpace: Container(
+        color: Colors.white,
+//          decoration: BoxDecoration(
+//              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+//            Color.fromRGBO(65, 202, 198, 1),
+//            Color.fromRGBO(65, 202, 198, 0.7),
+//            Color.fromRGBO(65, 202, 198, 0.5),
+//          ])),
       ),
     );
   }

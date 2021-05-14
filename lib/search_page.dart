@@ -12,56 +12,10 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
-            brightness: Brightness.light,
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-                Color.fromRGBO(65, 202, 198, 1),
-                Color.fromRGBO(65, 202, 198, 0.7),
-                Color.fromRGBO(65, 202, 198, 0.5),
-              ])),
-            ),
-            title: Text(
-              "Bul",
-              style: TextStyle(color: Colors.white),
-            ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
-              onPressed: () {
-                return Navigator.of(context).pop();
-              },
-            ),
-            floating: true,
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.search_sharp,
-                  color: Colors.white,
-                  size: 32,
-                ),
-                onPressed: () {},
-              ),
-              Container(
-                margin: EdgeInsets.only(right: 10),
-                child: IconButton(
-                  icon: Icon(
-                    Icons.filter_list,
-                    color: Colors.white,
-                    size: 35,
-                  ),
-                  onPressed: () {},
-                ),
-              ),
-            ],
-          ),
-          SliverToBoxAdapter(
-              child:
-                  Container(margin: EdgeInsets.all(15), child: TopTeachers())),
+          buildSliverAppBar(context),
           SliverToBoxAdapter(
               child: Container(
                   margin: EdgeInsets.only(top: 15, left: 15, right: 15),
@@ -76,6 +30,53 @@ class _SearchPageState extends State<SearchPage> {
           ),
         ],
       ),
+    );
+  }
+
+  SliverAppBar buildSliverAppBar(BuildContext context) {
+    return SliverAppBar(
+      brightness: Brightness.light,
+      flexibleSpace: Container(
+        color: Colors.white,
+//            decoration: BoxDecoration(
+//                gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+//              Color.fromRGBO(65, 202, 198, 1),
+//              Color.fromRGBO(65, 202, 198, 0.7),
+//              Color.fromRGBO(65, 202, 198, 0.5),
+//            ])),
+      ),
+      title: Text(
+        "Bul",
+        style: TextStyle(color: Colors.black),
+      ),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back, color: Colors.black),
+        onPressed: () {
+          return Navigator.of(context).pop();
+        },
+      ),
+      floating: true,
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.search_sharp,
+            color: Colors.black,
+            size: 32,
+          ),
+          onPressed: () {},
+        ),
+        Container(
+          margin: EdgeInsets.only(right: 10),
+          child: IconButton(
+            icon: Icon(
+              Icons.filter_list,
+              color: Colors.black,
+              size: 35,
+            ),
+            onPressed: () {},
+          ),
+        ),
+      ],
     );
   }
 }
