@@ -8,20 +8,39 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 20),
-      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-      decoration: BoxDecoration(
-        color: widgetBackgroundColor,
-        borderRadius: BorderRadius.circular(29.5),
-      ),
-      child: TextField(
-        decoration: InputDecoration(
-          hintText: "Ara",
-          icon: Icon(Icons.search),
-          border: InputBorder.none,
+    return Row(
+      children: [
+        Container(
+          width: 270,
+          margin: EdgeInsets.symmetric(vertical: 5),
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          decoration: BoxDecoration(
+            color: widgetBackgroundColor,
+            borderRadius: BorderRadius.circular(29.5),
+          ),
+          child: TextFormField(
+            cursorColor: turuncuDefault,
+            decoration: InputDecoration(
+              hintText: "Ara",
+              icon: Icon(
+                Icons.search,
+                color: turuncuDefault,
+              ),
+              border: InputBorder.none,
+            ),
+          ),
         ),
-      ),
+        Container(
+          child: IconButton(
+            icon: Icon(
+              Icons.filter_list,
+              color: Colors.black,
+              size: 35,
+            ),
+            onPressed: () {},
+          ),
+        ),
+      ],
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
 import 'package:tfinder_app/widgets/teaher_list_view.dart';
 
@@ -80,22 +81,28 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        buildSliverAppBar(context),
-        SliverToBoxAdapter(
-            child: Container(
-                margin: EdgeInsets.only(top: 5, left: 15, right: 15),
-                child: TagBar())),
-        SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return TeacherListItem(index: index);
-            },
-            childCount: 1000, // 1000 list items
+    return SafeArea(
+      child: CustomScrollView(
+        slivers: [
+          //buildSliverAppBar(context),
+          SliverToBoxAdapter(
+              child: Container(
+                  margin: EdgeInsets.only(top: 5, left: 15, right: 25),
+                  child: SearchBar())),
+          SliverToBoxAdapter(
+              child: Container(
+                  margin: EdgeInsets.only(top: 5, left: 15, right: 15),
+                  child: TagBar())),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return TeacherListItem(index: index);
+              },
+              childCount: 1000, // 1000 list items
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
