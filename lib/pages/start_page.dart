@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
-import 'package:tfinder_app/login_page.dart';
+import 'file:///D:/Flutter_uygulamalari/gitApps/tfinder_app/lib/pages/login_page.dart';
 
 class StartPage extends StatefulWidget {
   @override

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
-import 'package:tfinder_app/search_page.dart';
+import 'file:///D:/Flutter_uygulamalari/gitApps/tfinder_app/lib/pages/search_page.dart';
 import 'package:tfinder_app/widgets/base_button.dart';
 
 class LoginPage extends StatefulWidget {

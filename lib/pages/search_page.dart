@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/pages/request_page.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
 import 'package:tfinder_app/widgets/teaher_list_view.dart';
@@ -14,11 +15,8 @@ class _SearchPageState extends State<SearchPage> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
-    HomePage(),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
+    SearchPageBody(),
+    RequestPage(),
     Text(
       'Index 2: School',
       style: optionStyle,
@@ -73,12 +71,12 @@ class _SearchPageState extends State<SearchPage> {
   }
 }
 
-class HomePage extends StatefulWidget {
+class SearchPageBody extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _SearchPageBodyState createState() => _SearchPageBodyState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _SearchPageBodyState extends State<SearchPageBody> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
