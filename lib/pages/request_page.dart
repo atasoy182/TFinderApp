@@ -40,7 +40,34 @@ class _RequestPageState extends State<RequestPage> {
           child: CustomScrollView(slivers: [
             SliverToBoxAdapter(
                 child: Container(
-                    margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                    margin: EdgeInsets.only(top: 5, left: 15, right: 0),
+                    height: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Ders İstekleri",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        Container(
+                          //decoration: BoxDecoration(border: Border.all()),
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              Icons.filter_list,
+                              color: turkuazDefault,
+                              size: 35,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
+                    ))),
+            SliverToBoxAdapter(
+                child: Container(
+                    margin: EdgeInsets.only(left: 5, right: 5),
                     child: TagBar(
                       pageIndex: 1,
                       tagMargin:
