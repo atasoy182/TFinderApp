@@ -57,7 +57,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   width: double.infinity,
                   child: ChewieVideoPlayer(
                     videoUrl:
-                        "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4",
+                        "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
                   ))),
         ]),
       ),
