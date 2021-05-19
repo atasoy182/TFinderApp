@@ -17,6 +17,14 @@ const turkuazRenk = Color.fromRGBO(65, 202, 198, 1);
 final kBoxShadowColor = Color(0xFFD3D3D3).withOpacity(.84);
 const profilRenk = Color.fromRGBO(158, 146, 134, 1);
 
+const yesilDefault = Color.fromRGBO(116, 184, 22, 1);
+const yesil1 = Color.fromRGBO(192, 235, 117, 1);
+const yesil2 = Color.fromRGBO(148, 216, 45, 1);
+const yesil3 = Color.fromRGBO(130, 201, 30, 1);
+const yesil4 = Color.fromRGBO(116, 184, 22, 1);
+const yesil5 = Color.fromRGBO(102, 168, 15, 1);
+const yesil6 = Color.fromRGBO(92, 148, 13, 1);
+
 const turkuazDefault = Color.fromRGBO(65, 202, 198, 1);
 const turkuazWithOpacity = Color.fromRGBO(65, 202, 198, 0.8);
 const turkuazWithOpacity2 = Color.fromRGBO(65, 202, 198, 0.6);

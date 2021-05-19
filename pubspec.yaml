@@ -31,6 +31,14 @@ dependencies:
   simple_animations: ^1.3.3
   cached_network_image: any
   material_design_icons_flutter: any
+  video_player: ^2.0.0
+  chewie: ^1.0.0
+#  video_player:
+#    git:
+#      url: https://github.com/atasoy182/plugins
+#      ref: caching
+#      path: packages/video_player/video_player
+
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/messages_page.dart';
+import 'package:tfinder_app/pages/profile_page.dart';
 import 'package:tfinder_app/pages/request_page.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
@@ -19,10 +20,7 @@ class _SearchPageState extends State<SearchPage> {
     SearchPageBody(),
     RequestPage(),
     MessagePage(),
-    Text(
-      'Index 3: Settings',
-      style: optionStyle,
-    ),
+    ProfilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -58,7 +56,7 @@ class _SearchPageState extends State<SearchPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profilim',
-            backgroundColor: profilRenk,
+            backgroundColor: yesilDefault,
           ),
         ],
         currentIndex: _selectedIndex,
