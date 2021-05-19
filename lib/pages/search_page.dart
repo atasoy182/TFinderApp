@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/pages/messages_page.dart';
 import 'package:tfinder_app/pages/request_page.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
@@ -17,10 +18,7 @@ class _SearchPageState extends State<SearchPage> {
   static List<Widget> _widgetOptions = <Widget>[
     SearchPageBody(),
     RequestPage(),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
+    MessagePage(),
     Text(
       'Index 3: Settings',
       style: optionStyle,

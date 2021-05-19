@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 
@@ -135,7 +136,7 @@ class TeacherListItem extends StatelessWidget {
       alignment: Alignment.centerLeft,
       child: CircleAvatar(
           radius: 60,
-          backgroundImage: NetworkImage(
+          backgroundImage: CachedNetworkImageProvider(
               "https://monteluke.com.au/wp-content/gallery/linkedin-profile-pictures/9.JPG")),
     );
   }

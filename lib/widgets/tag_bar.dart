@@ -8,7 +8,7 @@ class TagBar extends StatelessWidget {
   const TagBar(
       {Key key,
       @required this.pageIndex,
-      this.tagMargin = const EdgeInsets.only(right: 10, bottom: 10)})
+      this.tagMargin = const EdgeInsets.only(right: 10, bottom: 5)})
       : super(key: key);
 
   @override

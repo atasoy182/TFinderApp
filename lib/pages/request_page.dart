@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +41,7 @@ class _RequestPageState extends State<RequestPage> {
           child: CustomScrollView(slivers: [
             SliverToBoxAdapter(
                 child: Container(
-                    margin: EdgeInsets.only(top: 5, left: 15, right: 0),
+                    margin: EdgeInsets.only(top: 5, left: 5, right: 0),
                     height: 30,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -89,7 +90,7 @@ class _RequestPageState extends State<RequestPage> {
   Widget buildList(List<String> items) {
     return SliverGrid.count(
       crossAxisCount: 1,
-      childAspectRatio: 4.2 / 1.4,
+      childAspectRatio: 4 / 1.4,
       children: List.generate(100, (index) {
         return Card(
           margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
@@ -110,7 +111,7 @@ class _RequestPageState extends State<RequestPage> {
         flex: 2,
         child: CircleAvatar(
             radius: 35,
-            backgroundImage: NetworkImage(
+            backgroundImage: CachedNetworkImageProvider(
                 "https://pixomatic.us/blog/wp-content/uploads/2019/11/pixomatic_1572877223091.png")),
       ),
       SizedBox(
@@ -140,7 +141,7 @@ class _RequestPageState extends State<RequestPage> {
                 height: 5,
               ),
               Text(
-                "YDS DERSİ ALMAK İSTİYORUMYDS DERSİ ALMAK İSTİYORUMYDS DERSİ ALMAK İSTİYORUMYDS DERSİ ALMAK İSTİYORUMYDS DERSİ ALMAK İSTİYORUM", //style: TextStyle(fontWeight: FontWeight.bold),
+                "İngilizce hazırlık okuyorum. Hazırlık atlama sınavı için ders almak istiyorum.", //style: TextStyle(fontWeight: FontWeight.bold),
                 maxLines: 3,
               ),
             ],

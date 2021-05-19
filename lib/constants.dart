@@ -23,6 +23,8 @@ const turkuazWithOpacity2 = Color.fromRGBO(65, 202, 198, 0.6);
 const turkuazWithOpacity3 = Color.fromRGBO(65, 202, 198, 0.4);
 const turkuazWithOpacity4 = Color.fromRGBO(65, 202, 198, 0.2);
 
+const morDefault = Colors.purple;
+
 const MaterialColor turkuazMaterialColor = const MaterialColor(
   0xFF41CAC6,
   const <int, Color>{
