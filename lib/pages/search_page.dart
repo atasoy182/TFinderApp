@@ -53,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
             backgroundColor: turkuazDefault,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.comment),
+            icon: Icon(Icons.message),
             label: 'Mesajlaşma',
             backgroundColor: Colors.purple,
           ),
@@ -90,7 +90,9 @@ class _SearchPageBodyState extends State<SearchPageBody> {
           SliverToBoxAdapter(
               child: Container(
                   margin: EdgeInsets.only(top: 5, left: 15, right: 15),
-                  child: TagBar())),
+                  child: TagBar(
+                    pageIndex: 0,
+                  ))),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
