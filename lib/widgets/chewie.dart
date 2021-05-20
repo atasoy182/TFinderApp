@@ -70,8 +70,7 @@ class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
                 CircularProgressIndicator(
                   backgroundColor: Color.fromRGBO(116, 184, 22, 1),
                 ),
-                SizedBox(height: 20),
-                Text('Loading'),
+                Text('Yükleniyor'),
               ],
             ),
     );
