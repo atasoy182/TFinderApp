@@ -1,5 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:tfinder_app/pages/profile_page_tabs/detail_tab_page.dart';
+import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
+import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
 import 'package:tfinder_app/widgets/video_player.dart';
 import 'package:video_player/video_player.dart';
@@ -17,7 +20,7 @@ class _ProfilePageState extends State<ProfilePage> {
     String _imageUrl =
         'https://nadiazheng.com/wp-content/uploads/2015/12/Montreal-personal-branding-linkedin-profile-professional-headshot-by-nadia-zheng-800x1000.jpg';
     return DefaultTabController(
-      length: 2,
+      length: 3,
       child: Scaffold(
         body: SafeArea(
           child: Container(
@@ -47,7 +50,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             padding: EdgeInsets.all(0),
                             icon: Icon(
                               Icons.settings,
-                              color: yesilDefault,
+                              color: turkuazDefault,
                               size: 35,
                             ),
                             onPressed: () {},
@@ -59,18 +62,20 @@ class _ProfilePageState extends State<ProfilePage> {
                   height: 35,
                   child: TabBar(
                     tabs: [
-                      Tab(text: "Call"),
-                      Tab(text: "Message"),
+                      Tab(text: "Genel"),
+                      Tab(text: "Detay"),
+                      Tab(text: "Program"),
                     ],
                   ),
                 ),
                 Expanded(
                   child: TabBarView(
                     children: [
-                      ProfileTabPage1(
+                      ProfileGeneralTab(
                         imageUrl: _imageUrl,
                       ),
-                      Text(" Hİ"),
+                      ProfileDetailTab(),
+                      ProfileProgramTab(),
                     ],
                   ),
                 ),
@@ -80,67 +85,5 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
-  }
-}
-
-class ProfileTabPage1 extends StatelessWidget {
-  const ProfileTabPage1({
-    Key key,
-    @required String imageUrl,
-  })  : _imageUrl = imageUrl,
-        super(key: key);
-
-  final String _imageUrl;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomScrollView(slivers: [
-      SliverToBoxAdapter(
-        child: Container(
-          //color: Colors.red,
-          height: 200,
-          width: double.infinity,
-          child: ChewieVideoPlayer(
-            videoUrl:
-                "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-          ),
-        ),
-      ),
-      SliverToBoxAdapter(
-        child: Container(
-          //color: Colors.red,
-          height: 80,
-          width: 100,
-          child: Row(
-            children: [
-              Expanded(
-                flex: 2,
-                child: CircleAvatar(
-                    radius: 50,
-                    backgroundImage: CachedNetworkImageProvider(_imageUrl)),
-              ),
-              Expanded(flex: 8, child: Container()),
-            ],
-          ),
-        ),
-      ),
-      SliverGrid.count(
-        crossAxisCount: 1,
-        childAspectRatio: 4 / 1.4,
-        children: List.generate(100, (index) {
-          return Card(
-            margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-            elevation: 1,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              height: 50,
-              color: Colors.green,
-            ),
-          );
-        }),
-      ),
-    ]);
   }
 }

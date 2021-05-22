@@ -47,7 +47,7 @@ class _SearchPageState extends State<SearchPage> {
               size: 20,
             ),
             label: 'Talepler',
-            backgroundColor: turkuazDefault,
+            backgroundColor: yesilDefault,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.location_on),
@@ -57,7 +57,7 @@ class _SearchPageState extends State<SearchPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profilim',
-            backgroundColor: yesilDefault,
+            backgroundColor: turkuazDefault,
           ),
         ],
         currentIndex: _selectedIndex,

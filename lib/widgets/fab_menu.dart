@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:tfinder_app/constants.dart';
+
 @immutable
 class ExampleExpandableFab extends StatelessWidget {
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
@@ -134,7 +136,7 @@ class _ExpandableFabState extends State<ExpandableFab>
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.close,
-                color: Theme.of(context).primaryColor,
+                color: yesilDefault,
               ),
             ),
           ),
@@ -179,6 +181,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
+            backgroundColor: yesilDefault,
             onPressed: _toggle,
             child: const Icon(
               Icons.create,
@@ -249,16 +252,13 @@ class ActionButton extends StatelessWidget {
     return Material(
       shape: const CircleBorder(),
       clipBehavior: Clip.antiAlias,
-      color: theme.accentColor,
+      color: yesilDefault,
       elevation: 4.0,
-      child: IconTheme.merge(
-        data: theme.accentIconTheme,
-        child: IconButton(
-          padding: EdgeInsets.all(0),
-          onPressed: onPressed,
-          icon: icon,
-          color: Colors.white,
-        ),
+      child: IconButton(
+        padding: EdgeInsets.all(0),
+        onPressed: onPressed,
+        icon: icon,
+        color: Colors.white,
       ),
     );
   }

@@ -69,7 +69,7 @@ class tagBarItem extends StatelessWidget {
     if (pageIndex == 0) {
       _activeColor = turuncuDefault;
     } else if (pageIndex == 1) {
-      _activeColor = turkuazDefault;
+      _activeColor = yesilDefault;
     }
 
     return ClipRRect(
