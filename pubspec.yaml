@@ -33,6 +33,7 @@ dependencies:
   material_design_icons_flutter: any
   video_player: ^2.0.0
   chewie: ^1.0.0
+  google_maps_flutter: ^2.0.5
 #  video_player:
 #    git:
 #      url: https://github.com/atasoy182/plugins

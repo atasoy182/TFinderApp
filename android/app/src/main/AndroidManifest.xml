@@ -3,6 +3,8 @@
    <application
         android:label="tfinder_app"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDB3QX8D6hiHg7rUQVHMvs_CsoMNrletRg"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

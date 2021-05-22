@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/pages/locations_page.dart';
 import 'package:tfinder_app/pages/messages_page.dart';
 import 'package:tfinder_app/pages/profile_page.dart';
 import 'package:tfinder_app/pages/request_page.dart';
@@ -19,7 +20,7 @@ class _SearchPageState extends State<SearchPage> {
   static List<Widget> _widgetOptions = <Widget>[
     SearchPageBody(),
     RequestPage(),
-    MessagePage(),
+    LocationsPage(),
     ProfilePage(),
   ];
 
@@ -49,8 +50,8 @@ class _SearchPageState extends State<SearchPage> {
             backgroundColor: turkuazDefault,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: 'Mesajlaşma',
+            icon: Icon(Icons.location_on),
+            label: 'Yakınımda',
             backgroundColor: Colors.purple,
           ),
           BottomNavigationBarItem(

@@ -19,18 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: TabBar(
-          tabs: [
-            Tab(
-                icon: Icon(Icons.call,
-                    color: const Color(0xFF0E3311).withOpacity(0)),
-                text: "Call"),
-            Tab(
-                icon: Icon(Icons.message,
-                    color: const Color(0xFF0E3311).withOpacity(0)),
-                text: "Message"),
-          ],
-        ),
         body: SafeArea(
           child: Container(
             margin: EdgeInsets.only(
@@ -38,12 +26,54 @@ class _ProfilePageState extends State<ProfilePage> {
               right: 5,
               top: 5,
             ),
-            child: TabBarView(
+            child: Column(
               children: [
-                ProfileTabPage1(
-                  imageUrl: _imageUrl,
+                Container(
+                    margin:
+                        EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
+                    height: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Profilim",
+                          style: TextStyle(fontSize: 24),
+                        ),
+                        Container(
+                          //decoration: BoxDecoration(border: Border.all()),
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              Icons.settings,
+                              color: yesilDefault,
+                              size: 35,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
+                    )),
+                SizedBox(
+                  height: 35,
+                  child: TabBar(
+                    tabs: [
+                      Tab(text: "Call"),
+                      Tab(text: "Message"),
+                    ],
+                  ),
                 ),
-                Text(" Hİ"),
+                Expanded(
+                  child: TabBarView(
+                    children: [
+                      ProfileTabPage1(
+                        imageUrl: _imageUrl,
+                      ),
+                      Text(" Hİ"),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -65,33 +95,6 @@ class ProfileTabPage1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
-      SliverToBoxAdapter(
-          child: Container(
-              margin: EdgeInsets.only(top: 5, left: 5, right: 5, bottom: 5),
-              height: 30,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    "Profilim",
-                    style: TextStyle(fontSize: 24),
-                  ),
-                  Container(
-                    //decoration: BoxDecoration(border: Border.all()),
-                    padding: EdgeInsets.only(bottom: 20),
-                    child: IconButton(
-                      padding: EdgeInsets.all(0),
-                      icon: Icon(
-                        Icons.settings,
-                        color: yesilDefault,
-                        size: 35,
-                      ),
-                      onPressed: () {},
-                    ),
-                  ),
-                ],
-              ))),
       SliverToBoxAdapter(
         child: Container(
           //color: Colors.red,
@@ -120,7 +123,24 @@ class ProfileTabPage1 extends StatelessWidget {
             ],
           ),
         ),
-      )
+      ),
+      SliverGrid.count(
+        crossAxisCount: 1,
+        childAspectRatio: 4 / 1.4,
+        children: List.generate(100, (index) {
+          return Card(
+            margin: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+            elevation: 1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Container(
+              height: 50,
+              color: Colors.green,
+            ),
+          );
+        }),
+      ),
     ]);
   }
 }
