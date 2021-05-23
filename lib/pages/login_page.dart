@@ -38,12 +38,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          decoration: BoxDecoration(
-              gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-            Color.fromRGBO(65, 202, 198, 1),
-            Color.fromRGBO(65, 202, 198, 0.8),
-            Color.fromRGBO(65, 202, 198, 0.6),
-          ])),
+          decoration: BoxDecoration(gradient: defaultTurkuazGradient),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -107,8 +102,8 @@ class _LoginPageState extends State<LoginPage> {
                               itemBuilder: (ctx, ix) {
                                 if (ix == 1) animateBody = false;
                                 return ix == 0
-                                    ? loginPageBody()
-                                    : registerPageBody();
+                                    ? LoginPageBody()
+                                    : RegisterPageBody();
                               },
                             ),
                           ],
@@ -153,14 +148,13 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-class loginPageBody extends StatefulWidget {
+class LoginPageBody extends StatefulWidget {
   @override
-  _loginPageBodyState createState() => _loginPageBodyState();
+  _LoginPageBodyState createState() => _LoginPageBodyState();
 }
 
-class _loginPageBodyState extends State<loginPageBody> {
+class _LoginPageBodyState extends State<LoginPageBody> {
   bool _obscureText = true;
-  String _password;
   final _formLoginPasswordKey = GlobalKey<FormState>();
   final _formLoginEmailKey = GlobalKey<FormState>();
 
@@ -364,14 +358,14 @@ class _loginPageBodyState extends State<loginPageBody> {
   }
 }
 
-class registerPageBody extends StatefulWidget {
+class RegisterPageBody extends StatefulWidget {
   @override
-  _registerPageBodyState createState() => _registerPageBodyState();
+  _RegisterPageBodyState createState() => _RegisterPageBodyState();
 }
 
-class _registerPageBodyState extends State<registerPageBody> {
-  final _formRegisterPasswordKey = GlobalKey<FormState>();
-  final _formRegisterEmailKey = GlobalKey<FormState>();
+class _RegisterPageBodyState extends State<RegisterPageBody> {
+//  final _formRegisterPasswordKey = GlobalKey<FormState>();
+//  final _formRegisterEmailKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {

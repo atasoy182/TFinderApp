@@ -72,10 +72,19 @@ class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
-                  CircularProgressIndicator(
-                    backgroundColor: Color.fromRGBO(116, 184, 22, 1),
+                  SizedBox(
+                    height: 10,
                   ),
-                  Text('Yükleniyor'),
+                  CircularProgressIndicator(
+                    backgroundColor: Colors.white,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text(
+                    'Yükleniyor',
+                    //style: TextStyle(color: Colors.white),
+                  ),
                 ],
               ),
             ),

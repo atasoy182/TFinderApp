@@ -1,9 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tfinder_app/constants.dart';
 
-Widget TopTeacherHeader(BuildContext context) {
+Widget methodTopTeacherHeader(BuildContext context) {
   return Container(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -26,14 +25,14 @@ class TopTeachers extends StatelessWidget {
       //color: Colors.grey,
       child: Column(
         children: [
-          TopTeacherHeader(context),
-          TopTeacherCard(),
+          methodTopTeacherHeader(context),
+          methodTopTeacherCard(),
         ],
       ),
     );
   }
 
-  Widget TopTeacherCard() {
+  Widget methodTopTeacherCard() {
     return SizedBox(
       height: 175,
       child: GridView(

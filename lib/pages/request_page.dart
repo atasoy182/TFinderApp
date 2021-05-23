@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/fab_menu.dart';
 import 'package:tfinder_app/widgets/tag_bar.dart';
@@ -16,9 +15,6 @@ class _RequestPageState extends State<RequestPage> {
   void dispose() {
     super.dispose();
   }
-
-  @override
-  void initState() {}
 
   @override
   Widget build(BuildContext context) {

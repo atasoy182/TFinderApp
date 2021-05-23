@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/locations_page.dart';
-import 'package:tfinder_app/pages/messages_page.dart';
 import 'package:tfinder_app/pages/profile_page.dart';
 import 'package:tfinder_app/pages/request_page.dart';
 import 'package:tfinder_app/widgets/searh_bar.dart';
@@ -15,8 +14,6 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static List<Widget> _widgetOptions = <Widget>[
     SearchPageBody(),
     RequestPage(),

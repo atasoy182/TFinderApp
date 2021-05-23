@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
-import 'file:///D:/Flutter_uygulamalari/gitApps/tfinder_app/lib/pages/start_page.dart';
+import 'package:tfinder_app/pages/start_page.dart';
 
 void main() {
   runApp(MyApp());

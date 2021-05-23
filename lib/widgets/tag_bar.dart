@@ -20,27 +20,27 @@ class TagBar extends StatelessWidget {
         // This next line does the trick.
         scrollDirection: Axis.horizontal,
         children: <Widget>[
-          tagBarItem(
+          TagBarItem(
             tagText: "İngilizce",
             isActive: true,
             pageIndex: pageIndex,
           ),
-          tagBarItem(
+          TagBarItem(
             tagText: "Matematik",
             isActive: false,
             pageIndex: pageIndex,
           ),
-          tagBarItem(
+          TagBarItem(
             tagText: "Almanca",
             isActive: false,
             pageIndex: pageIndex,
           ),
-          tagBarItem(
+          TagBarItem(
             tagText: "Programlama",
             isActive: false,
             pageIndex: pageIndex,
           ),
-          tagBarItem(
+          TagBarItem(
             tagText: "Fizik",
             isActive: false,
             pageIndex: pageIndex,
@@ -51,11 +51,11 @@ class TagBar extends StatelessWidget {
   }
 }
 
-class tagBarItem extends StatelessWidget {
+class TagBarItem extends StatelessWidget {
   final String tagText;
   final bool isActive;
   final int pageIndex;
-  const tagBarItem({
+  const TagBarItem({
     Key key,
     @required this.tagText,
     this.isActive = false,

@@ -48,3 +48,10 @@ const MaterialColor turkuazMaterialColor = const MaterialColor(
     900: Color.fromRGBO(65, 202, 198, 1),
   },
 );
+
+const defaultTurkuazGradient =
+    const LinearGradient(begin: Alignment.topCenter, colors: [
+  Color.fromRGBO(65, 202, 198, 1),
+  Color.fromRGBO(65, 202, 198, 0.8),
+  Color.fromRGBO(65, 202, 198, 0.6),
+]);
