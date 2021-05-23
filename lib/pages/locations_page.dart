@@ -26,7 +26,7 @@ class _LocationsPageState extends State<LocationsPage> {
           Container(
               child: Container(
                   margin:
-                      EdgeInsets.only(top: 10, left: 5, right: 0, bottom: 5),
+                      EdgeInsets.only(top: 10, left: 10, right: 0, bottom: 5),
                   height: 30,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +43,7 @@ class _LocationsPageState extends State<LocationsPage> {
                           padding: EdgeInsets.all(0),
                           icon: Icon(
                             Icons.list,
-                            color: morDefault,
+                            color: turkuazDefault,
                             size: 35,
                           ),
                           onPressed: () {},
@@ -53,7 +53,7 @@ class _LocationsPageState extends State<LocationsPage> {
                   ))),
           Container(
               child: Container(
-                  margin: EdgeInsets.only(top: 5, left: 5, right: 5),
+                  margin: EdgeInsets.only(top: 5, left: 10, right: 10),
                   height: _size.height - 160,
                   child: MapSample())),
         ],

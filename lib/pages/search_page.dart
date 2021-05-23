@@ -49,12 +49,12 @@ class _SearchPageState extends State<SearchPage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.location_on),
             label: 'Yakınımda',
-            backgroundColor: Colors.purple,
+            backgroundColor: turkuazDefault,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profilim',
-            backgroundColor: turkuazDefault,
+            backgroundColor: morDefault,
           ),
         ],
         currentIndex: _selectedIndex,

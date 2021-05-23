@@ -46,7 +46,9 @@ class ProfileGeneralTab extends StatelessWidget {
             ),
             child: Container(
               height: 50,
-              color: yesil6,
+              child: Center(
+                child: Text("Some text here"),
+              ),
             ),
           );
         }),

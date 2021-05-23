@@ -83,7 +83,7 @@ class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
                   ),
                   Text(
                     'Yükleniyor',
-                    //style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.white),
                   ),
                 ],
               ),

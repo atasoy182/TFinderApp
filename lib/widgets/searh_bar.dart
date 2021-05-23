@@ -34,7 +34,7 @@ class SearchBar extends StatelessWidget {
           child: IconButton(
             icon: Icon(
               Icons.filter_list,
-              color: Colors.black,
+              color: turuncuDefault,
               size: 35,
             ),
             onPressed: () {},

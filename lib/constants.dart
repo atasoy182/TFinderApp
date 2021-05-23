@@ -31,7 +31,7 @@ const turkuazWithOpacity2 = Color.fromRGBO(65, 202, 198, 0.6);
 const turkuazWithOpacity3 = Color.fromRGBO(65, 202, 198, 0.4);
 const turkuazWithOpacity4 = Color.fromRGBO(65, 202, 198, 0.2);
 
-const morDefault = Colors.purple;
+const morDefault = Color.fromRGBO(82, 67, 101, 1);
 
 const MaterialColor turkuazMaterialColor = const MaterialColor(
   0xFF41CAC6,
@@ -49,9 +49,30 @@ const MaterialColor turkuazMaterialColor = const MaterialColor(
   },
 );
 
+const MaterialColor morMaterialColor = const MaterialColor(
+  0xFF524365,
+  const <int, Color>{
+    50: Color.fromRGBO(82, 67, 101, .1),
+    100: Color.fromRGBO(82, 67, 101, .2),
+    200: Color.fromRGBO(82, 67, 101, .3),
+    300: Color.fromRGBO(82, 67, 101, .4),
+    400: Color.fromRGBO(82, 67, 101, .5),
+    500: Color.fromRGBO(82, 67, 101, .6),
+    600: Color.fromRGBO(82, 67, 101, .7),
+    700: Color.fromRGBO(82, 67, 101, .8),
+    800: Color.fromRGBO(82, 67, 101, .9),
+    900: Color.fromRGBO(82, 67, 101, 1),
+  },
+);
+
 const defaultTurkuazGradient =
     const LinearGradient(begin: Alignment.topCenter, colors: [
   Color.fromRGBO(65, 202, 198, 1),
   Color.fromRGBO(65, 202, 198, 0.8),
   Color.fromRGBO(65, 202, 198, 0.6),
 ]);
+
+/// Construct a color from a hex code string, of the format #RRGGBB.
+Color hexToColor(String code) {
+  return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
+}
