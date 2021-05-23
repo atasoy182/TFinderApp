@@ -58,20 +58,26 @@ class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
 
   @override
   Widget build(BuildContext context) {
+    var _size = MediaQuery.of(context).size;
+
     return Center(
       child: _chewieController != null &&
               _chewieController.videoPlayerController.value.isInitialized
           ? Chewie(
               controller: _chewieController,
             )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                CircularProgressIndicator(
-                  backgroundColor: Color.fromRGBO(116, 184, 22, 1),
-                ),
-                Text('Yükleniyor'),
-              ],
+          : Container(
+              height: 300,
+              width: _size.width,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  CircularProgressIndicator(
+                    backgroundColor: Color.fromRGBO(116, 184, 22, 1),
+                  ),
+                  Text('Yükleniyor'),
+                ],
+              ),
             ),
     );
   }
