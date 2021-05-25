@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tfinder_app/constants.dart';
@@ -13,6 +14,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  PageController _pageController = PageController(initialPage: 0);
+  int _currentPageIndex = 0;
+
   @override
   void initState() {
     super.initState();
@@ -21,6 +25,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void dispose() {
     super.dispose();
+    _pageController.dispose();
   }
 
   @override
@@ -32,7 +37,7 @@ class _ProfilePageState extends State<ProfilePage> {
         body: NestedScrollView(
           headerSliverBuilder: (context, value) {
             return [
-              buildSliverAppBarForProfilePage(_size),
+              buildSliverAppBarForProfilePage(_size, _pageController),
             ];
           },
           body: buildBodyForProfilePage(),
@@ -64,14 +69,17 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  SliverAppBar buildSliverAppBarForProfilePage(Size _size) {
-    String _ronaldoUrl =
-        "https://besthqwallpapers.com/Uploads/8-1-2019/76914/thumb2-cristiano-ronaldo-portrait-photo-shoot-portuguese-football-player-smile.jpg";
+  SliverAppBar buildSliverAppBarForProfilePage(
+      Size _size, PageController pageController) {
+    _pageController = pageController;
+    String _ppUrl =
+        "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
+
     return SliverAppBar(
         backgroundColor: morDefault,
         pinned: false,
         automaticallyImplyLeading: false,
-        expandedHeight: 250,
+        expandedHeight: 270,
         brightness: Brightness.dark,
         flexibleSpace: SafeArea(
           child: Container(
@@ -91,129 +99,28 @@ class _ProfilePageState extends State<ProfilePage> {
                 overscroll.disallowGlow();
                 return;
               },
-              child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  physics: PageScrollPhysics(),
-                  children: [
-                    Container(
-                      height: 220,
-                      width: _size.width,
-                      color: morDefault,
-//                      decoration: BoxDecoration(
-//                          color: morDefault,
-//                          borderRadius: BorderRadius.only(
-//                              bottomLeft: Radius.circular(25),
-//                              bottomRight: Radius.circular(25))),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 2,
-                            child: Container(
-                                child: Container(
-                                    margin: EdgeInsets.only(
-                                        top: 10, left: 10, right: 0, bottom: 5),
-                                    height: 30,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Profil",
-                                          style: TextStyle(
-                                              fontSize: 24,
-                                              color: Colors.white),
-                                        ),
-                                        Container(
-                                          //decoration: BoxDecoration(border: Border.all()),
-                                          padding: EdgeInsets.only(bottom: 20),
-                                          child: IconButton(
-                                            padding: EdgeInsets.all(0),
-                                            icon: Icon(
-                                              Icons.dehaze,
-                                              color: Colors.white,
-                                              size: 35,
-                                            ),
-                                            onPressed: () {},
-                                          ),
-                                        ),
-                                      ],
-                                    ))),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(16.0),
-                              child: CachedNetworkImage(
-                                imageUrl: _ronaldoUrl,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "Cristiano ronaldo",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 23,
-                                  fontFamily: "Raleway"),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Text(
-                              "Portekizce",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontFamily: "Raleway"),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 70,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      height: 220,
-                      width: _size.width,
-                      alignment: Alignment.center,
-                      color: morDefault,
-                      child: Column(
-                        children: [
-                          Expanded(
-                            flex: 7,
-                            child: Container(
-                              margin: EdgeInsets.only(top: 10),
-                              child: SizedBox(
-                                width: _size.width - 10,
-                                height: 200,
-                                child: ChewieVideoPlayer(
-                                  videoUrl:
-                                      "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-                                ),
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: SizedBox(
-                              height: 50,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ]),
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    scrollDirection: Axis.horizontal,
+                    controller: _pageController,
+                    itemCount: 2,
+                    onPageChanged: (ix) {
+                      setState(() {
+                        // TODO
+                        // Bütün sayfa set state olduğu için video tekrar yükleniyor. Provider ile çözülecek
+                        _currentPageIndex = ix;
+                      });
+                    },
+                    itemBuilder: (ctx, ix) {
+                      return ix == 0
+                          ? ProfilPageMainInfos(ppUrl: _ppUrl)
+                          : ProfilPageVideo();
+                    },
+                  ),
+                  pageDots(_currentPageIndex, context),
+                ],
+              ),
             ),
           ),
         ),
@@ -231,5 +138,198 @@ class _ProfilePageState extends State<ProfilePage> {
             Tab(text: "Program"),
           ],
         ));
+  }
+
+  Positioned pageDots(int currentPageIx, BuildContext context) {
+    double _pasifBoyut = 10;
+    double _aktifBoyut = 15;
+    int _currentPageIndex = currentPageIx;
+    return Positioned.fill(
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Container(
+          margin: EdgeInsets.only(bottom: 47),
+          child: _currentPageIndex == 0
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: _aktifBoyut,
+                      width: _aktifBoyut,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.white),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      height: _pasifBoyut,
+                      width: _pasifBoyut,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.grey),
+                    )
+                  ],
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: _pasifBoyut,
+                      width: _pasifBoyut,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.grey),
+                    ),
+                    SizedBox(
+                      width: 15,
+                    ),
+                    Container(
+                      height: _aktifBoyut,
+                      width: _aktifBoyut,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle, color: Colors.white),
+                    )
+                  ],
+                ),
+        ),
+      ),
+    );
+  }
+}
+
+class ProfilPageVideo extends StatelessWidget {
+  const ProfilPageVideo({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var _size = MediaQuery.of(context).size;
+
+    return Container(
+      height: 220,
+      width: _size.width,
+      alignment: Alignment.center,
+      color: morDefault,
+      child: Column(
+        children: [
+          Expanded(
+            flex: 7,
+            child: Container(
+              margin: EdgeInsets.only(top: 10),
+              child: SizedBox(
+                width: _size.width - 10,
+                height: 200,
+                child: ChewieVideoPlayer(
+                  videoUrl:
+                      "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: SizedBox(
+              height: 60,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ProfilPageMainInfos extends StatelessWidget {
+  const ProfilPageMainInfos({
+    Key key,
+    @required String ppUrl,
+  })  : _ppUrl = ppUrl,
+        super(key: key);
+
+  final String _ppUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    var _size = MediaQuery.of(context).size;
+
+    return Container(
+      height: 220,
+      width: _size.width,
+      color: morDefault,
+//                      decoration: BoxDecoration(
+//                          color: morDefault,
+//                          borderRadius: BorderRadius.only(
+//                              bottomLeft: Radius.circular(25),
+//                              bottomRight: Radius.circular(25))),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 2,
+            child: Container(
+                child: Container(
+                    margin:
+                        EdgeInsets.only(top: 10, left: 10, right: 0, bottom: 5),
+                    height: 40,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "Profil",
+                          style: TextStyle(fontSize: 24, color: Colors.white),
+                        ),
+                        Container(
+                          //decoration: BoxDecoration(border: Border.all()),
+                          padding: EdgeInsets.only(bottom: 20),
+                          child: IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              Icons.settings,
+                              color: Colors.white,
+                              size: 32,
+                            ),
+                            onPressed: () {},
+                          ),
+                        ),
+                      ],
+                    ))),
+          ),
+          Expanded(
+            flex: 5,
+            child: CircleAvatar(
+                radius: 50,
+                backgroundColor: Colors.white,
+                backgroundImage: CachedNetworkImageProvider(_ppUrl)),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              "Severus Snape",
+              style: TextStyle(
+                  color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(
+              " Karanlık Sanatlara Karşı Savunma",
+              style: TextStyle(color: Colors.white, fontFamily: "Raleway"),
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Text(
+              "Ankara",
+              style: TextStyle(color: Colors.white, fontFamily: "Raleway"),
+            ),
+          ),
+          SizedBox(
+            height: 70,
+          ),
+        ],
+      ),
+    );
   }
 }
