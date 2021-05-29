@@ -1,21 +1,59 @@
+import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/widgets/general_tab_widgets.dart';
 
-class ProfileGeneralTab extends StatelessWidget {
+class ProfileGeneralTab extends StatefulWidget {
+  @override
+  _ProfileGeneralTabState createState() => _ProfileGeneralTabState();
+}
+
+class _ProfileGeneralTabState extends State<ProfileGeneralTab> {
+  String _longString =
+      "When it comes to language, I use what is known in the applied linguistics field as the communicative approach, which simply means that communication is the end-goal of all language learning.My teaching philosophy is to help every student find their own motivation, needs and competencies in language learning. It is my job as a tutor to help students develop what is known as learner autonomy - taking ownership of one’s own learning - through goal-setting, self-assessment and self-reflection throughout the language learning process.For adults (age 16+), I offer lessons in general English that include work on all four language skills: speaking, listening, reading, writing. I use a digital coursebook as the basis of my general English curriculum to teach both lexis (vocabulary) and grammar within all four skills.For working professionals, I offer Business English lessons that begin with a detailed needs analysis of each learner's unique professional context to determine the language skills your job responsibilities require.For students taking the IELTS, TOEFL, TOEIC, Cambridge English exams, I offer exam prep lessons focusing on test-taking strategy and skills practice.Finally, I believe that language is a process of discovery, of your own skills and potential for connection with other people on this planet!Please do not hesitate to reach out with any questions or special requests :)";
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
-//      SliverToBoxAdapter(
-//        child: Container(
-//          //color: Colors.red,
-//          height: 200,
-//          width: double.infinity,
-//          child: ChewieVideoPlayer(
-//            videoUrl:
-//                "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-//          ),
-//        ),
-//      ),
+      SliverToBoxAdapter(
+        child: GeneralTabCard(
+          baslikText: "Hakkımda",
+          longString: _longString,
+          assetIconPath: "assets/images/about.png",
+        ),
+      ),
+      SliverToBoxAdapter(
+        child: GeneralTabCard(
+          baslikText: "Eğitim",
+          longString: _longString,
+          assetIconPath: "assets/images/graduate.png",
+        ),
+      ),
+//      ,
+    ]);
+  }
+}
+
+//SliverGrid.count(
+//        crossAxisCount: 1,
+//        childAspectRatio: 4 / 1.4,
+//        children: List.generate(100, (index) {
+//          return Card(
+//            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+//            elevation: 1,
+//            shape: RoundedRectangleBorder(
+//              borderRadius: BorderRadius.circular(20),
+//            ),
+//            child: Container(
+//              height: 50,
+//              child: Center(
+//                child: Text("Some text here"),
+//              ),
+//            ),
+//          );
+//        }),
+//      )
+
 //      SliverToBoxAdapter(
 //        child: Container(
 //          //color: Colors.red,
@@ -34,25 +72,3 @@ class ProfileGeneralTab extends StatelessWidget {
 //          ),
 //        ),
 //      ),
-      SliverGrid.count(
-        crossAxisCount: 1,
-        childAspectRatio: 4 / 1.4,
-        children: List.generate(100, (index) {
-          return Card(
-            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-            elevation: 1,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              height: 50,
-              child: Center(
-                child: Text("Some text here"),
-              ),
-            ),
-          );
-        }),
-      ),
-    ]);
-  }
-}

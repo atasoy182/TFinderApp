@@ -34,6 +34,7 @@ dependencies:
   video_player: ^2.0.0
   chewie: ^1.0.0
   google_maps_flutter: ^2.0.5
+  expand_widget: ^2.1.0
 #  video_player:
 #    git:
 #      url: https://github.com/atasoy182/plugins

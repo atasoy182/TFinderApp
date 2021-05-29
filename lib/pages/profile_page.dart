@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/pages/locations_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/detail_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
@@ -79,7 +80,7 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: morDefault,
         pinned: false,
         automaticallyImplyLeading: false,
-        expandedHeight: 270,
+        expandedHeight: 300,
         brightness: Brightness.dark,
         flexibleSpace: SafeArea(
           child: Container(
@@ -104,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   PageView.builder(
                     scrollDirection: Axis.horizontal,
                     controller: _pageController,
-                    itemCount: 2,
+                    itemCount: 3,
                     onPageChanged: (ix) {
                       setState(() {
                         // TODO
@@ -115,7 +116,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (ctx, ix) {
                       return ix == 0
                           ? ProfilPageMainInfos(ppUrl: _ppUrl)
-                          : ProfilPageVideo();
+                          : ix == 1
+                              ? ProfilPageVideo()
+                              : ProfilPageLocation();
                     },
                   ),
                   pageDots(_currentPageIndex, context),
@@ -167,30 +170,121 @@ class _ProfilePageState extends State<ProfilePage> {
                       width: _pasifBoyut,
                       decoration: BoxDecoration(
                           shape: BoxShape.circle, color: Colors.grey),
-                    )
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: _pasifBoyut,
-                      width: _pasifBoyut,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
                     ),
                     SizedBox(
                       width: 15,
                     ),
                     Container(
-                      height: _aktifBoyut,
-                      width: _aktifBoyut,
+                      height: _pasifBoyut,
+                      width: _pasifBoyut,
                       decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.white),
+                          shape: BoxShape.circle, color: Colors.grey),
                     )
                   ],
-                ),
+                )
+              : _currentPageIndex == 1
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: _pasifBoyut,
+                          width: _pasifBoyut,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                          height: _aktifBoyut,
+                          width: _aktifBoyut,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                          height: _pasifBoyut,
+                          width: _pasifBoyut,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.grey),
+                        ),
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: _pasifBoyut,
+                          width: _pasifBoyut,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                          height: _pasifBoyut,
+                          width: _pasifBoyut,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.grey),
+                        ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Container(
+                          height: _aktifBoyut,
+                          width: _aktifBoyut,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                        ),
+                      ],
+                    ),
         ),
+      ),
+    );
+  }
+}
+
+class ProfilPageLocation extends StatefulWidget {
+  const ProfilPageLocation({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _ProfilPageLocationState createState() => _ProfilPageLocationState();
+}
+
+class _ProfilPageLocationState extends State<ProfilPageLocation> {
+  @override
+  Widget build(BuildContext context) {
+    var _size = MediaQuery.of(context).size;
+    return Container(
+      height: 220,
+      width: _size.width,
+      alignment: Alignment.center,
+      color: morDefault,
+      child: Column(
+        children: [
+          Expanded(
+            flex: 7,
+            child: Container(
+              margin: EdgeInsets.only(top: 10),
+              child: SizedBox(
+                width: _size.width - 10,
+                height: 200,
+                child: MapSample(),
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              height: 60,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -227,7 +321,7 @@ class ProfilPageVideo extends StatelessWidget {
             ),
           ),
           Expanded(
-            flex: 3,
+            flex: 2,
             child: SizedBox(
               height: 60,
             ),
