@@ -16,17 +16,35 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> {
   Widget build(BuildContext context) {
     return CustomScrollView(slivers: [
       SliverToBoxAdapter(
-        child: GeneralTabCard(
-          baslikText: "Hakkımda",
-          longString: _longString,
-          assetIconPath: "assets/images/about.png",
+        child: GeneralTabChips(
+          assetIconPath: "assets/images/books.png",
         ),
       ),
       SliverToBoxAdapter(
         child: GeneralTabCard(
-          baslikText: "Eğitim",
+          baslikText: "Hakkında",
           longString: _longString,
+          assetIconPath: "assets/images/about.png",
+        ),
+      ),
+
+      SliverToBoxAdapter(
+        child: GeneralEducationTabCard(
+          baslikText: "Eğitim",
           assetIconPath: "assets/images/graduate.png",
+          year: "2020",
+          calisilanyerText: "İstanbul Arel Üniversitesi",
+          calisilanbolumText: "Bilgisayar mühensiliği",
+        ),
+      ),
+
+      SliverToBoxAdapter(
+        child: GeneralEducationTabCard(
+          baslikText: "İş Deneyimi",
+          assetIconPath: "assets/images/work.png",
+          year: "2021",
+          calisilanyerText: "Dia Yazılım",
+          calisilanbolumText: "Yazılım Geliştirici",
         ),
       ),
 //      ,
