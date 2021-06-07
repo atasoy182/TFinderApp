@@ -27,7 +27,6 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> {
           assetIconPath: "assets/images/about.png",
         ),
       ),
-
       SliverToBoxAdapter(
         child: GeneralEducationTabCard(
           baslikText: "Eğitim",
@@ -37,7 +36,6 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> {
           calisilanbolumText: "Bilgisayar mühensiliği",
         ),
       ),
-
       SliverToBoxAdapter(
         child: GeneralEducationTabCard(
           baslikText: "İş Deneyimi",

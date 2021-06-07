@@ -16,6 +16,9 @@ class GeneralTabCard extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 10),
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
         elevation: 4,
         child: Row(
           children: [
@@ -41,7 +44,9 @@ class GeneralTabCard extends StatelessWidget {
                       child: Text(
                         baslikText,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: "Raleway"),
                       ),
                     ),
                     SizedBox(
@@ -86,6 +91,9 @@ class GeneralEducationTabCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Row(
         children: [
           Expanded(
@@ -109,8 +117,10 @@ class GeneralEducationTabCard extends StatelessWidget {
                     alignment: Alignment.topLeft,
                     child: Text(
                       baslikText,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: "Raleway"),
                     ),
                   ),
                   SizedBox(

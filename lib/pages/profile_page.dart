@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/locations_page.dart';
-import 'package:tfinder_app/pages/profile_page_tabs/detail_tab_page.dart';
+import 'package:tfinder_app/pages/profile_page_tabs/reviews_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
@@ -60,7 +60,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: TabBarView(
               children: [
                 ProfileGeneralTab(),
-                ProfileDetailTab(),
+                ProfileReviewTab(),
                 ProfileProgramTab(),
               ],
             ),
@@ -137,7 +137,7 @@ class _ProfilePageState extends State<ProfilePage> {
             Tab(
               text: "Genel",
             ),
-            Tab(text: "Detay"),
+            Tab(text: "Yorumlar"),
             Tab(text: "Program"),
           ],
         ));

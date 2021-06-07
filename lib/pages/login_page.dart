@@ -505,9 +505,8 @@ Widget pageDots(int currentPageIx, BuildContext context) {
             Container(
               height: _aktifBoyut,
               width: _aktifBoyut,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor),
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: turkuazDefault),
             ),
             SizedBox(
               width: 15,
@@ -535,9 +534,8 @@ Widget pageDots(int currentPageIx, BuildContext context) {
             Container(
               height: _aktifBoyut,
               width: _aktifBoyut,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Theme.of(context).primaryColor),
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: turkuazDefault),
             )
           ],
         );
