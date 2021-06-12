@@ -55,12 +55,20 @@ class _ProfileProgramTabState extends State<ProfileProgramTab> {
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return Card(
-                margin: EdgeInsets.only(bottom: 15, left: 5, right: 5),
+                color: Colors.transparent,
+                margin: EdgeInsets.only(bottom: 5, left: 5, right: 5),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: ProgramRow(),
+                child: Column(
+                  children: [
+                    ProgramRow(),
+                    Divider(
+                      thickness: 2,
+                    ),
+                  ],
+                ),
               );
             },
             childCount: 7, // 1000 list items
@@ -79,8 +87,11 @@ class ProgramRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      //color: Colors.transparent,
-      elevation: 3,
+      color: Colors.transparent,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
       child: Row(
         children: [
           SizedBox(

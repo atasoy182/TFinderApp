@@ -109,7 +109,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   PageView.builder(
                     scrollDirection: Axis.horizontal,
                     controller: _pageController,
-                    itemCount: 3,
+                    itemCount: 2,
                     onPageChanged: (ix) {
                       setState(() {
                         // TODO
@@ -120,9 +120,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     itemBuilder: (ctx, ix) {
                       return ix == 0
                           ? ProfilPageMainInfos(ppUrl: _ppUrl)
-                          : ix == 1
-                              ? ProfilPageVideo()
-                              : ProfilPageLocation();
+                          : ProfilPageVideo();
+                      //: ProfilPageLocation();
                     },
                   ),
                   pageDots(_currentPageIndex, context),
@@ -178,12 +177,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     SizedBox(
                       width: 15,
                     ),
-                    Container(
-                      height: _pasifBoyut,
-                      width: _pasifBoyut,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
-                    )
+//                    Container(
+//                      height: _pasifBoyut,
+//                      width: _pasifBoyut,
+//                      decoration: BoxDecoration(
+//                          shape: BoxShape.circle, color: Colors.grey),
+//                    )
                   ],
                 )
               : _currentPageIndex == 1
@@ -208,12 +207,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           width: 15,
                         ),
-                        Container(
-                          height: _pasifBoyut,
-                          width: _pasifBoyut,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
-                        ),
+//                        Container(
+//                          height: _pasifBoyut,
+//                          width: _pasifBoyut,
+//                          decoration: BoxDecoration(
+//                              shape: BoxShape.circle, color: Colors.grey),
+//                        ),
                       ],
                     )
                   : Row(
@@ -237,12 +236,12 @@ class _ProfilePageState extends State<ProfilePage> {
                         SizedBox(
                           width: 15,
                         ),
-                        Container(
-                          height: _aktifBoyut,
-                          width: _aktifBoyut,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                        ),
+//                        Container(
+//                          height: _aktifBoyut,
+//                          width: _aktifBoyut,
+//                          decoration: BoxDecoration(
+//                              shape: BoxShape.circle, color: Colors.white),
+//                        ),
                       ],
                     ),
         ),

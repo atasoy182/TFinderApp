@@ -11,7 +11,7 @@ class SearchBar extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 270,
+          width: MediaQuery.of(context).size.width - 90,
           margin: EdgeInsets.symmetric(vertical: 5),
           padding: EdgeInsets.symmetric(horizontal: 20),
           decoration: BoxDecoration(
