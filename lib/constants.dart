@@ -10,6 +10,7 @@ const turuncuDefault = Color.fromRGBO(250, 151, 93, 1);
 const pictureBgColor = Color.fromRGBO(48, 45, 44, 1);
 const sariDefault = Color.fromRGBO(253, 196, 37, 1);
 final golgeDefault = Color(0xFFD3D3D3).withOpacity(.84);
+final linkColor = Color(0xFF3BB3BD);
 
 const topViewColor = Color(0xFFF5CEB8);
 const widgetBackgroundColor = Color.fromRGBO(240, 240, 240, 1);

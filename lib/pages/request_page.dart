@@ -79,7 +79,9 @@ class _RequestPageState extends State<RequestPage> {
           ),
         ),
       ),
-      floatingActionButton: ExampleExpandableFab(),
+      floatingActionButton: ExampleExpandableFab(
+        tabIndex: 1,
+      ),
     );
   }
 

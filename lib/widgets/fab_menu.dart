@@ -6,8 +6,10 @@ import 'package:tfinder_app/constants.dart';
 
 @immutable
 class ExampleExpandableFab extends StatelessWidget {
+  final int tabIndex;
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
-  const ExampleExpandableFab({Key key}) : super(key: key);
+  const ExampleExpandableFab({Key key, @required this.tabIndex})
+      : super(key: key);
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -28,14 +30,21 @@ class ExampleExpandableFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return tabIndex == 1 ? requestPageFabs(context) : profilPageFabs(context);
+  }
+
+  ExpandableFab requestPageFabs(BuildContext context) {
     return ExpandableFab(
+      tabIndex: tabIndex,
       distance: 112.0,
       children: [
         ActionButton(
+          tabIndex: tabIndex,
           onPressed: () => _showAction(context, 0),
           icon: const Icon(Icons.add),
         ),
         ActionButton(
+          tabIndex: tabIndex,
           onPressed: () => _showAction(context, 1),
           icon: Container(
             margin: EdgeInsets.only(left: 5),
@@ -48,6 +57,41 @@ class ExampleExpandableFab extends StatelessWidget {
       ],
     );
   }
+
+  ExpandableFab profilPageFabs(BuildContext context) {
+    return ExpandableFab(
+      tabIndex: tabIndex,
+      distance: 112.0,
+      children: [
+        ActionButton(
+          tabIndex: tabIndex,
+          onPressed: () => _showAction(context, 0),
+          icon: const Icon(Icons.message),
+        ),
+        ActionButton(
+          tabIndex: tabIndex,
+          onPressed: () => _showAction(context, 2),
+          icon: Container(
+            //margin: EdgeInsets.only(left: 5),
+            child: const ImageIcon(
+              AssetImage("assets/images/bubbleComment.png"),
+              color: Colors.white,
+            ),
+          ),
+        ),
+        ActionButton(
+          tabIndex: tabIndex,
+          onPressed: () => _showAction(context, 1),
+          icon: const Icon(Icons.location_on),
+        ),
+        ActionButton(
+          tabIndex: tabIndex,
+          onPressed: () => _showAction(context, 1),
+          icon: const Icon(Icons.phone),
+        )
+      ],
+    );
+  }
 }
 
 @immutable
@@ -57,11 +101,13 @@ class ExpandableFab extends StatefulWidget {
     this.initialOpen,
     @required this.distance,
     @required this.children,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final bool initialOpen;
   final double distance;
   final List<Widget> children;
+  final int tabIndex;
 
   @override
   _ExpandableFabState createState() => _ExpandableFabState();
@@ -113,15 +159,15 @@ class _ExpandableFabState extends State<ExpandableFab>
         alignment: Alignment.bottomRight,
         clipBehavior: Clip.none,
         children: [
-          _buildTapToCloseFab(),
+          _buildTapToCloseFab(widget.tabIndex),
           ..._buildExpandingActionButtons(),
-          _buildTapToOpenFab(),
+          _buildTapToOpenFab(widget.tabIndex),
         ],
       ),
     );
   }
 
-  Widget _buildTapToCloseFab() {
+  Widget _buildTapToCloseFab(int tabIndex) {
     return SizedBox(
       width: 56.0,
       height: 56.0,
@@ -136,7 +182,9 @@ class _ExpandableFabState extends State<ExpandableFab>
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.close,
-                color: yesilDefault,
+                color: tabIndex == 1
+                    ? yesilDefault
+                    : Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -164,7 +212,7 @@ class _ExpandableFabState extends State<ExpandableFab>
     return children;
   }
 
-  Widget _buildTapToOpenFab() {
+  Widget _buildTapToOpenFab(int tabIndex) {
     return IgnorePointer(
       ignoring: _open,
       child: AnimatedContainer(
@@ -181,12 +229,18 @@ class _ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
-            backgroundColor: yesilDefault,
+            backgroundColor:
+                tabIndex == 1 ? yesilDefault : Theme.of(context).primaryColor,
             onPressed: _toggle,
-            child: const Icon(
-              Icons.create,
-              color: Colors.white,
-            ),
+            child: tabIndex == 1
+                ? const Icon(
+                    Icons.create,
+                    color: Colors.white,
+                  )
+                : const Icon(
+                    Icons.person,
+                    color: Colors.white,
+                  ),
           ),
         ),
       ),
@@ -241,25 +295,26 @@ class ActionButton extends StatelessWidget {
     Key key,
     this.onPressed,
     @required this.icon,
+    @required this.tabIndex,
   }) : super(key: key);
 
   final VoidCallback onPressed;
   final Widget icon;
+  final int tabIndex;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      shape: const CircleBorder(),
-      clipBehavior: Clip.antiAlias,
-      color: yesilDefault,
-      elevation: 4.0,
-      child: IconButton(
-        padding: EdgeInsets.all(0),
-        onPressed: onPressed,
-        icon: icon,
-        color: Colors.white,
-      ),
-    );
+        shape: const CircleBorder(),
+        clipBehavior: Clip.antiAlias,
+        color: tabIndex == 1 ? yesilDefault : Theme.of(context).primaryColor,
+        elevation: 4.0,
+        child: IconButton(
+          padding: EdgeInsets.all(0),
+          onPressed: onPressed,
+          icon: icon,
+          color: Colors.white,
+        ));
   }
 }
 

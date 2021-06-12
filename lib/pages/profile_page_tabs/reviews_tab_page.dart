@@ -12,18 +12,6 @@ class _ProfileReviewTabState extends State<ProfileReviewTab> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: ImageIcon(
-          AssetImage("assets/images/bubbleComment.png"),
-          size: 32,
-          color: sariDefault,
-        ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
       body: CustomScrollView(slivers: [
         SliverToBoxAdapter(
           child: Card(

@@ -8,6 +8,7 @@ import 'package:tfinder_app/pages/profile_page_tabs/reviews_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
+import 'package:tfinder_app/widgets/fab_menu.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -42,6 +43,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ];
           },
           body: buildBodyForProfilePage(),
+        ),
+        floatingActionButton: ExampleExpandableFab(
+          tabIndex: 3,
         ),
       ),
     );
