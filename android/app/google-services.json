@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1008248009092",
+    "project_id": "t-finder-a2526",
+    "storage_bucket": "t-finder-a2526.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008248009092:android:8c82b71639f35daa042dd1",
+        "android_client_info": {
+          "package_name": "com.mehmetberkayatasoy.tfinder_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008248009092-7tq6cm2s0fj5lu6lv8d1vao488lu3knf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehmetberkayatasoy.tfinder_app",
+            "certificate_hash": "4a3aacd6ae8284356604f94039808968e03f5bcb"
+          }
+        },
+        {
+          "client_id": "1008248009092-3j1nttl0088gsthrsktp0cp7ppua7hg8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDufju9LBsB76qip9bREY7nmcTddqcGmPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008248009092-3j1nttl0088gsthrsktp0cp7ppua7hg8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
