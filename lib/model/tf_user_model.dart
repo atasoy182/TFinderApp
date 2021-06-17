@@ -10,5 +10,5 @@ class TfUser {
   DateTime updatedAt;
   int seviye;
 
-  TfUser({@required this.userID, @required email});
+  TfUser({@required this.userID});
 }

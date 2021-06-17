@@ -6,37 +6,22 @@ class AuthFirebaseService implements AuthBase {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   @override
-  Future<TfUser> createUserWithEmailAndPassword(String email, String password) {
-    // TODO: implement createUserWithEmailAndPassword
-    throw UnimplementedError();
+  Future<TfUser> getCurrentUser() async {
+    User user = await _firebaseAuth.currentUser;
+  }
+
+  Future<TfUser> _userFromFirebase(User user) async {
+    /*
+    FirebaseUser nesnesini TfUser nesnesine dönüştüren metottur.
+     */
+    if (user == null) return null;
+
+    return TfUser(userID: user.uid);
   }
 
   @override
-  Future<TfUser> getCurrentUser() {
-    // TODO: implement getCurrentUser
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<TfUser> signInAnonymously() async {
-    try {
-      UserCredential authResult = await _firebaseAuth.signInAnonymously();
-      return _userFromFirebase(authResult.user);
-    } catch (e) {
-      print("SIGN IN ANONYMOUSLY HATASI ${e.toString()}");
-      return null;
-    }
-  }
-
-  @override
-  Future<TfUser> signInEmailAndPassword(String email, String password) {
-    // TODO: implement signInEmailAndPassword
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<TfUser> signInWithGmail() {
-    // TODO: implement signInWithGmail
+  Future<TfUser> signInAnonymously() {
+    // TODO: implement signInAnonymously
     throw UnimplementedError();
   }
 
@@ -44,13 +29,5 @@ class AuthFirebaseService implements AuthBase {
   Future<bool> signOut() {
     // TODO: implement signOut
     throw UnimplementedError();
-  }
-
-  TfUser _userFromFirebase(User user) {
-    if (user == null) {
-      return null;
-    } else {
-      return TfUser(userID: user.uid, email: user.email);
-    }
   }
 }
