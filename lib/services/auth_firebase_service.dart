@@ -7,7 +7,12 @@ class AuthFirebaseService implements AuthBase {
 
   @override
   Future<TfUser> getCurrentUser() async {
-    User user = await _firebaseAuth.currentUser;
+    try {
+      User user = await _firebaseAuth.currentUser;
+      return _userFromFirebase(user);
+    } catch (e) {
+      print("get current user hatası: " + e.toString());
+    }
   }
 
   Future<TfUser> _userFromFirebase(User user) async {
@@ -20,14 +25,24 @@ class AuthFirebaseService implements AuthBase {
   }
 
   @override
-  Future<TfUser> signInAnonymously() {
-    // TODO: implement signInAnonymously
-    throw UnimplementedError();
+  Future<TfUser> signInAnonymously() async {
+    try {
+      UserCredential _userCredential = await _firebaseAuth.signInAnonymously();
+      return _userFromFirebase(_userCredential.user);
+    } catch (e) {
+      print("signInAnonymously  hatası: " + e.toString());
+      return null;
+    }
   }
 
   @override
-  Future<bool> signOut() {
-    // TODO: implement signOut
-    throw UnimplementedError();
+  Future<bool> signOut() async {
+    try {
+      await _firebaseAuth.signOut();
+      return true;
+    } catch (e) {
+      print("signOut user hatası: " + e.toString());
+      return false;
+    }
   }
 }
