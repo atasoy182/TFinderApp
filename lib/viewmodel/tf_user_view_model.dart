@@ -8,14 +8,20 @@ enum ViewState { Idle, Busy }
 
 class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
   ViewState _state = ViewState.Idle;
-  TfUserRepository _tfUserRepository = locator<TfUserRepository>();
+  TfUserRepository _tfUserRepository = locator.get<TfUserRepository>();
   TfUser _tfUser;
+
+  TfUser get tfUser => _tfUser;
 
   ViewState get state => _state;
 
   set state(ViewState value) {
     _state = value;
     notifyListeners();
+  }
+
+  TfUserViewModel() {
+    getCurrentUser();
   }
 
   @override

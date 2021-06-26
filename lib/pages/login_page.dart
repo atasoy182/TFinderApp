@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
-import 'file:///D:/Flutter_uygulamalari/gitApps/tfinder_app/lib/pages/search_page.dart';
+import 'package:tfinder_app/pages/search_page.dart';
+import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 import 'package:tfinder_app/widgets/base_button.dart';
 
 class LoginPage extends StatefulWidget {
@@ -167,6 +169,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
 
   @override
   Widget build(BuildContext context) {
+    final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -260,7 +264,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                       RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ))),
-              onPressed: () {
+              onPressed: () async {
                 bool validateEmail = _formLoginEmailKey.currentState.validate();
                 bool validatePassword =
                     _formLoginPasswordKey.currentState.validate();
@@ -269,6 +273,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Giriş Yapılıyor')));
                 }
+
+                await _tfUserModel.signInAnonymously();
 
                 Navigator.push(
                   context,

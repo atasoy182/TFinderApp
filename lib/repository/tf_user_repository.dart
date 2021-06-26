@@ -7,7 +7,7 @@ import 'package:tfinder_app/services/auth_firebase_service.dart';
 enum AppMode { DEBUG, RELEASE }
 
 class TfUserRepository implements AuthBase {
-  AuthFirebaseService _firebaseAuthService = locator<AuthFirebaseService>();
+  AuthFirebaseService _firebaseAuthService = locator.get<AuthFirebaseService>();
   AppMode _appMode = AppMode.RELEASE;
 
   @override

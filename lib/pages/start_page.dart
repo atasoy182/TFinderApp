@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
-import 'file:///D:/Flutter_uygulamalari/gitApps/tfinder_app/lib/pages/login_page.dart';
+import 'package:tfinder_app/pages/login_page.dart';
+import 'package:tfinder_app/pages/search_page.dart';
+import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 
-class StartPage extends StatefulWidget {
-  @override
-  _StartPageState createState() => _StartPageState();
-}
-
-class _StartPageState extends State<StartPage> {
+class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
 
     return Scaffold(
         body: SafeArea(
@@ -66,7 +65,11 @@ class _StartPageState extends State<StartPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {
-                      return LoginPage();
+                      if (_tfUserModel.tfUser == null) {
+                        return LoginPage();
+                      } else {
+                        return SearchPage();
+                      }
                     }),
                   );
                 },
