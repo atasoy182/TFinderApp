@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/services/auth_base.dart';
 
@@ -38,11 +39,40 @@ class AuthFirebaseService implements AuthBase {
   @override
   Future<bool> signOut() async {
     try {
+      final _googleSignIn = GoogleSignIn();
+      await _googleSignIn.signOut();
       await _firebaseAuth.signOut();
       return true;
     } catch (e) {
       print("signOut user hatası: " + e.toString());
       return false;
+    }
+  }
+
+  @override
+  Future<TfUser> signInWithGoogle() async {
+    try {
+      GoogleSignIn _googleSignIn = GoogleSignIn();
+      GoogleSignInAccount _googleUser = await _googleSignIn.signIn();
+      if (_googleUser != null) {
+        GoogleSignInAuthentication _googleAuth =
+            await _googleUser.authentication;
+        if (_googleAuth.accessToken != null && _googleAuth.idToken != null) {
+          UserCredential authResult = await _firebaseAuth.signInWithCredential(
+              GoogleAuthProvider.credential(
+                  idToken: _googleAuth.idToken,
+                  accessToken: _googleAuth.accessToken));
+          User user = authResult.user;
+          return _userFromFirebase(user);
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print("Gmail oturum açma hatası " + e.toString());
+      return null;
     }
   }
 }

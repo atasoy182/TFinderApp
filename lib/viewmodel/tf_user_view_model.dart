@@ -63,4 +63,19 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
       state = ViewState.Idle;
     }
   }
+
+  @override
+  Future<TfUser> signInWithGoogle() async {
+    try {
+      state = ViewState.Busy;
+      _tfUser = await _tfUserRepository.signInWithGoogle();
+      return _tfUser;
+    } catch (e) {
+      debugPrint(
+          "UserModel View modeldeki signInWithGmail hatası ${e.toString()}");
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
 }

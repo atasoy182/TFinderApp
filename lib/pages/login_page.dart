@@ -326,25 +326,27 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                 MaterialButton(
                   color: Colors.white,
                   shape: CircleBorder(),
-                  onPressed: () {},
+                  onPressed: () async {
+                    var _user = await _tfUserModel.signInWithGoogle();
+                    if (_user != null) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return SearchPage();
+                      }));
+                    } else {
+                      MotionToast.error(
+                        title: "Hata !",
+                        titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                        description: "Giriş Yapılamadı !",
+                        descriptionStyle: TextStyle(fontSize: 12),
+                        width: 300,
+                      ).show(context);
+                    }
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Image.asset(
                       "assets/images/google-logo.png",
-                      width: 30,
-                      height: 30,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                MaterialButton(
-                  color: Colors.white,
-                  shape: CircleBorder(),
-                  onPressed: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Image.asset(
-                      "assets/images/facebook-logo.png",
                       width: 30,
                       height: 30,
                       fit: BoxFit.cover,

@@ -33,4 +33,12 @@ class TfUserRepository implements AuthBase {
     }
     return null;
   }
+
+  @override
+  Future<TfUser> signInWithGoogle() async {
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseAuthService.signInWithGoogle();
+    }
+    return null;
+  }
 }
