@@ -54,6 +54,7 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
   Future<bool> signOut() async {
     try {
       state = ViewState.Busy;
+      _tfUser = null;
       return await _tfUserRepository.signOut();
     } catch (e) {
       print("View model signOut hatası:" + e.toString());

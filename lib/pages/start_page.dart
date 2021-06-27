@@ -62,10 +62,12 @@ class StartPage extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: MaterialButton(
                 onPressed: () async {
+                  var res = await _tfUserModel.getCurrentUser();
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) {
-                      if (_tfUserModel.tfUser == null) {
+                      print("Material page route:" + res.toString());
+                      if (res == null) {
                         return LoginPage();
                       } else {
                         return SearchPage();

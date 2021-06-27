@@ -2,11 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:motion_toast/motion_toast.dart';
+import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/locations_page.dart';
+import 'package:tfinder_app/pages/login_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/reviews_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
+import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
 import 'package:tfinder_app/widgets/fab_menu.dart';
 
@@ -347,6 +351,7 @@ class ProfilPageMainInfos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _size = MediaQuery.of(context).size;
+    final _tfUserModel = Provider.of<TfUserViewModel>(context);
 
     return Container(
       height: 220,
@@ -360,7 +365,7 @@ class ProfilPageMainInfos extends StatelessWidget {
       child: Column(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,
             child: Container(
                 child: Container(
                     margin:
@@ -384,7 +389,24 @@ class ProfilPageMainInfos extends StatelessWidget {
                               color: Colors.white,
                               size: 32,
                             ),
-                            onPressed: () {},
+                            onPressed: () async {
+                              MotionToast.info(
+                                      title: "Çıkış !",
+                                      titleStyle: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      description: "Çıkış Yapılıyor")
+                                  .show(context);
+                              await Future.delayed(Duration(seconds: 1));
+                              var sonuc = await _tfUserModel.signOut();
+                              if (sonuc) {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginPage(),
+                                    ),
+                                    ModalRoute.withName("/login"));
+                              }
+                            },
                           ),
                         ),
                       ],

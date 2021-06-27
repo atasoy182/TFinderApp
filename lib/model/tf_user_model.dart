@@ -24,4 +24,9 @@ class TfUser {
   List sosyalMedya;
 
   TfUser({@required this.userID});
+
+  @override
+  String toString() {
+    return 'TfUser{userID: $userID, email: $email, profilFotoURL: $profilFotoURL, videoURL: $videoURL, createdAt: $createdAt, updatedAt: $updatedAt, seviye: $seviye, oneCikarilanAlan: $oneCikarilanAlan, il: $il, dersVerdigiAlanlar: $dersVerdigiAlanlar, dersUcretAraligi: $dersUcretAraligi, ad: $ad, soyAd: $soyAd, yas: $yas, hakkinda: $hakkinda, egitimler: $egitimler, deneyimler: $deneyimler, locationX: $locationX, locationY: $locationY, cepTel: $cepTel, sosyalMedya: $sosyalMedya}';
+  }
 }

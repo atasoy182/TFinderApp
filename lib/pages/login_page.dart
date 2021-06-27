@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
@@ -169,7 +171,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
+    final _tfUserModel = Provider.of<TfUserViewModel>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -251,47 +253,58 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   )),
             ),
             animateBody),
-        FadeAnimation(
-          1.6,
-          SizedBox(
-            height: 50,
-            width: 250,
-            child: ElevatedButton(
-              style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(turuncuDefault),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                  ))),
-              onPressed: () async {
-                bool validateEmail = _formLoginEmailKey.currentState.validate();
-                bool validatePassword =
-                    _formLoginPasswordKey.currentState.validate();
+        _tfUserModel.state == ViewState.Idle
+            ? FadeAnimation(
+                1.6,
+                SizedBox(
+                  height: 50,
+                  width: 250,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(turuncuDefault),
+                        shape:
+                            MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ))),
+                    onPressed: () async {
+                      bool validateEmail =
+                          _formLoginEmailKey.currentState.validate();
+                      bool validatePassword =
+                          _formLoginPasswordKey.currentState.validate();
 
-                if (validateEmail && validatePassword) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text('Giriş Yapılıyor')));
-                }
+                      if (validateEmail && validatePassword) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Giriş Yapılıyor')));
+                      }
 
-                await _tfUserModel.signInAnonymously();
+                      await _tfUserModel.signInAnonymously();
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) {
-                    return SearchPage();
-                  }),
-                );
-              },
-              child: Text(
-                "Giriş Yap",
-                style:
-                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) {
+                          return SearchPage();
+                        }),
+                      );
+                    },
+                    child: Text(
+                      "Giriş Yap",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                animateBody,
+              )
+            : SizedBox(
+                width: 50,
+                height: 50,
+                child: LoadingIndicator(
+                  indicatorType: Indicator.ballRotateChase,
+                  color: morDefault.withOpacity(0.4),
+                ),
               ),
-            ),
-          ),
-          animateBody,
-        ),
         SizedBox(
           height: 30,
         ),
@@ -488,7 +501,15 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               height: 50,
               child: DefaultButton(
                 btnText: "Kayıt Ol",
-                btnCliked: () {},
+                btnCliked: () {
+                  MotionToast.success(
+                    title: "Success Motion Toast",
+                    titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                    description: "Example of success motion toast",
+                    descriptionStyle: TextStyle(fontSize: 12),
+                    width: 300,
+                  ).show(context);
+                },
                 btnColor: turuncuDefault,
               ),
             ),
