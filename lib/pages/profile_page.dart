@@ -380,33 +380,38 @@ class ProfilPageMainInfos extends StatelessWidget {
                           style: TextStyle(fontSize: 24, color: Colors.white),
                         ),
                         Container(
+                          //color: Colors.green,
                           //decoration: BoxDecoration(border: Border.all()),
-                          padding: EdgeInsets.only(bottom: 20),
-                          child: IconButton(
-                            padding: EdgeInsets.all(0),
-                            icon: Icon(
-                              Icons.settings,
-                              color: Colors.white,
-                              size: 32,
+                          //margin: EdgeInsets.only(bottom: 20),
+                          child: Container(
+                            //color: Colors.green,
+                            height: 50,
+                            child: IconButton(
+                              padding: EdgeInsets.all(0),
+                              icon: Icon(
+                                Icons.settings,
+                                color: Colors.white,
+                                size: 32,
+                              ),
+                              onPressed: () async {
+                                MotionToast.info(
+                                        title: "Çıkış !",
+                                        titleStyle: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                        description: "Çıkış Yapılıyor")
+                                    .show(context);
+                                await Future.delayed(Duration(seconds: 1));
+                                var sonuc = await _tfUserModel.signOut();
+                                if (sonuc) {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginPage(),
+                                      ),
+                                      ModalRoute.withName("/login"));
+                                }
+                              },
                             ),
-                            onPressed: () async {
-                              MotionToast.info(
-                                      title: "Çıkış !",
-                                      titleStyle: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      description: "Çıkış Yapılıyor")
-                                  .show(context);
-                              await Future.delayed(Duration(seconds: 1));
-                              var sonuc = await _tfUserModel.signOut();
-                              if (sonuc) {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginPage(),
-                                    ),
-                                    ModalRoute.withName("/login"));
-                              }
-                            },
                           ),
                         ),
                       ],

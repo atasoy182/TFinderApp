@@ -41,4 +41,20 @@ class TfUserRepository implements AuthBase {
     }
     return null;
   }
+
+  @override
+  Future<TfUser> createTfUserWithEmail(String email, String password) async {
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseAuthService.createTfUserWithEmail(email, password);
+    }
+    return null;
+  }
+
+  @override
+  Future<TfUser> signInWithEmail(String email, String password) async {
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseAuthService.signInWithEmail(email, password);
+    }
+    return null;
+  }
 }

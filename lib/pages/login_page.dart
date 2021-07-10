@@ -5,6 +5,7 @@ import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:tfinder_app/Animation/FadeAnimation.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/pages/search_page.dart';
 import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 import 'package:tfinder_app/widgets/base_button.dart';
@@ -158,6 +159,8 @@ class LoginPageBody extends StatefulWidget {
 }
 
 class _LoginPageBodyState extends State<LoginPageBody> {
+  String _loginEmail;
+  String _loginPassword;
   bool _obscureText = true;
   final _formLoginPasswordKey = GlobalKey<FormState>();
   final _formLoginEmailKey = GlobalKey<FormState>();
@@ -203,17 +206,20 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                       padding: EdgeInsets.only(left: 10, right: 10),
                       child: Center(
                         child: TextFormField(
-                            keyboardType: TextInputType.emailAddress,
-                            decoration: InputDecoration(
-                                hintText: "Email",
-                                hintStyle: TextStyle(color: Colors.grey),
-                                border: InputBorder.none),
-                            validator: (val) {
-                              if (!val.contains("@")) {
-                                return 'Geçerli bir email adresi giriniz';
-                              } else
-                                return null;
-                            }),
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              hintText: "Email",
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none),
+                          validator: (val) {
+                            if (!val.contains("@")) {
+                              return 'Geçerli bir email adresi giriniz';
+                            } else
+                              return null;
+                          },
+                          onSaved: (String girilenEmail) =>
+                              _loginEmail = girilenEmail,
+                        ),
                       ),
                     ),
                   ),
@@ -234,6 +240,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                         obscureText: _obscureText,
                         validator: (val) =>
                             val.length < 6 ? 'Şifre Çok Kısa' : null,
+                        onSaved: (String girilenSifre) =>
+                            _loginPassword = girilenSifre,
                       ),
                     ),
                   ),
@@ -268,26 +276,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                                 RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20.0),
                         ))),
-                    onPressed: () async {
-                      bool validateEmail =
-                          _formLoginEmailKey.currentState.validate();
-                      bool validatePassword =
-                          _formLoginPasswordKey.currentState.validate();
-
-                      if (validateEmail && validatePassword) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Giriş Yapılıyor')));
-                      }
-
-                      await _tfUserModel.signInAnonymously();
-
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) {
-                          return SearchPage();
-                        }),
-                      );
-                    },
+                    onPressed: () => loginWithEmail(context, _tfUserModel),
                     child: Text(
                       "Giriş Yap",
                       style: TextStyle(
@@ -377,6 +366,45 @@ class _LoginPageBodyState extends State<LoginPageBody> {
       ],
     );
   }
+
+  Future loginWithEmail(
+      BuildContext context, TfUserViewModel _tfUserModel) async {
+    {
+      bool validateEmail = _formLoginEmailKey.currentState.validate();
+      bool validatePassword = _formLoginPasswordKey.currentState.validate();
+
+      if (validateEmail && validatePassword) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Giriş Yapılıyor')));
+        // MotionToast.info(
+        //   title: "Giriş",
+        //   titleStyle: TextStyle(fontWeight: FontWeight.bold),
+        //   description: "Giriş Yapılıyor !",
+        //   descriptionStyle: TextStyle(fontSize: 12),
+        //   width: 300,
+        // ).show(context);
+      }
+
+      _formLoginEmailKey.currentState.save();
+      _formLoginPasswordKey.currentState.save();
+
+      try {
+        TfUser girisYapilanTfUser =
+            await _tfUserModel.signInWithEmail(_loginEmail, _loginPassword);
+
+        if (girisYapilanTfUser != null) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return SearchPage();
+            }),
+          );
+        } else {}
+
+        print(" kullanici giriş yaptı: " + girisYapilanTfUser.toString());
+      } catch (e) {}
+    }
+  }
 }
 
 class RegisterPageBody extends StatefulWidget {
@@ -385,11 +413,17 @@ class RegisterPageBody extends StatefulWidget {
 }
 
 class _RegisterPageBodyState extends State<RegisterPageBody> {
-//  final _formRegisterPasswordKey = GlobalKey<FormState>();
-//  final _formRegisterEmailKey = GlobalKey<FormState>();
+  bool _obscureText = true;
+
+  String _registerEmail;
+  String _registerPassword;
+
+  final _formRegisterEmailKey = GlobalKey<FormState>();
+  final _formRegisterPasswordKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final _tfUserModel = Provider.of<TfUserViewModel>(context);
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.only(left: 5, right: 5, top: 25, bottom: 5),
@@ -410,7 +444,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                     borderRadius: BorderRadius.circular(15)),
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  //keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       hintText: "Adınız",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -429,7 +463,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                 ),
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
-                  keyboardType: TextInputType.emailAddress,
+                  //keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       hintText: "Soy Adınız",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -441,29 +475,34 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               height: 5,
             ),
             Form(
+              key: _formRegisterEmailKey,
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blueGrey, width: 0.4),
                     borderRadius: BorderRadius.circular(15)),
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    decoration: InputDecoration(
-                        hintText: "Email",
-                        hintStyle: TextStyle(color: Colors.grey),
-                        border: InputBorder.none),
-                    validator: (val) {
-                      if (!val.contains("@")) {
-                        return 'Geçerli bir email adresi giriniz';
-                      } else
-                        return null;
-                    }),
+                  keyboardType: TextInputType.emailAddress,
+                  decoration: InputDecoration(
+                      hintText: "Email",
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none),
+                  validator: (val) {
+                    if (!val.contains("@")) {
+                      return 'Geçerli bir email adresi giriniz';
+                    } else
+                      return null;
+                  },
+                  onSaved: (String girilenRegisterEmail) =>
+                      _registerEmail = girilenRegisterEmail,
+                ),
               ),
             ),
             SizedBox(
               height: 5,
             ),
             Form(
+              key: _formRegisterPasswordKey,
               child: Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
@@ -471,10 +510,30 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                     borderRadius: BorderRadius.circular(15)),
                 child: TextFormField(
                   decoration: InputDecoration(
-                      hintText: "Şifre",
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none),
+                    suffix: Container(
+                      height: 30,
+                      //color: Colors.green,
+                      child: IconButton(
+                          padding: EdgeInsets.all(0),
+                          iconSize: 24,
+                          icon: Icon(
+                            Icons.remove_red_eye_sharp,
+                          ),
+                          color: Colors.grey,
+                          onPressed: () {
+                            setState(() {
+                              _obscureText = !_obscureText;
+                            });
+                          }),
+                    ),
+                    hintText: "Şifre",
+                    hintStyle: TextStyle(color: Colors.grey),
+                    border: InputBorder.none,
+                  ),
+                  obscureText: _obscureText,
                   validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                  onSaved: (String girilenRegisterPassword) =>
+                      _registerPassword = girilenRegisterPassword,
                 ),
               ),
             ),
@@ -493,6 +552,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none),
                   validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                  obscureText: _obscureText,
                 ),
               ),
             ),
@@ -501,19 +561,70 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
             ),
             SizedBox(
               height: 50,
-              child: DefaultButton(
-                btnText: "Kayıt Ol",
-                btnCliked: () {
-                  MotionToast.success(
-                    title: "Success Motion Toast",
-                    titleStyle: TextStyle(fontWeight: FontWeight.bold),
-                    description: "Example of success motion toast",
-                    descriptionStyle: TextStyle(fontSize: 12),
-                    width: 300,
-                  ).show(context);
-                },
-                btnColor: turuncuDefault,
-              ),
+              child: _tfUserModel.state == ViewState.Idle
+                  ? DefaultButton(
+                      btnColor: turuncuDefault,
+                      btnText: "Kayıt Ol",
+                      btnCliked: () async {
+                        bool validateEmail =
+                            _formRegisterEmailKey.currentState.validate();
+                        bool validatePassword =
+                            _formRegisterPasswordKey.currentState.validate();
+
+                        //if (validateEmail && validatePassword) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text('Kayıt Yapılıyor')));
+                        // }
+
+                        _formRegisterEmailKey.currentState.save();
+                        _formRegisterPasswordKey.currentState.save();
+
+                        try {
+                          TfUser girisYapilanTfUser =
+                              await _tfUserModel.createTfUserWithEmail(
+                                  _registerEmail, _registerPassword);
+
+                          print("Kullanici kayıt oldu: " +
+                              girisYapilanTfUser.toString());
+
+                          if (girisYapilanTfUser != null) {
+                            // MotionToast.success(
+                            //   title: "Başarılı",
+                            //   titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                            //   description: "Kayıt Oldunuz !",
+                            //   descriptionStyle: TextStyle(fontSize: 12),
+                            //   width: 300,
+                            // ).show(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) {
+                                return SearchPage();
+                              }),
+                            );
+                          } else {
+                            MotionToast.error(
+                              title: "Hata !",
+                              titleStyle:
+                                  TextStyle(fontWeight: FontWeight.bold),
+                              description: "Bir Hata Meydana Oluştu !",
+                              descriptionStyle: TextStyle(fontSize: 12),
+                              width: 300,
+                            ).show(context);
+                          }
+                        } catch (e) {
+                          MotionToast.error(
+                            title: "Hata !",
+                            titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                            description: "Bir Hata Meydana Oluştu !",
+                            descriptionStyle: TextStyle(fontSize: 12),
+                            width: 300,
+                          ).show(context);
+                        }
+                      })
+                  : LoadingIndicator(
+                      indicatorType: Indicator.ballRotateChase,
+                      color: morDefault.withOpacity(0.4),
+                    ),
             ),
           ],
         ),

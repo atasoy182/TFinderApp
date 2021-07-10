@@ -75,4 +75,28 @@ class AuthFirebaseService implements AuthBase {
       return null;
     }
   }
+
+  @override
+  Future<TfUser> createTfUserWithEmail(String email, String password) async {
+    try {
+      UserCredential _userCredential = await _firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      return _userFromFirebase(_userCredential.user);
+    } catch (e) {
+      print("createTfUserWithEmail  hatası: " + e.toString());
+      return null;
+    }
+  }
+
+  @override
+  Future<TfUser> signInWithEmail(String email, String password) async {
+    try {
+      UserCredential _userCredential = await _firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password);
+      return _userFromFirebase(_userCredential.user);
+    } catch (e) {
+      print("signInWithEmail  hatası: " + e.toString());
+      return null;
+    }
+  }
 }
