@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Yorumlar {
-  final String ID;
+  final String id;
   String userID;
   String yazanKisininAdi;
   String yazanKisininSoyAdi;
@@ -9,5 +9,5 @@ class Yorumlar {
   DateTime createdAt;
   DateTime updatedAt;
 
-  Yorumlar(@required this.ID);
+  Yorumlar({@required this.id});
 }

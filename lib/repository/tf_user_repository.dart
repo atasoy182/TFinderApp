@@ -1,13 +1,14 @@
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/services/auth_base.dart';
 import 'package:tfinder_app/services/auth_firebase_service.dart';
+import 'package:tfinder_app/services/firebase_db_service.dart';
 
 enum AppMode { DEBUG, RELEASE }
 
 class TfUserRepository implements AuthBase {
   AuthFirebaseService _firebaseAuthService = locator.get<AuthFirebaseService>();
+  DBFirebaseService _firebaseDBService = locator.get<DBFirebaseService>();
   AppMode _appMode = AppMode.RELEASE;
 
   @override
@@ -45,7 +46,13 @@ class TfUserRepository implements AuthBase {
   @override
   Future<TfUser> createTfUserWithEmail(String email, String password) async {
     if (_appMode == AppMode.RELEASE) {
-      return await _firebaseAuthService.createTfUserWithEmail(email, password);
+      TfUser _tfuser =
+          await _firebaseAuthService.createTfUserWithEmail(email, password);
+      bool _resultFromDB = await _firebaseDBService.saveUserToDB(_tfuser);
+      if (_resultFromDB)
+        return _tfuser;
+      else
+        return null;
     }
     return null;
   }

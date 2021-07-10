@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Program {
-  final String ID;
+  final String id;
   String userID;
   DateTime tarih1;
   DateTime tarih2;
@@ -15,5 +15,5 @@ class Program {
   DateTime createdAt;
   DateTime updatedAt;
 
-  Program(@required this.ID);
+  Program({@required this.id});
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Konumlar {
-  final String ID;
+  final String id;
   String userID;
   String locationX;
   String locationY;
@@ -9,5 +9,5 @@ class Konumlar {
   String kullaniciSoyAdi;
   String kullaniciProfilFotoUrl;
 
-  Konumlar(@required this.ID);
+  Konumlar({@required this.id});
 }

@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:tfinder_app/constants.dart';
 
 class ProfileReviewTab extends StatefulWidget {
   @override

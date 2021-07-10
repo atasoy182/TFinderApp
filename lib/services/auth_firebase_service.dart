@@ -9,10 +9,11 @@ class AuthFirebaseService implements AuthBase {
   @override
   Future<TfUser> getCurrentUser() async {
     try {
-      User user = await _firebaseAuth.currentUser;
+      User user = _firebaseAuth.currentUser;
       return _userFromFirebase(user);
     } catch (e) {
-      print("get current user hatası: " + e.toString());
+      return null;
+      //print("get current user hatası: " + e.toString());
     }
   }
 
@@ -22,7 +23,7 @@ class AuthFirebaseService implements AuthBase {
      */
     if (user == null) return null;
 
-    return TfUser(userID: user.uid);
+    return TfUser(userID: user.uid, email: user.email);
   }
 
   @override

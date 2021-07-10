@@ -504,14 +504,16 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
             Form(
               key: _formRegisterPasswordKey,
               child: Container(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.only(left: 5, bottom: 10, top: 5, right: 5),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blueGrey, width: 0.4),
                     borderRadius: BorderRadius.circular(15)),
                 child: TextFormField(
                   decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.only(bottom: 5),
                     suffix: Container(
-                      height: 30,
+                      height: 40,
                       //color: Colors.green,
                       child: IconButton(
                           padding: EdgeInsets.all(0),
@@ -571,37 +573,46 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                         bool validatePassword =
                             _formRegisterPasswordKey.currentState.validate();
 
-                        //if (validateEmail && validatePassword) {
-                        //   ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(content: Text('Kayıt Yapılıyor')));
-                        // }
+                        if (validateEmail && validatePassword) {
+                          // ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(content: Text('Kayıt Yapılıyor')));
 
-                        _formRegisterEmailKey.currentState.save();
-                        _formRegisterPasswordKey.currentState.save();
+                          _formRegisterEmailKey.currentState.save();
+                          _formRegisterPasswordKey.currentState.save();
 
-                        try {
-                          TfUser girisYapilanTfUser =
-                              await _tfUserModel.createTfUserWithEmail(
-                                  _registerEmail, _registerPassword);
+                          try {
+                            TfUser girisYapilanTfUser =
+                                await _tfUserModel.createTfUserWithEmail(
+                                    _registerEmail, _registerPassword);
 
-                          print("Kullanici kayıt oldu: " +
-                              girisYapilanTfUser.toString());
+                            print("Kullanici kayıt oldu: " +
+                                girisYapilanTfUser.toString());
 
-                          if (girisYapilanTfUser != null) {
-                            // MotionToast.success(
-                            //   title: "Başarılı",
-                            //   titleStyle: TextStyle(fontWeight: FontWeight.bold),
-                            //   description: "Kayıt Oldunuz !",
-                            //   descriptionStyle: TextStyle(fontSize: 12),
-                            //   width: 300,
-                            // ).show(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) {
-                                return SearchPage();
-                              }),
-                            );
-                          } else {
+                            if (girisYapilanTfUser != null) {
+                              // MotionToast.success(
+                              //   title: "Başarılı",
+                              //   titleStyle: TextStyle(fontWeight: FontWeight.bold),
+                              //   description: "Kayıt Oldunuz !",
+                              //   descriptionStyle: TextStyle(fontSize: 12),
+                              //   width: 300,
+                              // ).show(context);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return SearchPage();
+                                }),
+                              );
+                            } else {
+                              MotionToast.error(
+                                title: "Hata !",
+                                titleStyle:
+                                    TextStyle(fontWeight: FontWeight.bold),
+                                description: "Bir Hata Meydana Oluştu !",
+                                descriptionStyle: TextStyle(fontSize: 12),
+                                width: 300,
+                              ).show(context);
+                            }
+                          } catch (e) {
                             MotionToast.error(
                               title: "Hata !",
                               titleStyle:
@@ -611,14 +622,6 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                               width: 300,
                             ).show(context);
                           }
-                        } catch (e) {
-                          MotionToast.error(
-                            title: "Hata !",
-                            titleStyle: TextStyle(fontWeight: FontWeight.bold),
-                            description: "Bir Hata Meydana Oluştu !",
-                            descriptionStyle: TextStyle(fontSize: 12),
-                            width: 300,
-                          ).show(context);
                         }
                       })
                   : LoadingIndicator(

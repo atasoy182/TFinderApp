@@ -1,6 +1,4 @@
-import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/general_tab_widgets.dart';
 
 class ProfileGeneralTab extends StatefulWidget {

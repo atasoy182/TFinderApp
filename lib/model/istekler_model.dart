@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Istekler {
-  final String ID;
+  final String id;
   String userID;
   String dersIstenilenAlan;
   String profilFotoURL;
   String mesaj;
 
-  Istekler(@required this.ID);
+  Istekler({@required this.id});
 }
