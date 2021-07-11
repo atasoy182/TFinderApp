@@ -10,6 +10,7 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
   ViewState _state = ViewState.Idle;
   TfUserRepository _tfUserRepository = locator.get<TfUserRepository>();
   TfUser _tfUser;
+  String eMailCevap;
 
   TfUser get tfUser => _tfUser;
 
@@ -103,6 +104,30 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
     } catch (e) {
       debugPrint(
           "UserModel View modeldeki signInWithEmail hatası ${e.toString()}");
+      return null;
+    } finally {
+      state = ViewState.Idle;
+    }
+  }
+
+  @override
+  Future<bool> forgotPassword(String email) async {
+    eMailCevap = "";
+    try {
+      state = ViewState.Busy;
+
+      var result = await _tfUserRepository.forgotPassword(email);
+
+      if (!result) {
+        eMailCevap = "Belirtilen Mail Sistemde Bulunamadi !";
+      } else {
+        eMailCevap = "Mail Gönderilmiştir.";
+      }
+
+      return result;
+    } catch (e) {
+      debugPrint(
+          "UserModel View modeldeki forgotPassword hatası ${e.toString()}");
       return null;
     } finally {
       state = ViewState.Idle;

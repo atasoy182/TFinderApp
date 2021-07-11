@@ -100,4 +100,15 @@ class AuthFirebaseService implements AuthBase {
       return null;
     }
   }
+
+  @override
+  Future<bool> forgotPassword(String email) async {
+    try {
+      _firebaseAuth.sendPasswordResetEmail(email: email);
+      return true;
+    } catch (e) {
+      print("forgotPassword  hatası: " + e.toString());
+      return false;
+    }
+  }
 }

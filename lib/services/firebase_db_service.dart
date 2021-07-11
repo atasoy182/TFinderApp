@@ -15,4 +15,17 @@ class DBFirebaseService implements DBBase {
     await _firestore.collection("users").doc(tfUser.userID).set(tfUser.toMap());
     return true;
   }
+
+  @override
+  Future<bool> eMailVarMi(String email) async {
+    var users = await _firestore
+        .collection("users")
+        .where(TFC.email, isEqualTo: email)
+        .get();
+    if (users.docs.length >= 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

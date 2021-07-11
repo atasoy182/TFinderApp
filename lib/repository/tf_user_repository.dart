@@ -64,4 +64,15 @@ class TfUserRepository implements AuthBase {
     }
     return null;
   }
+
+  @override
+  Future<bool> forgotPassword(String email) async {
+    if (_appMode == AppMode.RELEASE) {
+      bool _resultFromDB = await _firebaseDBService.eMailVarMi(email);
+      if (_resultFromDB) {
+        return await _firebaseAuthService.forgotPassword(email);
+      } else
+        return false;
+    }
+  }
 }

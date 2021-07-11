@@ -162,8 +162,11 @@ class _LoginPageBodyState extends State<LoginPageBody> {
   String _loginEmail;
   String _loginPassword;
   bool _obscureText = true;
+  String _forgotEmail;
+
   final _formLoginPasswordKey = GlobalKey<FormState>();
   final _formLoginEmailKey = GlobalKey<FormState>();
+  final _formForgotEmailKey = GlobalKey<FormState>();
 
   // Toggles the password show status
   void _toggle() {
@@ -254,7 +257,88 @@ class _LoginPageBodyState extends State<LoginPageBody> {
             Align(
               alignment: Alignment.topRight,
               child: TextButton(
-                  onPressed: () => print("Şifremi unuttum"),
+                  onPressed: () => showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        final _tfUserModel2 =
+                            Provider.of<TfUserViewModel>(context);
+                        return AlertDialog(
+                          title: const Text('Şifremi Unuttum'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Form(
+                                key: _formForgotEmailKey,
+                                child: TextFormField(
+                                  keyboardType: TextInputType.emailAddress,
+                                  onSaved: (String unutulanMail) =>
+                                      _forgotEmail = unutulanMail,
+                                  validator: (val) {
+                                    if (!val.contains("@")) {
+                                      return 'Geçerli bir email adresi giriniz';
+                                    } else
+                                      return null;
+                                  },
+                                  decoration: InputDecoration(
+                                    // border: OutlineInputBorder(),
+                                    // contentPadding: EdgeInsets.all(0),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.blueGrey, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.blueGrey, width: 1.0),
+                                    ),
+                                    prefixIcon: Icon(Icons.email_outlined),
+                                    hintText: "EMail",
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              _tfUserModel2.state == ViewState.Idle
+                                  ? Text(_tfUserModel2.eMailCevap ?? "")
+                                  : SizedBox(
+                                      height: 50,
+                                      width: 50,
+                                      child: LoadingIndicator(
+                                        indicatorType:
+                                            Indicator.ballRotateChase,
+                                        color: turkuazDefault.withOpacity(0.4),
+                                      ),
+                                    ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                _tfUserModel2.eMailCevap = "";
+                                return Navigator.pop(context, 'Cancel');
+                              },
+                              child: const Text('Geri'),
+                            ),
+                            TextButton(
+                              // TODO mail gönderimi
+                              onPressed: () async {
+                                bool _validateForgotMail =
+                                    _formForgotEmailKey.currentState.validate();
+                                if (_validateForgotMail) {
+                                  _formForgotEmailKey.currentState.save();
+                                  var _mailGonderildi = await _tfUserModel
+                                      .forgotPassword(_forgotEmail);
+                                }
+                              },
+                              child: const Text('Mail Gönder'),
+                            ),
+                          ],
+                        );
+                      }),
                   child: Text(
                     "Şifrenizi mi unuttunuz ?",
                     style: TextStyle(color: Colors.grey),
@@ -291,7 +375,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                 height: 50,
                 child: LoadingIndicator(
                   indicatorType: Indicator.ballRotateChase,
-                  color: morDefault.withOpacity(0.4),
+                  color: turkuazDefault.withOpacity(0.4),
                 ),
               ),
         SizedBox(
@@ -626,7 +710,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                       })
                   : LoadingIndicator(
                       indicatorType: Indicator.ballRotateChase,
-                      color: morDefault.withOpacity(0.4),
+                      color: turkuazDefault.withOpacity(0.4),
                     ),
             ),
           ],

@@ -39,6 +39,9 @@ class MyApp extends StatelessWidget {
               color: Colors.black,
             ),
           ),
+          inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(),
+          ),
         ),
         initialRoute: '/',
         routes: {
