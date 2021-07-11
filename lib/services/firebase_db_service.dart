@@ -9,13 +9,7 @@ class DBFirebaseService implements DBBase {
   Future<bool> saveUserToDB(
       TfUser tfUser, Map<String, dynamic> extraPrms) async {
     Map _eklenecekMap = tfUser.toMap();
-
-    print("111. _eklenecekMap" + _eklenecekMap.toString());
-
     _eklenecekMap.addAll(extraPrms);
-
-    print("222. _eklenecekMap" + _eklenecekMap.toString());
-
     await _firestore.collection("users").doc(tfUser.userID).set(_eklenecekMap);
     return true;
   }
