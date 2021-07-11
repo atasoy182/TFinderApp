@@ -260,7 +260,7 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                   onPressed: () => showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        final _tfUserModel2 =
+                        final _tfUserModel =
                             Provider.of<TfUserViewModel>(context);
                         return AlertDialog(
                           title: const Text('Şifremi Unuttum'),
@@ -302,8 +302,8 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                               SizedBox(
                                 height: 10,
                               ),
-                              _tfUserModel2.state == ViewState.Idle
-                                  ? Text(_tfUserModel2.eMailCevap ?? "")
+                              _tfUserModel.state == ViewState.Idle
+                                  ? Text(_tfUserModel.eMailCevap ?? "")
                                   : SizedBox(
                                       height: 50,
                                       width: 50,
@@ -318,13 +318,12 @@ class _LoginPageBodyState extends State<LoginPageBody> {
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
-                                _tfUserModel2.eMailCevap = "";
+                                _tfUserModel.eMailCevap = "";
                                 return Navigator.pop(context, 'Cancel');
                               },
                               child: const Text('Geri'),
                             ),
                             TextButton(
-                              // TODO mail gönderimi
                               onPressed: () async {
                                 bool _validateForgotMail =
                                     _formForgotEmailKey.currentState.validate();
@@ -501,9 +500,17 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
 
   String _registerEmail;
   String _registerPassword;
+  String _registerName;
+  String _registerSurname;
 
   final _formRegisterEmailKey = GlobalKey<FormState>();
   final _formRegisterPasswordKey = GlobalKey<FormState>();
+  final _formRegisterPassword2Key = GlobalKey<FormState>();
+  final _formRegisterNameKey = GlobalKey<FormState>();
+  final _formRegisterSurnameKey = GlobalKey<FormState>();
+
+  final TextEditingController _pass1 = TextEditingController();
+  final TextEditingController _pass2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -522,6 +529,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               height: 15,
             ),
             Form(
+              key: _formRegisterNameKey,
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blueGrey, width: 0.4),
@@ -529,6 +537,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
                   //keyboardType: TextInputType.emailAddress,
+                  onSaved: (girilenAd) => _registerName = girilenAd,
                   decoration: InputDecoration(
                       hintText: "Adınız",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -540,6 +549,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               height: 5,
             ),
             Form(
+              key: _formRegisterSurnameKey,
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.blueGrey, width: 0.4),
@@ -547,7 +557,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                 ),
                 padding: EdgeInsets.all(5),
                 child: TextFormField(
-                  //keyboardType: TextInputType.emailAddress,
+                  onSaved: (girilenSoyad) => _registerSurname = girilenSoyad,
                   decoration: InputDecoration(
                       hintText: "Soy Adınız",
                       hintStyle: TextStyle(color: Colors.grey),
@@ -593,6 +603,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                     border: Border.all(color: Colors.blueGrey, width: 0.4),
                     borderRadius: BorderRadius.circular(15)),
                 child: TextFormField(
+                  controller: _pass1,
                   decoration: InputDecoration(
                     isDense: true,
                     contentPadding: EdgeInsets.only(bottom: 5),
@@ -617,7 +628,14 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                     border: InputBorder.none,
                   ),
                   obscureText: _obscureText,
-                  validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                  validator: (val) {
+                    if (val.length < 6) {
+                      return "Şifre Çok Kısa";
+                    } else if (_pass1.text != _pass2.text) {
+                      return "Şifreler Aynı Olmalıdır";
+                    } else
+                      return null;
+                  },
                   onSaved: (String girilenRegisterPassword) =>
                       _registerPassword = girilenRegisterPassword,
                 ),
@@ -627,17 +645,26 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
               height: 5,
             ),
             Form(
+              key: _formRegisterPassword2Key,
               child: Container(
                 padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.blueGrey, width: 0.4),
                     borderRadius: BorderRadius.circular(15)),
                 child: TextFormField(
+                  controller: _pass2,
                   decoration: InputDecoration(
                       hintText: "Şifre Tekrar",
                       hintStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none),
-                  validator: (val) => val.length < 6 ? 'Şifre Çok Kısa' : null,
+                  validator: (val) {
+                    if (val.length < 6) {
+                      return "Şifre Çok Kısa";
+                    } else if (_pass1.text != _pass2.text) {
+                      return "Şifreler Aynı Olmalıdır";
+                    } else
+                      return null;
+                  },
                   obscureText: _obscureText,
                 ),
               ),
@@ -656,30 +683,37 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                             _formRegisterEmailKey.currentState.validate();
                         bool validatePassword =
                             _formRegisterPasswordKey.currentState.validate();
+                        bool validatePass =
+                            _formRegisterPasswordKey.currentState.validate();
+                        bool validate2Pass =
+                            _formRegisterPassword2Key.currentState.validate();
 
-                        if (validateEmail && validatePassword) {
-                          // ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(content: Text('Kayıt Yapılıyor')));
-
+                        if (validateEmail &&
+                            validatePassword &&
+                            validatePass &&
+                            validate2Pass) {
                           _formRegisterEmailKey.currentState.save();
                           _formRegisterPasswordKey.currentState.save();
+                          _formRegisterNameKey.currentState.save();
+                          _formRegisterSurnameKey.currentState.save();
+
+                          var extraPrms = {
+                            TFC.adSoyad: _registerName.toString() +
+                                " " +
+                                _registerSurname.toString(),
+                          };
 
                           try {
                             TfUser girisYapilanTfUser =
                                 await _tfUserModel.createTfUserWithEmail(
-                                    _registerEmail, _registerPassword);
+                                    _registerEmail,
+                                    _registerPassword,
+                                    extraPrms);
 
                             print("Kullanici kayıt oldu: " +
                                 girisYapilanTfUser.toString());
 
                             if (girisYapilanTfUser != null) {
-                              // MotionToast.success(
-                              //   title: "Başarılı",
-                              //   titleStyle: TextStyle(fontWeight: FontWeight.bold),
-                              //   description: "Kayıt Oldunuz !",
-                              //   descriptionStyle: TextStyle(fontSize: 12),
-                              //   width: 300,
-                              // ).show(context);
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {

@@ -6,13 +6,11 @@ class DBFirebaseService implements DBBase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<bool> saveUserToDB(TfUser tfUser) async {
-    // Map _eklenecekMap = tfUser.toMap();
-    // _eklenecekMap.addAll(<String, dynamic> {
-    //   TFC.createdAt : FieldValue.serverTimestamp();
-    //   TFC.updatedAt : FieldValue.serverTimestamp();
-    // });
-    await _firestore.collection("users").doc(tfUser.userID).set(tfUser.toMap());
+  Future<bool> saveUserToDB(
+      TfUser tfUser, Map<String, dynamic> extraPrms) async {
+    Map _eklenecekMap = tfUser.toMap();
+    _eklenecekMap.addAll(extraPrms);
+    await _firestore.collection("users").doc(tfUser.userID).set(_eklenecekMap);
     return true;
   }
 

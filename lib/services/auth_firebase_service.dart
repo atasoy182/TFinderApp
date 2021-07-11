@@ -78,7 +78,8 @@ class AuthFirebaseService implements AuthBase {
   }
 
   @override
-  Future<TfUser> createTfUserWithEmail(String email, String password) async {
+  Future<TfUser> createTfUserWithEmail(
+      String email, String password, Map<String, dynamic> extraPrms) async {
     try {
       UserCredential _userCredential = await _firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);

@@ -81,10 +81,12 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
   }
 
   @override
-  Future<TfUser> createTfUserWithEmail(String email, String password) async {
+  Future<TfUser> createTfUserWithEmail(
+      String email, String password, Map<String, dynamic> extraPrms) async {
     try {
       state = ViewState.Busy;
-      _tfUser = await _tfUserRepository.createTfUserWithEmail(email, password);
+      _tfUser = await _tfUserRepository.createTfUserWithEmail(
+          email, password, extraPrms);
       return _tfUser;
     } catch (e) {
       debugPrint(

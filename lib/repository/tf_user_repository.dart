@@ -44,11 +44,13 @@ class TfUserRepository implements AuthBase {
   }
 
   @override
-  Future<TfUser> createTfUserWithEmail(String email, String password) async {
+  Future<TfUser> createTfUserWithEmail(
+      String email, String password, Map<String, dynamic> extraPrms) async {
     if (_appMode == AppMode.RELEASE) {
-      TfUser _tfuser =
-          await _firebaseAuthService.createTfUserWithEmail(email, password);
-      bool _resultFromDB = await _firebaseDBService.saveUserToDB(_tfuser);
+      TfUser _tfuser = await _firebaseAuthService.createTfUserWithEmail(
+          email, password, extraPrms);
+      bool _resultFromDB =
+          await _firebaseDBService.saveUserToDB(_tfuser, extraPrms);
       if (_resultFromDB)
         return _tfuser;
       else
