@@ -38,7 +38,16 @@ class TfUserRepository implements AuthBase {
   @override
   Future<TfUser> signInWithGoogle() async {
     if (_appMode == AppMode.RELEASE) {
-      return await _firebaseAuthService.signInWithGoogle();
+      var GirisYapilanTfUser = await _firebaseAuthService.signInWithGoogle();
+
+      print("TF USER GELEN " + GirisYapilanTfUser.toString());
+
+      bool _resultFromDB =
+          await _firebaseDBService.saveUserToDB(GirisYapilanTfUser, {});
+      if (_resultFromDB)
+        return GirisYapilanTfUser;
+      else
+        return null;
     }
     return null;
   }

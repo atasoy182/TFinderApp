@@ -701,6 +701,7 @@ class _RegisterPageBodyState extends State<RegisterPageBody> {
                             TFC.adSoyad: _registerName.toString() +
                                 " " +
                                 _registerSurname.toString(),
+                            TFC.email: _registerEmail.toString(),
                           };
 
                           try {

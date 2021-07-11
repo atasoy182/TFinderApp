@@ -47,7 +47,7 @@ class TfUser {
   String cepTel;
   List sosyalMedya;
 
-  TfUser({@required this.userID, @required email, @required adSoyad});
+  TfUser({@required this.userID, @required this.email, this.adSoyad});
 
   @override
   String toString() {

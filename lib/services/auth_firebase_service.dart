@@ -23,7 +23,8 @@ class AuthFirebaseService implements AuthBase {
      */
     if (user == null) return null;
 
-    return TfUser(userID: user.uid, email: user.email);
+    return TfUser(
+        userID: user.uid, email: user.email, adSoyad: user.displayName);
   }
 
   @override
