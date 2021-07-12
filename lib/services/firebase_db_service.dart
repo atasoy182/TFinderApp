@@ -19,6 +19,7 @@ class DBFirebaseService implements DBBase {
     var users = await _firestore
         .collection("users")
         .where(TFC.email, isEqualTo: email)
+        .limit(1)
         .get();
     if (users.docs.length >= 1) {
       return true;

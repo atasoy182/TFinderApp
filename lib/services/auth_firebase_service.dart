@@ -103,7 +103,6 @@ class AuthFirebaseService implements AuthBase {
     }
   }
 
-  @override
   Future<bool> forgotPassword(String email) async {
     try {
       _firebaseAuth.sendPasswordResetEmail(email: email);

@@ -18,7 +18,9 @@ class _SearchPageState extends State<SearchPage> {
     SearchPageBody(),
     RequestPage(),
     LocationsPage(),
-    ProfilePage(),
+    ProfilePage(
+      pageMode: ProfilePageMode.Incele,
+    ),
   ];
 
   void _onItemTapped(int index) {

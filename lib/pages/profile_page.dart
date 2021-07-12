@@ -14,7 +14,13 @@ import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
 import 'package:tfinder_app/widgets/fab_menu.dart';
 
+enum ProfilePageMode { Degistir, Incele }
+
 class ProfilePage extends StatefulWidget {
+  final ProfilePageMode pageMode;
+
+  const ProfilePage({Key key, @required this.pageMode}) : super(key: key);
+
   @override
   _ProfilePageState createState() => _ProfilePageState();
 }
@@ -48,9 +54,11 @@ class _ProfilePageState extends State<ProfilePage> {
           },
           body: buildBodyForProfilePage(),
         ),
-        floatingActionButton: ExampleExpandableFab(
-          tabIndex: 3,
-        ),
+        floatingActionButton: widget.pageMode == ProfilePageMode.Incele
+            ? ExampleExpandableFab(
+                tabIndex: 3,
+              )
+            : null,
       ),
     );
   }
