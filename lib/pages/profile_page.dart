@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/locations_page.dart';
 import 'package:tfinder_app/pages/login_page.dart';
+import 'package:tfinder_app/pages/profile_edit_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/reviews_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
@@ -46,20 +47,39 @@ class _ProfilePageState extends State<ProfilePage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        body: NestedScrollView(
-          headerSliverBuilder: (context, value) {
-            return [
-              buildSliverAppBarForProfilePage(_size, _pageController),
-            ];
-          },
-          body: buildBodyForProfilePage(),
-        ),
-        floatingActionButton: widget.pageMode == ProfilePageMode.Incele
-            ? ExampleExpandableFab(
-                tabIndex: 3,
-              )
-            : null,
-      ),
+          body: Stack(
+            children: [
+              NestedScrollView(
+                headerSliverBuilder: (context, value) {
+                  return [
+                    buildSliverAppBarForProfilePage(_size, _pageController),
+                  ];
+                },
+                body: buildBodyForProfilePage(),
+              ),
+              widget.pageMode == ProfilePageMode.Degistir
+                  ? Positioned(
+                      left: 15,
+                      bottom: 16,
+                      child: FloatingActionButton(
+                          onPressed: () {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ProfileEditPage();
+                            }));
+                          },
+                          child: const ImageIcon(
+                            AssetImage("assets/images/pen.png"),
+                            color: Colors.white,
+                          ),
+                          backgroundColor: Theme.of(context).primaryColor),
+                    )
+                  : Container(),
+            ],
+          ),
+          floatingActionButton: ExampleExpandableFab(
+            tabIndex: 3,
+          )),
     );
   }
 

@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
     RequestPage(),
     LocationsPage(),
     ProfilePage(
-      pageMode: ProfilePageMode.Incele,
+      pageMode: ProfilePageMode.Degistir,
     ),
   ];
 
