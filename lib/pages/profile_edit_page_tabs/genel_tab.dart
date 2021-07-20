@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/widgets/look_up.dart';
 
 class ProfileEditGenelTab extends StatefulWidget {
   const ProfileEditGenelTab({Key key}) : super(key: key);
@@ -121,7 +122,15 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                 Expanded(flex: 3, child: Text("Öne çıkarılan alan")),
                 Expanded(
                   flex: 7,
-                  child: DropdownButton(
+                  child: Lookup(
+                    btnColor: defaultLink,
+                    lookupMode: LookupMode.SingleSelect,
+                    allItems: allCategories,
+                    dialogTitle: "Kategori Seçiniz",
+                    baslangicDegerleri: ["Bilgisayar", "Drama"],
+                  ),
+                  /*
+                  DropdownButton(
                     isExpanded: true,
                     value: _oneCikarilanAlan,
                     onChanged: (String newValue) {
@@ -142,6 +151,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                       );
                     }).toList(),
                   ),
+                  */
                 )
               ],
             ),

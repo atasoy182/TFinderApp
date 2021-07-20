@@ -62,6 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       left: 15,
                       bottom: 16,
                       child: FloatingActionButton(
+                          heroTag: "Edit",
                           onPressed: () {
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
