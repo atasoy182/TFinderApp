@@ -4,10 +4,12 @@ enum LookupMode { SingleSelect, MultiSelect }
 
 class Lookup extends StatefulWidget {
   final Color btnColor;
+  final Color iconColor;
   final LookupMode lookupMode;
   final List allItems;
   final String dialogTitle;
   final List baslangicDegerleri;
+  final String hintText;
 
   const Lookup(
       {Key key,
@@ -15,7 +17,9 @@ class Lookup extends StatefulWidget {
       @required this.lookupMode,
       @required this.allItems,
       @required this.dialogTitle,
-      @required this.baslangicDegerleri})
+      @required this.baslangicDegerleri,
+      @required this.iconColor,
+      this.hintText = ""})
       : super(key: key);
 
   @override
@@ -93,7 +97,7 @@ class _LookupState extends State<Lookup> {
                     builder: (BuildContext context) => StatefulBuilder(
                       builder: (context, setState) {
                         return AlertDialog(
-                          title: Text(widget.dialogTitle),
+                          title: Align(child: Text(widget.dialogTitle)),
                           content: Container(
                               height: MediaQuery.of(context).size.height / 2,
                               //color: Colors.green,
@@ -110,13 +114,13 @@ class _LookupState extends State<Lookup> {
                                         decoration: new InputDecoration(
                                             focusedBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 1.0),
+                                                  color: widget.iconColor,
+                                                  width: 0.5),
                                             ),
                                             enabledBorder: OutlineInputBorder(
                                               borderSide: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 1.0),
+                                                  color: widget.iconColor,
+                                                  width: 0.5),
                                             ),
                                             border: OutlineInputBorder(
                                               borderRadius:
@@ -127,12 +131,24 @@ class _LookupState extends State<Lookup> {
                                               padding: EdgeInsets.all(0),
                                               icon: Icon(
                                                 Icons.search_sharp,
-                                                color: Colors.black,
-                                                size: 35,
+                                                color: widget.iconColor,
+                                                size: 32,
                                               ),
                                               onPressed: () {
                                                 searchOperation(
                                                     _controller.text);
+                                              },
+                                            ),
+                                            suffixIcon: IconButton(
+                                              padding: EdgeInsets.all(0),
+                                              icon: Icon(
+                                                Icons.highlight_remove_sharp,
+                                                color: Colors.redAccent,
+                                                size: 32,
+                                              ),
+                                              onPressed: () {
+                                                _controller.clear();
+                                                searchOperation("");
                                               },
                                             ),
                                             hintText: "Arama...",
@@ -140,36 +156,75 @@ class _LookupState extends State<Lookup> {
                                                 color: Colors.black)),
                                         onChanged: searchOperation,
                                       )),
+                                  widget.hintText.length > 0
+                                      ? Expanded(
+                                          flex: 1,
+                                          child: Container(
+                                            margin: EdgeInsets.only(bottom: 5),
+                                            child: Center(
+                                              child: Text(
+                                                widget.hintText,
+                                                style: TextStyle(
+                                                    fontSize: 12,
+                                                    color: Colors.grey),
+                                              ),
+                                            ),
+                                          ))
+                                      : null,
                                   Expanded(
-                                    flex: 8,
+                                    flex: 7,
                                     child: ListView.builder(
                                         padding: const EdgeInsets.only(
                                             left: 5, right: 5, top: 5),
-                                        itemCount: filteredItems.length,
+                                        itemCount: filteredItems.length +
+                                            selectedItems.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
-                                          return ListTile(
-                                            onTap: () {
-                                              if (!selectedItems.contains(
-                                                  filteredItems[index])) {
-                                                selectedItems
-                                                    .add(filteredItems[index]);
-                                              } else {
-                                                selectedItems.remove(
-                                                    filteredItems[index]);
-                                              }
-                                              setState(() {});
-                                            },
-                                            title:
-                                                Text('${filteredItems[index]}'),
-                                            trailing: selectedItems.contains(
-                                                    filteredItems[index])
-                                                ? Icon(
-                                                    Icons.check,
-                                                    color: Colors.green,
-                                                  )
-                                                : null,
-                                          );
+                                          filteredItems = [
+                                            ...selectedItems..sort(),
+                                            ...filteredItems..sort()
+                                          ].toSet().toList();
+                                          try {
+                                            return ListTile(
+                                              onTap: () {
+                                                if (!selectedItems.contains(
+                                                    filteredItems[index])) {
+                                                  if (widget.lookupMode ==
+                                                      LookupMode.MultiSelect) {
+                                                    selectedItems.add(
+                                                        filteredItems[index]);
+                                                  } else {
+                                                    if (selectedItems.length >=
+                                                        1) {
+                                                      ScaffoldMessenger.of(
+                                                              context)
+                                                          .showSnackBar(SnackBar(
+                                                              content: Text(
+                                                                  'Bir Seçimden Fazla Yapılamaz !')));
+                                                    } else {
+                                                      selectedItems.add(
+                                                          filteredItems[index]);
+                                                    }
+                                                  }
+                                                } else {
+                                                  selectedItems.remove(
+                                                      filteredItems[index]);
+                                                }
+                                                setState(() {});
+                                              },
+                                              title: Text(
+                                                  '${filteredItems[index]}'),
+                                              trailing: selectedItems.contains(
+                                                      filteredItems[index])
+                                                  ? Icon(
+                                                      Icons.check,
+                                                      color: Colors.green,
+                                                    )
+                                                  : null,
+                                            );
+                                          } catch (e) {
+                                            return null;
+                                          }
                                         }),
                                   ),
                                 ],
@@ -180,7 +235,10 @@ class _LookupState extends State<Lookup> {
                                 setState(() {});
                                 Navigator.pop(context, 'Tamam');
                               },
-                              child: const Text('Tamam'),
+                              child: const Text(
+                                'Tamam',
+                                style: TextStyle(color: Colors.blue),
+                              ),
                             ),
                           ],
                         );

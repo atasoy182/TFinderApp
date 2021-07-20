@@ -124,10 +124,13 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                   flex: 7,
                   child: Lookup(
                     btnColor: defaultLink,
+                    iconColor: defaultLink,
                     lookupMode: LookupMode.SingleSelect,
                     allItems: allCategories,
                     dialogTitle: "Kategori Seçiniz",
-                    baslangicDegerleri: ["Bilgisayar", "Drama"],
+                    baslangicDegerleri: ["Bilgisayar"],
+                    hintText:
+                        "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                   ),
                   /*
                   DropdownButton(
