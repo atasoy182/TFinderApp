@@ -16,7 +16,8 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
 
   String _adSoyad;
   String _oneCikarilanAlan = "Bos";
-  String _konum = "Ankara";
+  String _sehir = "Ankara";
+  String _ilce = "Çankaya";
 
   final _formAdsoyadKey = GlobalKey<FormState>();
   final _formOneCikarilanAlanKey = GlobalKey<FormState>();
@@ -131,6 +132,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                     baslangicDegerleri: ["Bilgisayar"],
                     hintText:
                         "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
+                    okCliked: (secilenler) {
+                      print("Secilenler:" + secilenler.toString());
+                    },
                   ),
                   /*
                   DropdownButton(
@@ -160,7 +164,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
             ),
           ),
         ),
-        // Konum
+        // Ders Verilen Alanlar
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -168,22 +172,37 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
             height: 60,
             child: Row(
               children: [
-                Expanded(flex: 3, child: Text("Konum")),
+                Expanded(flex: 3, child: Text("Ders verilen alanlar")),
                 Expanded(
                   flex: 7,
-                  child: DropdownButton(
+                  child: Lookup(
+                    btnColor: defaultLink,
+                    iconColor: defaultLink,
+                    lookupMode: LookupMode.MultiSelect,
+                    allItems: allCategories,
+                    dialogTitle: "Kategori Seçiniz",
+                    baslangicDegerleri: ["Bilgisayar", "İngilizce"],
+                    hintText:
+                        "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
+                    okCliked: (secilenler) {
+                      print("Secilenler:" + secilenler.toString());
+                    },
+                  ),
+                  /*
+                  DropdownButton(
                     isExpanded: true,
-                    value: _konum,
+                    value: _oneCikarilanAlan,
                     onChanged: (String newValue) {
                       setState(() {
-                        _konum = newValue;
+                        _oneCikarilanAlan = newValue;
                       });
                     },
                     items: <String>[
-                      'Ankara',
-                      'İstanbul',
-                      'Samsun',
-                      'Bursa',
+                      'ASDAEDFEWDEWDWEDWEDWEDWEDWEDEWFDEWF',
+                      'Two',
+                      'Free',
+                      'Four',
+                      'Bos'
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -191,12 +210,118 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                       );
                     }).toList(),
                   ),
+                  */
                 )
               ],
             ),
           ),
         ),
+        // Şehir
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            //color: Colors.green,
+            height: 60,
+            child: Row(
+              children: [
+                Expanded(flex: 3, child: Text("Şehir")),
+                Expanded(
+                  flex: 7,
+                  child: DropdownButton(
+                    key: UniqueKey(),
+                    isExpanded: true,
+                    value: _sehir,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _ilce = "Seçim Yapınız";
+                        _sehir = newValue;
+                      });
+                    },
+                    items: allStatesOfTurkey
+                        .map((item) => buildDropdownMenuItem(item))
+                        .toList(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        // İlçe
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            //color: Colors.green,
+            height: 60,
+            child: Row(
+              children: [
+                Expanded(flex: 3, child: Text("İlçe")),
+                Expanded(
+                  flex: 7,
+                  child: DropdownButton(
+                    key: UniqueKey(),
+                    isExpanded: true,
+                    value: _ilce,
+                    onChanged: (String newValue) {
+                      setState(() {
+                        _ilce = newValue;
+                      });
+                    },
+                    items: _buildIlceItemsForDropDown(),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: SizedBox(
+            height: 100,
+          ),
+        ),
       ],
+    );
+  }
+
+  List<Widget> _buildIlceItemsForDropDown() {
+    List<String> ilceler = [];
+    var tempIlceler = [];
+    String _sehirID = '0';
+
+    if (_sehir != "Seçim Yapınız") {
+      for (var i = 0; i < allStatesOfTurkey.length; i++) {
+        // Sehirin idsini bulalım.
+        if (allStatesOfTurkey[i]['aciklama'] == _sehir) {
+          _sehirID = allStatesOfTurkey[i]['kodu'].toString();
+        }
+      }
+
+      tempIlceler =
+          allCitiesOfTurkey.where((f) => f['il'] == _sehirID).toList();
+
+      tempIlceler.forEach((element) {
+        if (!ilceler.contains("Seçim Yapınız")) {
+          ilceler.add("Seçim Yapınız");
+        }
+        ilceler.add(element["aciklama"]);
+      });
+    } else {
+      ilceler.add("Seçim Yapınız");
+    }
+
+    return ilceler.map<DropdownMenuItem<String>>((String deg) {
+      return DropdownMenuItem<String>(
+        key: UniqueKey(),
+        value: deg,
+        child: Text(deg),
+      );
+    }).toList();
+  }
+
+  DropdownMenuItem<String> buildDropdownMenuItem(dynamic item) {
+    return DropdownMenuItem(
+      key: UniqueKey(),
+      value: item['aciklama'],
+      child: Text(item['aciklama'] ?? ""),
     );
   }
 }

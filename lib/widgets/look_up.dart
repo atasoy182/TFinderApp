@@ -10,6 +10,7 @@ class Lookup extends StatefulWidget {
   final String dialogTitle;
   final List baslangicDegerleri;
   final String hintText;
+  final Function okCliked;
 
   const Lookup(
       {Key key,
@@ -19,7 +20,8 @@ class Lookup extends StatefulWidget {
       @required this.dialogTitle,
       @required this.baslangicDegerleri,
       @required this.iconColor,
-      this.hintText = ""})
+      this.hintText = "",
+      @required this.okCliked})
       : super(key: key);
 
   @override
@@ -233,6 +235,7 @@ class _LookupState extends State<Lookup> {
                             TextButton(
                               onPressed: () {
                                 setState(() {});
+                                widget.okCliked(selectedItems);
                                 Navigator.pop(context, 'Tamam');
                               },
                               child: const Text(
