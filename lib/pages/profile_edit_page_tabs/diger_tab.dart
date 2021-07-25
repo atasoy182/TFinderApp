@@ -155,6 +155,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
         ),
 
         // Eğitim
+        // TODO eğitim ekle/düzenle gibi bir yapı düşünebilir. Hem arama yapılacak hem düzeltme yapılacak.
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
@@ -214,6 +215,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
         ),
 
         // İş Deneyimi
+        // TODO deneyim ekle/düzenle gibi bir yapı düşünebilir. Hem arama yapılacak hem düzeltme yapılacak.
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),

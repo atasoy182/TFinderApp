@@ -423,6 +423,7 @@ class ProfilPageMainInfos extends StatelessWidget {
                                 size: 32,
                               ),
                               onPressed: () async {
+                                // TODO drop down ile editleme,mesaj atma,tel numarası görme, alanları yapılabilir.
                                 MotionToast.info(
                                         title: "Çıkış !",
                                         titleStyle: TextStyle(

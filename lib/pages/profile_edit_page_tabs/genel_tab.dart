@@ -121,7 +121,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
           ),
         ),
         // Ceptel
-        // TODO ceptel onaylama yapılacak..
+        // TODO ceptel onaylama yapılacak.. Numaram görünsün mü ? yapılacak
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
