@@ -2,7 +2,9 @@
     package="com.mehmetberkayatasoy.tfinder_app">
    <application
         android:label="tfinder_app"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true"
+       >
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyDB3QX8D6hiHg7rUQVHMvs_CsoMNrletRg"/>
         <activity

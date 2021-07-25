@@ -44,6 +44,8 @@ dependencies:
   motion_toast: ^1.0.0
   google_sign_in: ^4.0.6
   sqflite: ^2.0.0
+  mask_input_formatter: ^0.0.3
+  http: ^0.12.0
 
 #  video_player:
 #    git:

@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/look_up.dart';
 
@@ -15,13 +16,14 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
       "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
 
   String _adSoyad;
-  String _oneCikarilanAlan = "Bos";
+  String _ceptel;
   String _sehir = "Ankara";
   String _ilce = "Çankaya";
 
   final _formAdsoyadKey = GlobalKey<FormState>();
-  final _formOneCikarilanAlanKey = GlobalKey<FormState>();
-  final _formKonumKey = GlobalKey<FormState>();
+  final _formCepTelKey = GlobalKey<FormState>();
+  MaskInputFormatter phoneFormatter =
+      MaskInputFormatter(mask: '+## (###) ###-##-##');
 
   @override
   Widget build(BuildContext context) {
@@ -53,21 +55,26 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   ListTile(
-                                    leading: Icon(Icons.photo),
+                                    leading: Icon(
+                                      Icons.photo,
+                                      color: defaultLink,
+                                    ),
                                     title: new Text('Galeriden Resim Seç'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.camera),
+                                    leading:
+                                        Icon(Icons.camera, color: defaultLink),
                                     title: new Text('Kameradan Resim Seç'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.highlight_remove),
+                                    leading: Icon(Icons.highlight_remove,
+                                        color: defaultLink),
                                     title: new Text('Profil Resmini Kaldır'),
                                     onTap: () {
                                       Navigator.pop(context);
@@ -97,7 +104,39 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
               child: TextFormField(
                 onSaved: (String adSoyadInput) => _adSoyad = adSoyadInput,
                 decoration: InputDecoration(
+                  icon: Icon(Icons.person, color: defaultLink),
                   labelText: 'Ad Soyad',
+                  // border: OutlineInputBorder(),
+                  // contentPadding: EdgeInsets.all(0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                  ),
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+              ),
+            ),
+          ),
+        ),
+        // Ceptel
+        // TODO ceptel onaylama yapılacak..
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            //color: Colors.green,
+            height: 60,
+            child: Form(
+              key: _formCepTelKey,
+              child: TextFormField(
+                initialValue: "+90 (5##) ###-##-##",
+                inputFormatters: [phoneFormatter],
+                keyboardType: TextInputType.phone,
+                onSaved: (String input) => _ceptel = input,
+                decoration: InputDecoration(
+                  icon: Icon(Icons.phone, color: defaultLink),
+                  labelText: 'Cep Telefon',
                   // border: OutlineInputBorder(),
                   // contentPadding: EdgeInsets.all(0),
                   focusedBorder: OutlineInputBorder(
@@ -136,29 +175,6 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                       print("Secilenler:" + secilenler.toString());
                     },
                   ),
-                  /*
-                  DropdownButton(
-                    isExpanded: true,
-                    value: _oneCikarilanAlan,
-                    onChanged: (String newValue) {
-                      setState(() {
-                        _oneCikarilanAlan = newValue;
-                      });
-                    },
-                    items: <String>[
-                      'ASDAEDFEWDEWDWEDWEDWEDWEDWEDEWFDEWF',
-                      'Two',
-                      'Free',
-                      'Four',
-                      'Bos'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                  */
                 )
               ],
             ),
@@ -188,29 +204,6 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                       print("Secilenler:" + secilenler.toString());
                     },
                   ),
-                  /*
-                  DropdownButton(
-                    isExpanded: true,
-                    value: _oneCikarilanAlan,
-                    onChanged: (String newValue) {
-                      setState(() {
-                        _oneCikarilanAlan = newValue;
-                      });
-                    },
-                    items: <String>[
-                      'ASDAEDFEWDEWDWEDWEDWEDWEDWEDEWFDEWF',
-                      'Two',
-                      'Free',
-                      'Four',
-                      'Bos'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                  ),
-                  */
                 )
               ],
             ),

@@ -248,7 +248,7 @@ packages:
     source: hosted
     version: "0.9.2"
   http:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: http
       url: "https://pub.dartlang.org"
@@ -289,6 +289,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
+  mask_input_formatter:
+    dependency: "direct main"
+    description:
+      name: mask_input_formatter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.3"
   matcher:
     dependency: transitive
     description:
