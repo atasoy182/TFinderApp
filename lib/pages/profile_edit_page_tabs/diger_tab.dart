@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
+import 'package:tfinder_app/widgets/education_experince_widget.dart';
 
 class ProfileEditDigerTab extends StatefulWidget {
   const ProfileEditDigerTab({Key key}) : super(key: key);
@@ -176,14 +177,14 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Text(
                     egitimler[index]['yil'],
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
                 Expanded(
-                  flex: 7,
+                  flex: 6,
                   child: Column(
                     children: [
                       Text(egitimler[index]['okul'],
@@ -196,18 +197,22 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                       ),
                     ],
                   ),
-                )
+                ),
+                Expanded(
+                  flex: 2,
+                  child: EducationExperince(
+                    edExMode: EdExMode.IconButton,
+                    icon: Icons.edit,
+                  ),
+                ),
               ],
             ),
           );
         }, childCount: egitimler.length)),
         SliverToBoxAdapter(
-          child: TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Eğitim Ekle',
-              style: TextStyle(color: defaultLink, fontSize: 18),
-            ),
+          child: EducationExperince(
+            edExMode: EdExMode.TextButton,
+            textButtonText: "Eğitim Ekle",
           ),
         ),
         SliverToBoxAdapter(
@@ -236,14 +241,14 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
-                  flex: 3,
+                  flex: 2,
                   child: Text(
                     deneyimler[index]['yil'],
                     style: TextStyle(fontSize: 20),
                   ),
                 ),
                 Expanded(
-                  flex: 7,
+                  flex: 6,
                   child: Column(
                     children: [
                       Text(deneyimler[index]['isyeri'],
@@ -256,18 +261,19 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                       ),
                     ],
                   ),
-                )
+                ),
+                EducationExperince(
+                  edExMode: EdExMode.IconButton,
+                  icon: Icons.edit,
+                ),
               ],
             ),
           );
         }, childCount: deneyimler.length)),
         SliverToBoxAdapter(
-          child: TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Deneyim Ekle',
-              style: TextStyle(color: defaultLink, fontSize: 18),
-            ),
+          child: EducationExperince(
+            edExMode: EdExMode.TextButton,
+            textButtonText: "Deneyim Ekle",
           ),
         ),
         SliverToBoxAdapter(
