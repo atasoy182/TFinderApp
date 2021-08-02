@@ -33,7 +33,6 @@ class _LookupState extends State<Lookup> {
   List filteredItems;
   List allItemsList;
   List secilmisItemsList;
-  String filterString = "";
 
   final TextEditingController _controller = new TextEditingController();
 
@@ -65,7 +64,6 @@ class _LookupState extends State<Lookup> {
     }
 
     setState(() {
-      filterString = _controller.text;
       filteredItems = localList;
     });
   }
@@ -95,159 +93,162 @@ class _LookupState extends State<Lookup> {
                 ),
                 onPressed: () async {
                   final res = await showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => StatefulBuilder(
-                      builder: (context, setState) {
-                        return AlertDialog(
-                          title: Align(child: Text(widget.dialogTitle)),
-                          content: Container(
-                              height: MediaQuery.of(context).size.height / 2,
-                              //color: Colors.green,
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Expanded(
-                                      flex: 2,
-                                      child: TextField(
-                                        controller: _controller,
-                                        style: new TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        decoration: new InputDecoration(
-                                            focusedBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: widget.iconColor,
-                                                  width: 0.5),
+                      context: context,
+                      builder: (BuildContext context) {
+                        return StatefulBuilder(
+                          builder: (context, setState) {
+                            return AlertDialog(
+                              title: Align(child: Text(widget.dialogTitle)),
+                              content: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height / 2,
+                                  //color: Colors.green,
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Expanded(
+                                          flex: 2,
+                                          child: TextField(
+                                            controller: _controller,
+                                            style: new TextStyle(
+                                              color: Colors.black,
                                             ),
-                                            enabledBorder: OutlineInputBorder(
-                                              borderSide: BorderSide(
-                                                  color: widget.iconColor,
-                                                  width: 0.5),
-                                            ),
-                                            border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15.0),
-                                            ),
-                                            filled: true,
-                                            prefixIcon: IconButton(
-                                              padding: EdgeInsets.all(0),
-                                              icon: Icon(
-                                                Icons.search_sharp,
-                                                color: widget.iconColor,
-                                                size: 32,
-                                              ),
-                                              onPressed: () {
-                                                searchOperation(
-                                                    _controller.text);
-                                              },
-                                            ),
-                                            suffixIcon: IconButton(
-                                              padding: EdgeInsets.all(0),
-                                              icon: Icon(
-                                                Icons.highlight_remove_sharp,
-                                                color: Colors.redAccent,
-                                                size: 32,
-                                              ),
-                                              onPressed: () {
-                                                _controller.clear();
-                                                searchOperation("");
-                                              },
-                                            ),
-                                            hintText: "Arama...",
-                                            hintStyle: new TextStyle(
-                                                color: Colors.black)),
-                                        onChanged: searchOperation,
-                                      )),
-                                  widget.hintText.length > 0
-                                      ? Expanded(
-                                          flex: 1,
-                                          child: Container(
-                                            margin: EdgeInsets.only(bottom: 5),
-                                            child: Center(
-                                              child: Text(
-                                                widget.hintText,
-                                                style: TextStyle(
-                                                    fontSize: 12,
-                                                    color: Colors.grey),
-                                              ),
-                                            ),
-                                          ))
-                                      : null,
-                                  Expanded(
-                                    flex: 7,
-                                    child: ListView.builder(
-                                        padding: const EdgeInsets.only(
-                                            left: 5, right: 5, top: 5),
-                                        itemCount: filteredItems.length +
-                                            selectedItems.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          filteredItems = [
-                                            ...selectedItems..sort(),
-                                            ...filteredItems..sort()
-                                          ].toSet().toList();
-                                          try {
-                                            return ListTile(
-                                              onTap: () {
-                                                if (!selectedItems.contains(
-                                                    filteredItems[index])) {
-                                                  if (widget.lookupMode ==
-                                                      LookupMode.MultiSelect) {
-                                                    selectedItems.add(
-                                                        filteredItems[index]);
-                                                  } else {
-                                                    if (selectedItems.length >=
-                                                        1) {
-                                                      ScaffoldMessenger.of(
-                                                              context)
-                                                          .showSnackBar(SnackBar(
-                                                              content: Text(
-                                                                  'Bir Seçimden Fazla Yapılamaz !')));
+                                            decoration: new InputDecoration(
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: widget.iconColor,
+                                                      width: 0.5),
+                                                ),
+                                                enabledBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: widget.iconColor,
+                                                      width: 0.5),
+                                                ),
+                                                border: OutlineInputBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0),
+                                                ),
+                                                filled: true,
+                                                prefixIcon: IconButton(
+                                                  padding: EdgeInsets.all(0),
+                                                  icon: Icon(
+                                                    Icons.search_sharp,
+                                                    color: widget.iconColor,
+                                                    size: 32,
+                                                  ),
+                                                  onPressed: () {
+                                                    searchOperation(
+                                                        _controller.text);
+                                                  },
+                                                ),
+                                                suffixIcon: IconButton(
+                                                  padding: EdgeInsets.all(0),
+                                                  icon: Icon(
+                                                    Icons
+                                                        .highlight_remove_sharp,
+                                                    color: Colors.redAccent,
+                                                    size: 32,
+                                                  ),
+                                                  onPressed: () {
+                                                    _controller.clear();
+                                                    searchOperation("");
+                                                  },
+                                                ),
+                                                hintText: "Arama...",
+                                                hintStyle: new TextStyle(
+                                                    color: Colors.black)),
+                                            onChanged: searchOperation,
+                                          )),
+                                      widget.hintText.length > 0
+                                          ? Expanded(
+                                              flex: 1,
+                                              child: Container(
+                                                margin:
+                                                    EdgeInsets.only(bottom: 5),
+                                                child: Center(
+                                                  child: Text(
+                                                    widget.hintText,
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: Colors.grey),
+                                                  ),
+                                                ),
+                                              ))
+                                          : null,
+                                      Expanded(
+                                        flex: 7,
+                                        child: ListView.builder(
+                                            padding: const EdgeInsets.only(
+                                                left: 5, right: 5, top: 5),
+                                            itemCount: filteredItems.length +
+                                                selectedItems.length,
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              filteredItems = [
+                                                ...selectedItems..sort(),
+                                                ...filteredItems..sort()
+                                              ].toSet().toList();
+                                              try {
+                                                return ListTile(
+                                                  onTap: () {
+                                                    if (!selectedItems.contains(
+                                                        filteredItems[index])) {
+                                                      if (widget.lookupMode ==
+                                                          LookupMode
+                                                              .MultiSelect) {
+                                                        selectedItems.add(
+                                                            filteredItems[
+                                                                index]);
+                                                      } else {
+                                                        selectedItems = [
+                                                          filteredItems[index]
+                                                        ];
+                                                      }
                                                     } else {
-                                                      selectedItems.add(
+                                                      selectedItems.remove(
                                                           filteredItems[index]);
                                                     }
-                                                  }
-                                                } else {
-                                                  selectedItems.remove(
-                                                      filteredItems[index]);
-                                                }
-                                                setState(() {});
-                                              },
-                                              title: Text(
-                                                  '${filteredItems[index]}'),
-                                              trailing: selectedItems.contains(
-                                                      filteredItems[index])
-                                                  ? Icon(
-                                                      Icons.check,
-                                                      color: Colors.green,
-                                                    )
-                                                  : null,
-                                            );
-                                          } catch (e) {
-                                            return null;
-                                          }
-                                        }),
+                                                    setState(() {});
+                                                  },
+                                                  title: Text(
+                                                      '${filteredItems[index]}'),
+                                                  trailing: selectedItems
+                                                          .contains(
+                                                              filteredItems[
+                                                                  index])
+                                                      ? Icon(
+                                                          Icons.check,
+                                                          color: Colors.green,
+                                                        )
+                                                      : null,
+                                                );
+                                              } catch (e) {
+                                                return null;
+                                              }
+                                            }),
+                                      ),
+                                    ],
+                                  )),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {});
+                                    widget.okCliked(selectedItems);
+                                    Navigator.pop(context, 'Tamam');
+                                  },
+                                  child: const Text(
+                                    'Tamam',
+                                    style: TextStyle(color: Colors.blue),
                                   ),
-                                ],
-                              )),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                setState(() {});
-                                widget.okCliked(selectedItems);
-                                Navigator.pop(context, 'Tamam');
-                              },
-                              child: const Text(
-                                'Tamam',
-                                style: TextStyle(color: Colors.blue),
-                              ),
-                            ),
-                          ],
+                                ),
+                              ],
+                            );
+                          },
                         );
-                      },
-                    ),
-                  );
+                      });
                   setState(() {});
                 },
               ),

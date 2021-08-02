@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tfinder_app/widgets/base_button.dart';
 import 'package:tfinder_app/widgets/look_up.dart';
 
 import '../constants.dart';
@@ -45,14 +46,18 @@ class _EducationExperinceState extends State<EducationExperince> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) {
-        return EducationExperincePage();
+        return EducationExperincePage(
+          edExMode: widget.edExMode,
+        );
       }),
     );
   }
 }
 
 class EducationExperincePage extends StatefulWidget {
-  const EducationExperincePage({Key key}) : super(key: key);
+  final EdExMode edExMode;
+
+  const EducationExperincePage({Key key, this.edExMode}) : super(key: key);
 
   @override
   _EducationExperincePageState createState() => _EducationExperincePageState();
@@ -60,6 +65,7 @@ class EducationExperincePage extends StatefulWidget {
 
 class _EducationExperincePageState extends State<EducationExperincePage> {
   var seciliYil = "Seçim Yapınız";
+  var derece = "Seçim Yapınız";
 
   @override
   Widget build(BuildContext context) {
@@ -153,6 +159,98 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                   )
                 ],
               ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Bölüm",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                  ),
+                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                      flex: 6,
+                      child: Lookup(
+                        btnColor: defaultLink,
+                        lookupMode: LookupMode.SingleSelect,
+                        allItems: allDepartments,
+                        baslangicDegerleri: ["Bilgisayar Mühendisliği"],
+                        iconColor: defaultLink,
+                        hintText:
+                            "Bilgisayar Mühendisliği, İngilizce Öğretmenliği gibi aratabilisiniz !",
+                        okCliked: (selectedItems) {},
+                        dialogTitle: "Bölüm Seçiniz",
+                      ))
+                ],
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    flex: 3,
+                    child: Align(
+                      child: Text(
+                        "Derece",
+                        style: TextStyle(fontSize: 17),
+                      ),
+                    ),
+                  ),
+                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                    flex: 6,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: DropdownButton(
+                        isExpanded: true,
+                        value: derece,
+                        onChanged: (String newValue) {
+                          setState(() {
+                            derece = newValue;
+                          });
+                        },
+                        items: allDegrees
+                            .map((item) => buildDropdownMenuItem(item))
+                            .toList(),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              Row(
+                children: [
+                  widget.edExMode == EdExMode.IconButton
+                      ? Expanded(
+                          flex: 5,
+                          child: DefaultButton(
+                            btnText: "Sil",
+                            btnCliked: () {},
+                            btnColor: dangerDefault,
+                          ),
+                        )
+                      : Expanded(flex: 5, child: Container()),
+                  Expanded(flex: 1, child: Container()),
+                  Expanded(
+                    flex: 5,
+                    child: DefaultButton(
+                      btnText: "Kaydet",
+                      btnCliked: () {},
+                      btnColor: successDefault,
+                    ),
+                  ),
+                ],
+              )
             ],
           )),
     );

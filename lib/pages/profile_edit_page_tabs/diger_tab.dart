@@ -16,12 +16,14 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
     {
       "yil": "2021",
       "okul": "İstanbul Arel Üniversitesi",
-      "bolum": "Bilgisayar Mühendisliği"
+      "bolum": "Bilgisayar Mühendisliği",
+      "derece": "Lisans",
     },
     {
       "yil": "2021",
       "okul": "İstanbul Arel Üniversitesi",
-      "bolum": "Bilgisayar Mühendisliği"
+      "bolum": "Bilgisayar Mühendisliği",
+      "derece": "Lisans",
     }
   ];
   List deneyimler = [
@@ -187,13 +189,19 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   flex: 6,
                   child: Column(
                     children: [
-                      Text(egitimler[index]['okul'],
+                      Text(egitimler[index]['okul'] ?? "",
                           style: TextStyle(fontWeight: FontWeight.bold)),
                       SizedBox(
                         height: 5,
                       ),
                       Text(
-                        egitimler[index]['bolum'],
+                        egitimler[index]['bolum'] ?? "",
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        egitimler[index]['derece'] ?? "",
                       ),
                     ],
                   ),
@@ -218,9 +226,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
         SliverToBoxAdapter(
           child: Divider(),
         ),
-
         // İş Deneyimi
-        // TODO deneyim ekle/düzenle gibi bir yapı düşünebilir. Hem arama yapılacak hem düzeltme yapılacak.
         SliverToBoxAdapter(
           child: Container(
             margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
