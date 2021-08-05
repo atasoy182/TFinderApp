@@ -282,7 +282,7 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                               TextButton(
                                 onPressed: () {
                                   setState(() {});
-                                  //widget.okCliked(selectedItems);
+                                  widget.okCliked(selectedItem);
                                   Navigator.pop(context, 'Tamam');
                                 },
                                 child: const Text(

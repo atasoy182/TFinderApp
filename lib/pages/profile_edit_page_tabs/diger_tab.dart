@@ -65,28 +65,32 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   ListTile(
-                                    leading: Icon(Icons.link),
+                                    leading:
+                                        Icon(Icons.link, color: defaultLink),
                                     title: new Text('URL linkinden getir'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.photo),
+                                    leading:
+                                        Icon(Icons.photo, color: defaultLink),
                                     title: new Text('Galeriden Video Seç'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.camera),
+                                    leading:
+                                        Icon(Icons.camera, color: defaultLink),
                                     title: new Text('Kameradan Video Çek'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.highlight_remove),
+                                    leading: Icon(Icons.highlight_remove,
+                                        color: defaultLink),
                                     title: new Text('Tanıtım Videosu Kaldır'),
                                     onTap: () {
                                       Navigator.pop(context);
@@ -183,25 +187,31 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   child: Text(
                     egitimler[index]['yil'],
                     style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
                   flex: 6,
                   child: Column(
                     children: [
-                      Text(egitimler[index]['okul'] ?? "",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text(
+                        egitimler[index]['okul'] ?? "",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
+                      ),
                       SizedBox(
                         height: 5,
                       ),
                       Text(
                         egitimler[index]['bolum'] ?? "",
+                        textAlign: TextAlign.center,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       Text(
                         egitimler[index]['derece'] ?? "",
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -211,6 +221,16 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   child: EducationExperince(
                     edExMode: EdExMode.IconButton,
                     icon: Icons.edit,
+                    operation: 0,
+                    values: egitimler[index],
+                    kaydetCliked: (kaydedilecekDeger) {
+                      egitimler[index] = kaydedilecekDeger;
+                      setState(() {});
+                    },
+                    silCliked: (silinecekDeger) {
+                      egitimler.removeAt(index);
+                      setState(() {});
+                    },
                   ),
                 ),
               ],
@@ -221,6 +241,11 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
           child: EducationExperince(
             edExMode: EdExMode.TextButton,
             textButtonText: "Eğitim Ekle",
+            operation: 0,
+            kaydetCliked: (kaydedilecekDeger) {
+              egitimler.add(kaydedilecekDeger);
+              setState(() {});
+            },
           ),
         ),
         SliverToBoxAdapter(
@@ -251,6 +276,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   child: Text(
                     deneyimler[index]['yil'],
                     style: TextStyle(fontSize: 20),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 Expanded(
@@ -258,12 +284,14 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   child: Column(
                     children: [
                       Text(deneyimler[index]['isyeri'],
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                          textAlign: TextAlign.center),
                       SizedBox(
                         height: 5,
                       ),
                       Text(
                         deneyimler[index]['alan'],
+                        textAlign: TextAlign.center,
                       ),
                     ],
                   ),
@@ -271,6 +299,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                 EducationExperince(
                   edExMode: EdExMode.IconButton,
                   icon: Icons.edit,
+                  operation: 1,
                 ),
               ],
             ),
@@ -280,6 +309,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
           child: EducationExperince(
             edExMode: EdExMode.TextButton,
             textButtonText: "Deneyim Ekle",
+            operation: 1,
           ),
         ),
         SliverToBoxAdapter(
