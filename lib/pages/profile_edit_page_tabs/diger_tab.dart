@@ -246,6 +246,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
               egitimler.add(kaydedilecekDeger);
               setState(() {});
             },
+            silCliked: (silinecekDeger) {},
           ),
         ),
         SliverToBoxAdapter(
@@ -300,6 +301,15 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   edExMode: EdExMode.IconButton,
                   icon: Icons.edit,
                   operation: 1,
+                  values: deneyimler[index],
+                  kaydetCliked: (kaydedilecekDeger) {
+                    deneyimler[index] = kaydedilecekDeger;
+                    setState(() {});
+                  },
+                  silCliked: (silinecekDeger) {
+                    deneyimler.removeAt(index);
+                    setState(() {});
+                  },
                 ),
               ],
             ),
@@ -310,6 +320,13 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
             edExMode: EdExMode.TextButton,
             textButtonText: "Deneyim Ekle",
             operation: 1,
+            kaydetCliked: (kaydedilecekDeger) {
+              print("kaydedilecekDeger: " + kaydedilecekDeger.toString());
+
+              deneyimler.add(kaydedilecekDeger);
+              setState(() {});
+            },
+            silCliked: (silinecekDeger) {},
           ),
         ),
         SliverToBoxAdapter(
