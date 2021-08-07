@@ -199,13 +199,7 @@ class GeneralTabChips extends StatelessWidget {
       child: Wrap(
         spacing: 6.0,
         runSpacing: 6.0,
-        children: <Widget>[
-          _buildChip('Python', context),
-          _buildChip('Postgresql', context),
-          _buildChip('Qt5', context),
-          _buildChip('React Native', context),
-          _buildChip('Firebase', context),
-        ],
+        children: chipList.map((item) => _buildChip(item, context)).toList(),
       ),
     );
   }

@@ -12,6 +12,7 @@ class TFC {
   static final String seviye = 'seviye';
   static final String oneCikarilanAlan = 'oneCikarilanAlan';
   static final String il = 'il';
+  static final String ilce = 'ilce';
   static final String dersVerdigiAlanlar = 'dersVerdigiAlanlar';
   static final String dersUcretAraligi = 'dersUcretAraligi';
   static final String adSoyad = 'adSoyad';
@@ -22,7 +23,9 @@ class TFC {
   static final String locationX = 'locationX';
   static final String locationY = 'locationY';
   static final String cepTel = 'cepTel';
+  static final String cepTelOnay = 'cepTelOnay';
   static final String sosyalMedya = 'sosyalMedya';
+  static final String onaylanmisOgretmen = 'onaylanmisOgretmen';
 }
 
 class TfUser {
@@ -35,6 +38,7 @@ class TfUser {
   int seviye;
   String oneCikarilanAlan;
   String il;
+  String ilce;
   List dersVerdigiAlanlar;
   String dersUcretAraligi;
   String adSoyad;
@@ -45,13 +49,15 @@ class TfUser {
   String locationX;
   String locationY;
   String cepTel;
+  String cepTelOnay;
+  String onaylanmisOgretmen;
   List sosyalMedya;
 
   TfUser({@required this.userID, @required this.email, this.adSoyad});
 
   @override
   String toString() {
-    return 'TfUser{userID: $userID, email: $email, profilFotoURL: $profilFotoURL, videoURL: $videoURL, createdAt: $createdAt, updatedAt: $updatedAt, seviye: $seviye, oneCikarilanAlan: $oneCikarilanAlan, il: $il, dersVerdigiAlanlar: $dersVerdigiAlanlar, dersUcretAraligi: $dersUcretAraligi, adSoyad: $adSoyad, yas: $yas, hakkinda: $hakkinda, egitimler: $egitimler, deneyimler: $deneyimler, locationX: $locationX, locationY: $locationY, cepTel: $cepTel, sosyalMedya: $sosyalMedya}';
+    return 'TfUser{userID: $userID, email: $email, profilFotoURL: $profilFotoURL, videoURL: $videoURL, createdAt: $createdAt, updatedAt: $updatedAt, seviye: $seviye, oneCikarilanAlan: $oneCikarilanAlan, il: $il,  ilce: $ilce, dersVerdigiAlanlar: $dersVerdigiAlanlar, dersUcretAraligi: $dersUcretAraligi, adSoyad: $adSoyad, yas: $yas, hakkinda: $hakkinda, egitimler: $egitimler, deneyimler: $deneyimler, locationX: $locationX, locationY: $locationY, cepTel: $cepTel , cepTelOnay: $cepTelOnay, onaylanmisOgretmen: $onaylanmisOgretmen , sosyalMedya: $sosyalMedya}';
   }
 
   Map<String, dynamic> toMap() {
@@ -65,6 +71,7 @@ class TfUser {
       TFC.seviye: seviye ?? 0,
       TFC.oneCikarilanAlan: oneCikarilanAlan ?? '',
       TFC.il: il ?? '',
+      TFC.ilce: ilce ?? '',
       TFC.dersVerdigiAlanlar: dersVerdigiAlanlar ?? [],
       TFC.dersUcretAraligi: dersUcretAraligi ?? '',
       TFC.adSoyad: adSoyad ?? '',
@@ -75,6 +82,8 @@ class TfUser {
       TFC.locationX: locationX ?? '',
       TFC.locationY: locationY ?? '',
       TFC.cepTel: cepTel ?? '',
+      TFC.cepTelOnay: cepTelOnay ?? '',
+      TFC.onaylanmisOgretmen: onaylanmisOgretmen ?? '',
       TFC.sosyalMedya: sosyalMedya ?? [],
     };
   }
@@ -89,6 +98,7 @@ class TfUser {
         seviye = map[TFC.seviye],
         oneCikarilanAlan = map[TFC.oneCikarilanAlan],
         il = map[TFC.il],
+        ilce = map[TFC.ilce],
         dersVerdigiAlanlar = map[TFC.dersVerdigiAlanlar],
         dersUcretAraligi = map[TFC.dersUcretAraligi],
         adSoyad = map[TFC.adSoyad],
@@ -99,5 +109,7 @@ class TfUser {
         locationX = map[TFC.locationX],
         locationY = map[TFC.locationY],
         cepTel = map[TFC.cepTel],
+        cepTelOnay = map[TFC.cepTelOnay],
+        onaylanmisOgretmen = map[TFC.onaylanmisOgretmen],
         sosyalMedya = map[TFC.sosyalMedya];
 }
