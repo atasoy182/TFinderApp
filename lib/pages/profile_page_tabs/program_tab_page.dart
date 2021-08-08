@@ -14,43 +14,43 @@ class _ProfileProgramTabState extends State<ProfileProgramTab> {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: Container(
-            height: 50,
-            margin: EdgeInsets.only(left: 8, right: 8, top: 8),
-            child: Row(
-              children: [
-                IconButtonWithBorder(
-                  iconData: Icons.arrow_back_ios,
-                  onPressed: () {},
-                  useBorder: false,
-                  padding: EdgeInsets.only(left: 10),
-                ),
-                IconButtonWithBorder(
-                  iconData: Icons.arrow_forward_ios,
-                  useBorder: false,
-                  onPressed: () {},
-                ),
-                Spacer(),
-                Text(
-                  "7-13 Haz 2021",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                Spacer(),
-                IconButtonWithBorder(
-                  iconData: Icons.calendar_today_rounded,
-                  useBorder: false,
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: Divider(
-            thickness: 2,
-          ),
-        ),
+        // SliverToBoxAdapter(
+        //   child: Container(
+        //     height: 50,
+        //     margin: EdgeInsets.only(left: 8, right: 8, top: 8),
+        //     child: Row(
+        //       children: [
+        //         IconButtonWithBorder(
+        //           iconData: Icons.arrow_back_ios,
+        //           onPressed: () {},
+        //           useBorder: false,
+        //           padding: EdgeInsets.only(left: 10),
+        //         ),
+        //         IconButtonWithBorder(
+        //           iconData: Icons.arrow_forward_ios,
+        //           useBorder: false,
+        //           onPressed: () {},
+        //         ),
+        //         Spacer(),
+        //         Text(
+        //           "7-13 Haz 2021",
+        //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+        //         ),
+        //         Spacer(),
+        //         IconButtonWithBorder(
+        //           iconData: Icons.calendar_today_rounded,
+        //           useBorder: false,
+        //           onPressed: () {},
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
+        // SliverToBoxAdapter(
+        //   child: Divider(
+        //     thickness: 2,
+        //   ),
+        // ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {

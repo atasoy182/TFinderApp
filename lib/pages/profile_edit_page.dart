@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/diger_tab.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/genel_tab.dart';
+import 'package:tfinder_app/pages/profile_edit_page_tabs/program_tab.dart';
 
 class ProfileEditPage extends StatefulWidget {
   ProfileEditPage({Key key}) : super(key: key);
@@ -86,7 +87,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           children: [
             ProfileEditGenelTab(),
             ProfileEditDigerTab(),
-            Text("3"),
+            ProfileEditProgramTab(),
           ],
         ),
       ),
