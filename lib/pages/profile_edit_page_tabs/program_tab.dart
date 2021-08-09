@@ -166,7 +166,7 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> {
                 child: DefaultButton(
                   btnText: "Tümünü seç",
                   btnCliked: () {
-                    secimler[haftaIndex.toString()] = saatList;
+                    secimler[haftaIndex.toString()] = List.from(saatList);
                     setState(() {});
                   },
                   btnColor: successDefault,

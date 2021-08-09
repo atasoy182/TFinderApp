@@ -12,18 +12,27 @@ class ProfileEditGenelTab extends StatefulWidget {
 }
 
 class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
-  String _ppUrl =
-      "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
+  String _ppUrl = "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
 
-  String _adSoyad;
-  String _ceptel;
+  String _adSoyad = "Mehmet Berkay Atasoy";
+  String _ceptel = "+90 (555) 555-55-55";
   String _sehir = "Ankara";
   String _ilce = "Çankaya";
+  String _ucretAraligi = "50-100";
+  String _ucretAraligi1;
+  String _ucretAraligi2;
+  String _yas = "24";
 
   final _formAdsoyadKey = GlobalKey<FormState>();
   final _formCepTelKey = GlobalKey<FormState>();
-  MaskInputFormatter phoneFormatter =
-      MaskInputFormatter(mask: '+## (###) ###-##-##');
+  MaskInputFormatter phoneFormatter = MaskInputFormatter(mask: '+## (###) ###-##-##');
+
+  @override
+  void initState() {
+    super.initState();
+    _ucretAraligi1 = _ucretAraligi.split("-")[0];
+    _ucretAraligi2 = _ucretAraligi.split("-")[1];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +48,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
               children: [
                 Expanded(
                   flex: 6,
-                  child: CircleAvatar(
-                      radius: 45,
-                      backgroundColor: Colors.white,
-                      backgroundImage: CachedNetworkImageProvider(_ppUrl)),
+                  child: CircleAvatar(radius: 45, backgroundColor: Colors.white, backgroundImage: CachedNetworkImageProvider(_ppUrl)),
                 ),
                 Expanded(
                     flex: 4,
@@ -65,16 +71,14 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                                     },
                                   ),
                                   ListTile(
-                                    leading:
-                                        Icon(Icons.camera, color: defaultLink),
+                                    leading: Icon(Icons.camera, color: defaultLink),
                                     title: new Text('Kameradan Resim Seç'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.highlight_remove,
-                                        color: defaultLink),
+                                    leading: Icon(Icons.highlight_remove, color: defaultLink),
                                     title: new Text('Profil Resmini Kaldır'),
                                     onTap: () {
                                       Navigator.pop(context);
@@ -93,15 +97,21 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
             ),
           ),
         ),
+
+        SliverToBoxAdapter(
+          child: Divider(),
+        ),
+
         // Ad Soyad
         SliverToBoxAdapter(
           child: Container(
-            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
             //color: Colors.green,
             height: 60,
             child: Form(
               key: _formAdsoyadKey,
               child: TextFormField(
+                initialValue: _adSoyad,
                 onSaved: (String adSoyadInput) => _adSoyad = adSoyadInput,
                 decoration: InputDecoration(
                   icon: Icon(Icons.person, color: defaultLink),
@@ -130,7 +140,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
             child: Form(
               key: _formCepTelKey,
               child: TextFormField(
-                initialValue: "+90 (5##) ###-##-##",
+                initialValue: _ceptel,
                 inputFormatters: [phoneFormatter],
                 keyboardType: TextInputType.phone,
                 onSaved: (String input) => _ceptel = input,
@@ -148,6 +158,39 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                   hintStyle: TextStyle(color: Colors.grey),
                 ),
               ),
+            ),
+          ),
+        ),
+        // Yaş
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            //color: Colors.green,
+            height: 60,
+            child: Row(
+              children: [
+                Expanded(flex: 3, child: Text("Yaş")),
+                Expanded(
+                  flex: 2,
+                  child: TextFormField(
+                    initialValue: _yas,
+                    onSaved: (String input) => _yas = input,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 5,
+                  child: Container(),
+                ),
+              ],
             ),
           ),
         ),
@@ -169,8 +212,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                     allItems: allCategories,
                     dialogTitle: "Kategori Seçiniz",
                     baslangicDegerleri: ["Bilgisayar"],
-                    hintText:
-                        "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
+                    hintText: "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                     okCliked: (secilenler) {
                       print("Secilenler:" + secilenler.toString());
                     },
@@ -198,8 +240,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                     allItems: allCategories,
                     dialogTitle: "Kategori Seçiniz",
                     baslangicDegerleri: ["Bilgisayar", "İngilizce"],
-                    hintText:
-                        "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
+                    hintText: "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                     okCliked: (secilenler) {
                       print("Secilenler:" + secilenler.toString());
                     },
@@ -230,9 +271,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                         _sehir = newValue;
                       });
                     },
-                    items: allStatesOfTurkey
-                        .map((item) => buildDropdownMenuItem(item))
-                        .toList(),
+                    items: allStatesOfTurkey.map((item) => buildDropdownMenuItem(item)).toList(),
                   ),
                 )
               ],
@@ -266,6 +305,82 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
             ),
           ),
         ),
+        // Ders Ücret Aralığı
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            //color: Colors.green,
+            height: 60,
+            child: Row(
+              children: [
+                Expanded(flex: 3, child: Text("Ders ücret aralığı")),
+                Expanded(
+                  flex: 3,
+                  child: TextFormField(
+                    initialValue: _ucretAraligi1,
+                    onSaved: (String input) => _ucretAraligi1 = input,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                  child: Center(child: Text("ile")),
+                ),
+                Expanded(
+                  flex: 3,
+                  child: TextFormField(
+                    initialValue: _ucretAraligi2,
+                    keyboardType: TextInputType.number,
+                    onSaved: (String input) => _ucretAraligi2 = input,
+                    decoration: InputDecoration(
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+
+        SliverToBoxAdapter(
+          child: Divider(),
+        ),
+
+        // Konum Değiştir
+        SliverToBoxAdapter(
+          child: Container(
+            margin: EdgeInsets.only(left: 20, right: 20),
+            //color: Colors.green,
+            height: 60,
+            child: Center(
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Konum Değiştir',
+                  style: TextStyle(color: defaultLink, fontSize: 18),
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        SliverToBoxAdapter(
+          child: Divider(),
+        ),
+
         SliverToBoxAdapter(
           child: SizedBox(
             height: 100,
@@ -288,8 +403,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
         }
       }
 
-      tempIlceler =
-          allCitiesOfTurkey.where((f) => f['il'] == _sehirID).toList();
+      tempIlceler = allCitiesOfTurkey.where((f) => f['il'] == _sehirID).toList();
 
       tempIlceler.forEach((element) {
         if (!ilceler.contains("Seçim Yapınız")) {
