@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/look_up.dart';
+import 'dart:io';
 
 class ProfileEditGenelTab extends StatefulWidget {
   const ProfileEditGenelTab({Key key}) : super(key: key);
@@ -23,8 +26,12 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
   String _ucretAraligi2;
   String _yas = "24";
 
+  File _pickedImage;
+  int operation = 0;
+
   final _formAdsoyadKey = GlobalKey<FormState>();
   final _formCepTelKey = GlobalKey<FormState>();
+  final ImagePicker _picker = ImagePicker();
   MaskInputFormatter phoneFormatter = MaskInputFormatter(mask: '+## (###) ###-##-##');
 
   @override
@@ -48,7 +55,14 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
               children: [
                 Expanded(
                   flex: 6,
-                  child: CircleAvatar(radius: 45, backgroundColor: Colors.white, backgroundImage: CachedNetworkImageProvider(_ppUrl)),
+                  child: CircleAvatar(
+                    radius: 55,
+                    backgroundColor: Colors.black,
+                    child: CircleAvatar(
+                        radius: 43,
+                        backgroundColor: Colors.white,
+                        backgroundImage: _pickedImage == null ? CachedNetworkImageProvider(_ppUrl) : FileImage(_pickedImage)),
+                  ),
                 ),
                 Expanded(
                     flex: 4,
@@ -67,13 +81,15 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                                     ),
                                     title: new Text('Galeriden Resim Seç'),
                                     onTap: () {
+                                      _loadPicker(ImageSource.gallery);
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
                                     leading: Icon(Icons.camera, color: defaultLink),
-                                    title: new Text('Kameradan Resim Seç'),
+                                    title: new Text('Kameradan Resim Çek'),
                                     onTap: () {
+                                      _loadPicker(ImageSource.camera);
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -81,6 +97,10 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
                                     leading: Icon(Icons.highlight_remove, color: defaultLink),
                                     title: new Text('Profil Resmini Kaldır'),
                                     onTap: () {
+                                      setState(() {
+                                        _pickedImage = null;
+                                        _ppUrl = "https://img.icons8.com/pastel-glyph/2x/person-male--v2.png";
+                                      });
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -430,5 +450,30 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
       value: item['aciklama'],
       child: Text(item['aciklama'] ?? ""),
     );
+  }
+
+  void _loadPicker(ImageSource imageSource) async {
+    final XFile picked = await _picker.pickImage(source: imageSource);
+
+    if (picked != null) {
+      File cropped = await ImageCropper.cropImage(
+        androidUiSettings: AndroidUiSettings(
+          toolbarTitle: "Resim Kırp",
+          toolbarWidgetColor: Colors.black,
+        ),
+        sourcePath: picked.path,
+        aspectRatioPresets: [CropAspectRatioPreset.square],
+        maxWidth: 800,
+      );
+      if (cropped != null) {
+        setState(() {
+          _pickedImage = cropped;
+        });
+      }
+    } else {
+      setState(() {
+        _pickedImage = null;
+      });
+    }
   }
 }

@@ -36,6 +36,8 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
 
   final TextEditingController _controller = new TextEditingController();
 
+  var client = http.Client();
+
   @override
   void initState() {
     super.initState();
@@ -97,9 +99,7 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                             bool flag = false;
 
                             for (var i = 0; i < cachedList.length; i++) {
-                              if (cachedList[i]
-                                  .toLowerCase()
-                                  .contains(text.toLowerCase())) {
+                              if (cachedList[i].toLowerCase().contains(text.toLowerCase())) {
                                 if (!localList.contains(cachedList[i])) {
                                   localList.add(cachedList[i]);
                                   flag = true;
@@ -109,7 +109,7 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
 
                             try {
                               if (!flag) {
-                                var response = await http.get(url);
+                                var response = await client.post(Uri.http(url, ""));
                                 List decodedJson = json.decode(response.body);
                                 decodedJson.forEach((element) {
                                   if (!localList.contains(element['name'])) {
@@ -145,18 +145,13 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                                           ),
                                           decoration: new InputDecoration(
                                               focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: widget.iconColor,
-                                                    width: 0.5),
+                                                borderSide: BorderSide(color: widget.iconColor, width: 0.5),
                                               ),
                                               enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: widget.iconColor,
-                                                    width: 0.5),
+                                                borderSide: BorderSide(color: widget.iconColor, width: 0.5),
                                               ),
                                               border: OutlineInputBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(15.0),
+                                                borderRadius: BorderRadius.circular(15.0),
                                               ),
                                               filled: true,
                                               prefixIcon: IconButton(
@@ -167,8 +162,7 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                                                   size: 32,
                                                 ),
                                                 onPressed: () {
-                                                  searchOperation(
-                                                      _controller.text);
+                                                  searchOperation(_controller.text);
                                                 },
                                               ),
                                               suffixIcon: IconButton(
@@ -184,22 +178,18 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                                                 },
                                               ),
                                               hintText: "Arama...",
-                                              hintStyle: new TextStyle(
-                                                  color: Colors.black)),
+                                              hintStyle: new TextStyle(color: Colors.black)),
                                           onChanged: searchOperation,
                                         )),
                                     widget.hintText.length > 0
                                         ? Expanded(
                                             flex: 2,
                                             child: Container(
-                                              margin:
-                                                  EdgeInsets.only(bottom: 5),
+                                              margin: EdgeInsets.only(bottom: 5),
                                               child: Center(
                                                 child: Text(
                                                   widget.hintText,
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.grey),
+                                                  style: TextStyle(fontSize: 12, color: Colors.grey),
                                                 ),
                                               ),
                                             ))
@@ -211,49 +201,31 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                                             Container(
                                               // color: Colors.green,
                                               child: ListView.builder(
-                                                  itemCount:
-                                                      selectedItem.length > 0
-                                                          ? allItems.length + 1
-                                                          : allItems.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    if (selectedItem.length >
-                                                        0) {
-                                                      allItems.insert(
-                                                          0, selectedItem);
-                                                      allItems = allItems
-                                                          .toSet()
-                                                          .toList();
+                                                  itemCount: selectedItem.length > 0 ? allItems.length + 1 : allItems.length,
+                                                  itemBuilder: (BuildContext context, int index) {
+                                                    if (selectedItem.length > 0) {
+                                                      allItems.insert(0, selectedItem);
+                                                      allItems = allItems.toSet().toList();
                                                     }
 
                                                     try {
                                                       return ListTile(
                                                           onTap: () {
-                                                            if (selectedItem ==
-                                                                allItems[
-                                                                    index]) {
+                                                            if (selectedItem == allItems[index]) {
                                                               setState(() {
-                                                                selectedItem =
-                                                                    "";
+                                                                selectedItem = "";
                                                               });
                                                             } else {
                                                               setState(() {
-                                                                selectedItem =
-                                                                    allItems[
-                                                                        index];
+                                                                selectedItem = allItems[index];
                                                               });
                                                             }
                                                           },
-                                                          title: Text(
-                                                              '${allItems[index]}'),
-                                                          trailing: allItems[
-                                                                      index] ==
-                                                                  selectedItem
+                                                          title: Text('${allItems[index]}'),
+                                                          trailing: allItems[index] == selectedItem
                                                               ? Icon(
                                                                   Icons.check,
-                                                                  color: Colors
-                                                                      .green,
+                                                                  color: Colors.green,
                                                                 )
                                                               : null);
                                                     } catch (e) {
@@ -267,8 +239,7 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
                                                     child: SizedBox(
                                                       height: 75,
                                                       child: LoadingIndicator(
-                                                        indicatorType: Indicator
-                                                            .ballRotateChase,
+                                                        indicatorType: Indicator.ballRotateChase,
                                                         color: defaultLink,
                                                       ),
                                                     ),

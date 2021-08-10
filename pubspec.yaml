@@ -36,16 +36,18 @@ dependencies:
   google_maps_flutter: ^2.0.6
   expand_widget: ^2.1.0
   provider: ^5.0.0
-  firebase_core: ^0.7.0
-  firebase_auth: ^0.20.0+1
-  cloud_firestore: ^0.16.0+1
+  firebase_core: ^1.4.0
+  firebase_auth: ^3.0.1
+  cloud_firestore: ^2.4.0
   get_it: ^5.0.0
   loading_indicator: any
   motion_toast: ^1.0.0
   google_sign_in: ^4.0.6
   sqflite: ^2.0.0
   mask_input_formatter: ^0.0.3
-  http: ^0.12.0
+  http: ^0.13.0
+  image_picker: ^0.8.3+2
+  image_cropper: any
 
 #  video_player:
 #    git:
