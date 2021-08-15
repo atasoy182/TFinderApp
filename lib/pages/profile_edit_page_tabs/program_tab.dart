@@ -11,7 +11,7 @@ class ProfileEditProgramTab extends StatefulWidget {
   _ProfileEditProgramTabState createState() => _ProfileEditProgramTabState();
 }
 
-class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> {
+class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> with AutomaticKeepAliveClientMixin {
   Map<String, dynamic> secimler;
 
   @override
@@ -50,10 +50,7 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> {
           margin: EdgeInsets.only(left: 8, right: 8, top: 8),
           child: Text(
             haftaninGunleri[haftaIndex],
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                fontFamily: "Raleway"),
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, fontFamily: "Raleway"),
           ),
         ),
         Container(
@@ -91,15 +88,7 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> {
                 child: DefaultButton(
                   btnText: "Öğlen - Akşam Seç",
                   btnCliked: () {
-                    secimler[haftaIndex.toString()] = [
-                      "12.00",
-                      "13.00",
-                      "14.00",
-                      "15.00",
-                      "16.00",
-                      "17.00",
-                      "18.00"
-                    ];
+                    secimler[haftaIndex.toString()] = ["12.00", "13.00", "14.00", "15.00", "16.00", "17.00", "18.00"];
                     setState(() {});
                   },
                   btnColor: defaultLink,
@@ -118,15 +107,7 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> {
                 child: DefaultButton(
                   btnText: "Akşam - Gece Seç",
                   btnCliked: () {
-                    secimler[haftaIndex.toString()] = [
-                      "18.00",
-                      "19.00",
-                      "20.00",
-                      "21.00",
-                      "22.00",
-                      "23.00",
-                      "00.00"
-                    ];
+                    secimler[haftaIndex.toString()] = ["18.00", "19.00", "20.00", "21.00", "22.00", "23.00", "00.00"];
                     setState(() {});
                   },
                   btnColor: morDefault,
@@ -223,12 +204,14 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> {
             ),
             child: Text(
               element,
-              style: TextStyle(
-                  color: seciliMi ? Colors.white : defaultLink, fontSize: 20),
+              style: TextStyle(color: seciliMi ? Colors.white : defaultLink, fontSize: 20),
             ),
           ),
         );
       }).toList(),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

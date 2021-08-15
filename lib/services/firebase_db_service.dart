@@ -6,8 +6,7 @@ class DBFirebaseService implements DBBase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<bool> saveUserToDB(
-      TfUser tfUser, Map<String, dynamic> extraPrms) async {
+  Future<bool> saveUserToDB(TfUser tfUser, Map<String, dynamic> extraPrms) async {
     Map _eklenecekMap = tfUser.toMap();
     _eklenecekMap.addAll(extraPrms);
     await _firestore.collection("users").doc(tfUser.userID).set(_eklenecekMap);
@@ -16,15 +15,17 @@ class DBFirebaseService implements DBBase {
 
   @override
   Future<bool> eMailVarMi(String email) async {
-    var users = await _firestore
-        .collection("users")
-        .where(TFC.email, isEqualTo: email)
-        .limit(1)
-        .get();
+    var users = await _firestore.collection("users").where(TFC.email, isEqualTo: email).limit(1).get();
     if (users.docs.length >= 1) {
       return true;
     } else {
       return false;
     }
+  }
+
+  @override
+  Future<TfUser> getCurrentTfUser() {
+    // TODO: implement getCurrentTfUser
+    throw UnimplementedError();
   }
 }

@@ -13,7 +13,7 @@ class ChewieVideoPlayer extends StatefulWidget {
   }
 }
 
-class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
+class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> with AutomaticKeepAliveClientMixin {
   VideoPlayerController _videoPlayerController1;
   ChewieController _chewieController;
 
@@ -61,8 +61,7 @@ class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
     var _size = MediaQuery.of(context).size;
 
     return Center(
-      child: _chewieController != null &&
-              _chewieController.videoPlayerController.value.isInitialized
+      child: _chewieController != null && _chewieController.videoPlayerController.value.isInitialized
           ? Chewie(
               controller: _chewieController,
             )
@@ -90,4 +89,7 @@ class _ChewieVideoPlayerState extends State<ChewieVideoPlayer> {
             ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

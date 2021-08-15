@@ -9,7 +9,7 @@ class ProfileProgramTab extends StatefulWidget {
   _ProfileProgramTabState createState() => _ProfileProgramTabState();
 }
 
-class _ProfileProgramTabState extends State<ProfileProgramTab> {
+class _ProfileProgramTabState extends State<ProfileProgramTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -77,6 +77,9 @@ class _ProfileProgramTabState extends State<ProfileProgramTab> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class ProgramRow extends StatelessWidget {

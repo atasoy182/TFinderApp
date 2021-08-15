@@ -1,14 +1,16 @@
 import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/repository/tf_user_repository.dart';
+import 'package:tfinder_app/services/auth_firebase_service.dart';
 import 'package:tfinder_app/services/database_base.dart';
 import 'package:tfinder_app/services/firebase_db_service.dart';
 import 'package:tfinder_app/services/sqflite_db_service.dart';
 
-class ProfileRepository implements DBBase {
+class ProfileEditRepository implements DBBase {
   AppMode _appMode = AppMode.RELEASE;
   DBFirebaseService _firebaseDBService = locator.get<DBFirebaseService>();
   DBSQFLiteService _sqfLiteDBService = locator.get<DBSQFLiteService>();
+  AuthFirebaseService _firebaseAuthService = locator.get<AuthFirebaseService>();
 
   @override
   Future<bool> eMailVarMi(String email) async {
@@ -19,11 +21,15 @@ class ProfileRepository implements DBBase {
   }
 
   @override
-  Future<bool> saveUserToDB(
-      TfUser tfUser, Map<String, dynamic> extraPrms) async {
+  Future<bool> saveUserToDB(TfUser tfUser, Map<String, dynamic> extraPrms) async {
     if (_appMode == AppMode.RELEASE) {
       return await _firebaseDBService.saveUserToDB(tfUser, extraPrms);
     }
     return null;
+  }
+
+  @override
+  Future<TfUser> getCurrentTfUser() async {
+    return await _firebaseAuthService.getCurrentUser();
   }
 }

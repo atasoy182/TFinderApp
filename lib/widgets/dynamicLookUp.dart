@@ -36,8 +36,6 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
 
   final TextEditingController _controller = new TextEditingController();
 
-  var client = http.Client();
-
   @override
   void initState() {
     super.initState();
@@ -109,7 +107,7 @@ class _DynamicLookUpState extends State<DynamicLookUp> {
 
                             try {
                               if (!flag) {
-                                var response = await client.post(Uri.http(url, ""));
+                                var response = await http.get(Uri.parse(url));
                                 List decodedJson = json.decode(response.body);
                                 decodedJson.forEach((element) {
                                   if (!localList.contains(element['name'])) {

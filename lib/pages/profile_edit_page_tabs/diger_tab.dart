@@ -10,7 +10,7 @@ class ProfileEditDigerTab extends StatefulWidget {
   _ProfileEditDigerTabState createState() => _ProfileEditDigerTabState();
 }
 
-class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
+class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with AutomaticKeepAliveClientMixin {
   String hakkinda = "";
   List egitimler = [
     {
@@ -50,8 +50,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                 Expanded(
                   flex: 7,
                   child: ChewieVideoPlayer(
-                    videoUrl:
-                        "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                    videoUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
                   ),
                 ),
                 Expanded(
@@ -65,32 +64,28 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   ListTile(
-                                    leading:
-                                        Icon(Icons.link, color: defaultLink),
+                                    leading: Icon(Icons.link, color: defaultLink),
                                     title: new Text('URL linkinden getir'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading:
-                                        Icon(Icons.photo, color: defaultLink),
+                                    leading: Icon(Icons.photo, color: defaultLink),
                                     title: new Text('Galeriden Video Seç'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading:
-                                        Icon(Icons.camera, color: defaultLink),
+                                    leading: Icon(Icons.camera, color: defaultLink),
                                     title: new Text('Kameradan Video Çek'),
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
                                   ),
                                   ListTile(
-                                    leading: Icon(Icons.highlight_remove,
-                                        color: defaultLink),
+                                    leading: Icon(Icons.highlight_remove, color: defaultLink),
                                     title: new Text('Tanıtım Videosu Kaldır'),
                                     onTap: () {
                                       Navigator.pop(context);
@@ -118,10 +113,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
             margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
             child: Text(
               "Hakkında",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  fontFamily: "Raleway"),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Raleway"),
             ),
           ),
         ),
@@ -165,10 +157,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
             margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
             child: Text(
               "Eğitim",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  fontFamily: "Raleway"),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Raleway"),
             ),
           ),
         ),
@@ -255,10 +244,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
             margin: EdgeInsets.only(left: 10, bottom: 10, top: 10),
             child: Text(
               "Deneyim",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  fontFamily: "Raleway"),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Raleway"),
             ),
           ),
         ),
@@ -281,9 +267,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
                   flex: 6,
                   child: Column(
                     children: [
-                      Text(deneyimler[index]['isyeri'],
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                          textAlign: TextAlign.center),
+                      Text(deneyimler[index]['isyeri'], style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center),
                       SizedBox(
                         height: 5,
                       ),
@@ -339,4 +323,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> {
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

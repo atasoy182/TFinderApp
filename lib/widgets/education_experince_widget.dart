@@ -67,13 +67,10 @@ class _EducationExperinceState extends State<EducationExperince> {
         return EducationExperincePage(
           edExMode: widget.edExMode,
           operation: widget.operation,
-          seciliYil:
-              controlField("yil") ? widget.values["yil"] : "Seçim Yapınız",
+          seciliYil: controlField("yil") ? widget.values["yil"] : "Seçim Yapınız",
           seciliOkul: controlField("okul") ? widget.values["okul"] : "",
           seciliBolum: controlField("bolum") ? widget.values["bolum"] : "",
-          derece: controlField("derece")
-              ? widget.values["derece"]
-              : "Seçim Yapınız",
+          derece: controlField("derece") ? widget.values["derece"] : "Seçim Yapınız",
           isyeri: controlField("isyeri") ? widget.values["isyeri"] : "",
           alan: controlField("alan") ? widget.values["alan"] : "",
         );
@@ -205,9 +202,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                               seciliYil = newValue;
                             });
                           },
-                          items: yearList
-                              .map((item) => buildDropdownMenuItem(item))
-                              .toList(),
+                          items: yearList.map((item) => buildDropdownMenuItem(item)).toList(),
                         ),
                       ),
                     )
@@ -236,8 +231,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                         btnColor: defaultLink,
                         dialogTitle: "Üniversite Seçiniz",
                         iconColor: defaultLink,
-                        hintText:
-                            "University of Cambridge, Hacettepe Üniversitesi gibi arama yapabilirsiniz ! ",
+                        hintText: "University of Cambridge, Hacettepe Üniversitesi gibi arama yapabilirsiniz ! ",
                         extraList: allUniversitiesOfTurkey,
                         apiURL: "http://universities.hipolabs.com/search?name=",
                         selectedItem: seciliOkul ?? "Seçim Yapınız",
@@ -271,8 +265,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                           allItems: allDepartments,
                           baslangicDegerleri: [seciliBolum ?? "Seçim Yapınız"],
                           iconColor: defaultLink,
-                          hintText:
-                              "Bilgisayar Mühendisliği, İngilizce Öğretmenliği gibi aratabilisiniz !",
+                          hintText: "Bilgisayar Mühendisliği, İngilizce Öğretmenliği gibi aratabilisiniz !",
                           okCliked: (selectedItems) {
                             seciliBolum = selectedItems[0];
                           },
@@ -311,9 +304,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                                     derece = newValue;
                                   });
                                 },
-                                items: allDegrees
-                                    .map((item) => buildDropdownMenuItem(item))
-                                    .toList(),
+                                items: allDegrees.map((item) => buildDropdownMenuItem(item)).toList(),
                               ),
                             ),
                           )
@@ -341,8 +332,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                                   };
                                 }
 
-                                Navigator.pop(
-                                    context, ["delete", gonderilecekDegerler]);
+                                Navigator.pop(context, ["delete", gonderilecekDegerler]);
                               },
                               btnColor: dangerDefault,
                             ),
@@ -364,8 +354,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                             };
                           }
 
-                          Navigator.pop(
-                              context, ["save", gonderilecekDegerler]);
+                          Navigator.pop(context, ["save", gonderilecekDegerler]);
                         },
                         btnColor: successDefault,
                       ),
@@ -406,9 +395,7 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                               seciliYil = newValue;
                             });
                           },
-                          items: yearList
-                              .map((item) => buildDropdownMenuItem(item))
-                              .toList(),
+                          items: yearList.map((item) => buildDropdownMenuItem(item)).toList(),
                         ),
                       ),
                     )
@@ -433,12 +420,10 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                             // border: OutlineInputBorder(),
                             // contentPadding: EdgeInsets.all(0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0),
+                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0),
+                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                             ),
                             hintStyle: TextStyle(color: Colors.grey),
                           ),
@@ -466,12 +451,10 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                             // border: OutlineInputBorder(),
                             // contentPadding: EdgeInsets.all(0),
                             focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0),
+                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                             ),
                             enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.blueGrey, width: 1.0),
+                              borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
                             ),
                             hintStyle: TextStyle(color: Colors.grey),
                           ),
@@ -498,15 +481,10 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                                   _formAlanKey.currentState.save();
                                   _formIsyeriKey.currentState.save();
 
-                                  gonderilecekDegerler = {
-                                    "yil": seciliYil ?? "",
-                                    "isyeri": isyeri ?? "",
-                                    "alan": alan ?? ""
-                                  };
+                                  gonderilecekDegerler = {"yil": seciliYil ?? "", "isyeri": isyeri ?? "", "alan": alan ?? ""};
                                 }
 
-                                Navigator.pop(
-                                    context, ["delete", gonderilecekDegerler]);
+                                Navigator.pop(context, ["delete", gonderilecekDegerler]);
                               },
                               btnColor: dangerDefault,
                             ),
@@ -522,14 +500,9 @@ class _EducationExperincePageState extends State<EducationExperincePage> {
                           if (widget.operation == 1) {
                             _formAlanKey.currentState.save();
                             _formIsyeriKey.currentState.save();
-                            gonderilecekDegerler = {
-                              "yil": seciliYil ?? "",
-                              "isyeri": isyeri ?? "",
-                              "alan": alan ?? ""
-                            };
+                            gonderilecekDegerler = {"yil": seciliYil ?? "", "isyeri": isyeri ?? "", "alan": alan ?? ""};
                           }
-                          Navigator.pop(
-                              context, ["save", gonderilecekDegerler]);
+                          Navigator.pop(context, ["save", gonderilecekDegerler]);
                         },
                         btnColor: successDefault,
                       ),

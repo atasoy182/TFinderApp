@@ -13,4 +13,10 @@ class DBSQFLiteService implements DBBase {
     // TODO: implement saveUserToDB
     throw UnimplementedError();
   }
+
+  @override
+  Future<TfUser> getCurrentTfUser() {
+    // TODO: implement getCurrentTfUser
+    throw UnimplementedError();
+  }
 }

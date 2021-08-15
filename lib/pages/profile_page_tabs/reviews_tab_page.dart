@@ -7,7 +7,7 @@ class ProfileReviewTab extends StatefulWidget {
   _ProfileReviewTabState createState() => _ProfileReviewTabState();
 }
 
-class _ProfileReviewTabState extends State<ProfileReviewTab> {
+class _ProfileReviewTabState extends State<ProfileReviewTab> with AutomaticKeepAliveClientMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,8 +54,7 @@ class _ProfileReviewTabState extends State<ProfileReviewTab> {
         flex: 2,
         child: CircleAvatar(
             radius: 35,
-            backgroundImage: CachedNetworkImageProvider(
-                "https://pixomatic.us/blog/wp-content/uploads/2019/11/pixomatic_1572877223091.png")),
+            backgroundImage: CachedNetworkImageProvider("https://pixomatic.us/blog/wp-content/uploads/2019/11/pixomatic_1572877223091.png")),
       ),
       SizedBox(
         width: 15,
@@ -89,4 +88,7 @@ class _ProfileReviewTabState extends State<ProfileReviewTab> {
       ),
     ]);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

@@ -14,7 +14,7 @@ class ProfileEditGenelTab extends StatefulWidget {
   _ProfileEditGenelTabState createState() => _ProfileEditGenelTabState();
 }
 
-class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
+class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with AutomaticKeepAliveClientMixin {
   String _ppUrl = "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
 
   String _adSoyad = "Mehmet Berkay Atasoy";
@@ -476,4 +476,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> {
       });
     }
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
