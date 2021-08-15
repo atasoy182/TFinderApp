@@ -11,6 +11,7 @@ import 'package:tfinder_app/pages/profile_edit_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/reviews_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/general_tab_page.dart';
 import 'package:tfinder_app/pages/profile_page_tabs/program_tab_page.dart';
+import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
 import 'package:tfinder_app/widgets/fab_menu.dart';
@@ -43,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
     var _size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 3,
@@ -63,11 +65,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       bottom: 16,
                       child: FloatingActionButton(
                           heroTag: "Edit",
-                          onPressed: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return ProfileEditPage();
-                            }));
+                          onPressed: () async {
+                            var res = await _profileEditModel.doldurBilgiler();
+                            if (res) {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return ProfileEditPage();
+                              }));
+                            }
                           },
                           child: const ImageIcon(
                             AssetImage("assets/images/pen.png"),
@@ -107,11 +111,9 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  SliverAppBar buildSliverAppBarForProfilePage(
-      Size _size, PageController pageController) {
+  SliverAppBar buildSliverAppBarForProfilePage(Size _size, PageController pageController) {
     _pageController = pageController;
-    String _ppUrl =
-        "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
+    String _ppUrl = "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
 
     return SliverAppBar(
         backgroundColor: morDefault,
@@ -151,9 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       });
                     },
                     itemBuilder: (ctx, ix) {
-                      return ix == 0
-                          ? ProfilPageMainInfos(ppUrl: _ppUrl)
-                          : ProfilPageVideo();
+                      return ix == 0 ? ProfilPageMainInfos(ppUrl: _ppUrl) : ProfilPageVideo();
                       //: ProfilPageLocation();
                     },
                   ),
@@ -165,8 +165,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         bottom: TabBar(
           labelColor: Colors.white,
-          labelStyle: TextStyle(
-              fontFamily: "Raleway", fontWeight: FontWeight.bold, fontSize: 15),
+          labelStyle: TextStyle(fontFamily: "Raleway", fontWeight: FontWeight.bold, fontSize: 15),
           indicatorColor: Colors.white,
           indicatorWeight: 3,
           tabs: [
@@ -195,8 +194,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Container(
                       height: _aktifBoyut,
                       width: _aktifBoyut,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.white),
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                     ),
                     SizedBox(
                       width: 15,
@@ -204,8 +202,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     Container(
                       height: _pasifBoyut,
                       width: _pasifBoyut,
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle, color: Colors.grey),
+                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
                     ),
                     SizedBox(
                       width: 15,
@@ -225,8 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Container(
                           height: _pasifBoyut,
                           width: _pasifBoyut,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
                         ),
                         SizedBox(
                           width: 15,
@@ -234,8 +230,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Container(
                           height: _aktifBoyut,
                           width: _aktifBoyut,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
                         ),
                         SizedBox(
                           width: 15,
@@ -254,8 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Container(
                           height: _pasifBoyut,
                           width: _pasifBoyut,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
                         ),
                         SizedBox(
                           width: 15,
@@ -263,8 +257,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         Container(
                           height: _pasifBoyut,
                           width: _pasifBoyut,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.grey),
+                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
                         ),
                         SizedBox(
                           width: 15,
@@ -350,8 +343,7 @@ class ProfilPageVideo extends StatelessWidget {
                 width: _size.width - 10,
                 height: 200,
                 child: ChewieVideoPlayer(
-                  videoUrl:
-                      "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                  videoUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
                 ),
               ),
             ),
@@ -397,8 +389,7 @@ class ProfilPageMainInfos extends StatelessWidget {
             flex: 3,
             child: Container(
                 child: Container(
-                    margin:
-                        EdgeInsets.only(top: 10, left: 10, right: 0, bottom: 5),
+                    margin: EdgeInsets.only(top: 10, left: 10, right: 0, bottom: 5),
                     height: 40,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -424,11 +415,7 @@ class ProfilPageMainInfos extends StatelessWidget {
                               ),
                               onPressed: () async {
                                 // TODO drop down ile editleme,mesaj atma,tel numarası görme, alanları yapılabilir.
-                                MotionToast.info(
-                                        title: "Çıkış !",
-                                        titleStyle: TextStyle(
-                                            fontWeight: FontWeight.bold),
-                                        description: "Çıkış Yapılıyor")
+                                MotionToast.info(title: "Çıkış !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Çıkış Yapılıyor")
                                     .show(context);
                                 await Future.delayed(Duration(seconds: 1));
                                 var sonuc = await _tfUserModel.signOut();
@@ -449,10 +436,7 @@ class ProfilPageMainInfos extends StatelessWidget {
           ),
           Expanded(
             flex: 5,
-            child: CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.white,
-                backgroundImage: CachedNetworkImageProvider(_ppUrl)),
+            child: CircleAvatar(radius: 50, backgroundColor: Colors.white, backgroundImage: CachedNetworkImageProvider(_ppUrl)),
           ),
           SizedBox(
             height: 5,
@@ -461,8 +445,7 @@ class ProfilPageMainInfos extends StatelessWidget {
             flex: 2,
             child: Text(
               "Severus Snape",
-              style: TextStyle(
-                  color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
+              style: TextStyle(color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
             ),
           ),
           Expanded(

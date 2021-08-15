@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
 import 'package:tfinder_app/widgets/education_experince_widget.dart';
@@ -12,6 +13,7 @@ class ProfileEditDigerTab extends StatefulWidget {
 
 class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with AutomaticKeepAliveClientMixin {
   String hakkinda = "";
+  String videoUrl = "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4";
   List egitimler = [
     {
       "yil": "2021",
@@ -33,6 +35,10 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
 
   final _formHakkindaKey = GlobalKey<FormState>();
 
+  XFile _pickedVideo;
+  final ImagePicker _picker = ImagePicker();
+  bool fromUrl = true;
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
@@ -50,7 +56,9 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
                 Expanded(
                   flex: 7,
                   child: ChewieVideoPlayer(
-                    videoUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                    videoUrl: videoUrl,
+                    fromUrl: fromUrl,
+                    xfile: _pickedVideo,
                   ),
                 ),
                 Expanded(
@@ -63,17 +71,18 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
                               return Column(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  ListTile(
-                                    leading: Icon(Icons.link, color: defaultLink),
-                                    title: new Text('URL linkinden getir'),
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
+                                  // ListTile(
+                                  //   leading: Icon(Icons.link, color: defaultLink),
+                                  //   title: new Text('URL linkinden getir'),
+                                  //   onTap: () {
+                                  //     Navigator.pop(context);
+                                  //   },
+                                  // ),
                                   ListTile(
                                     leading: Icon(Icons.photo, color: defaultLink),
                                     title: new Text('Galeriden Video Seç'),
                                     onTap: () {
+                                      _loadPicker(ImageSource.gallery);
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -81,6 +90,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
                                     leading: Icon(Icons.camera, color: defaultLink),
                                     title: new Text('Kameradan Video Çek'),
                                     onTap: () {
+                                      _loadPicker(ImageSource.camera);
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -88,6 +98,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
                                     leading: Icon(Icons.highlight_remove, color: defaultLink),
                                     title: new Text('Tanıtım Videosu Kaldır'),
                                     onTap: () {
+                                      _loadPicker(null);
                                       Navigator.pop(context);
                                     },
                                   ),
@@ -322,6 +333,23 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
         ),
       ],
     );
+  }
+
+  void _loadPicker(ImageSource imageSource) async {
+    if (imageSource != null) {
+      final XFile picked = await _picker.pickVideo(source: imageSource);
+
+      setState(() {
+        videoUrl = "";
+        fromUrl = false;
+        _pickedVideo = picked;
+      });
+    } else {
+      setState(() {
+        _pickedVideo = null;
+        videoUrl = "kaldir";
+      });
+    }
   }
 
   @override

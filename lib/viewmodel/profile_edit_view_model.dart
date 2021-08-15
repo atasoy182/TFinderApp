@@ -8,6 +8,7 @@ enum ViewState { Idle, Busy }
 
 class ProfileEditViewModel with ChangeNotifier implements DBBase {
   ProfileEditRepository _profileRepository = locator.get<ProfileEditRepository>();
+  Map<String, dynamic> extraPrms = {};
 
   ViewState _state = ViewState.Idle;
 
@@ -39,5 +40,14 @@ class ProfileEditViewModel with ChangeNotifier implements DBBase {
     } finally {
       state = ViewState.Idle;
     }
+  }
+
+  Future<bool> doldurBilgiler() async {
+    state = ViewState.Busy;
+    TfUser _user = await getCurrentTfUser();
+    print("doldurBilgiler:" + _user.toString());
+    extraPrms['adsoyad'] = "AHMET";
+    // TO DO bilgiler getirilip ekrana yansıtılabiliyor...
+    return true;
   }
 }

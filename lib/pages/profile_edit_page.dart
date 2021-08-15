@@ -14,14 +14,8 @@ class ProfileEditPage extends StatefulWidget {
 }
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
-  String _profileUrl;
-  String _videoUrl;
-
   @override
   Widget build(BuildContext context) {
-    final _formProfilePhotoUrl = GlobalKey<FormState>();
-    final _formVideoUrl = GlobalKey<FormState>();
-
     return DefaultTabController(
       length: 3,
       child: Scaffold(
