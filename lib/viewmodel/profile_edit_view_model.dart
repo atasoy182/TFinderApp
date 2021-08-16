@@ -44,10 +44,32 @@ class ProfileEditViewModel with ChangeNotifier implements DBBase {
 
   Future<bool> doldurBilgiler() async {
     state = ViewState.Busy;
-    TfUser _user = await getCurrentTfUser();
-    print("doldurBilgiler:" + _user.toString());
-    extraPrms['adsoyad'] = "AHMET";
-    // TO DO bilgiler getirilip ekrana yansıtılabiliyor...
+    var gecici = await _profileRepository.getCurrentTfUser();
+    TfUser _user = await _profileRepository.getCurrentTfUserDetayli(gecici.userID);
+
+    extraPrms[TFC.adSoyad] = _user.adSoyad;
+    extraPrms[TFC.email] = _user.email;
+    extraPrms[TFC.cepTel] = _user.cepTel;
+    extraPrms[TFC.il] = _user.il;
+    extraPrms[TFC.ilce] = _user.ilce;
+    extraPrms[TFC.dersUcretAraligi] = _user.dersUcretAraligi;
+    extraPrms[TFC.yas] = _user.yas;
+    extraPrms[TFC.profilFotoURL] = _user.profilFotoURL;
+
+    state = ViewState.Idle;
+
     return true;
+  }
+
+  @override
+  Future<bool> kullaniciVarMi(String userID) {
+    // TODO: implement kullaniciVarMi
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TfUser> getCurrentTfUserDetayli(String userID) {
+    // TODO: implement getCurrentTfUserDetayli
+    throw UnimplementedError();
   }
 }

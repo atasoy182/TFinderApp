@@ -72,8 +72,7 @@ const MaterialColor morMaterialColor = const MaterialColor(
   },
 );
 
-const defaultTurkuazGradient =
-    const LinearGradient(begin: Alignment.topCenter, colors: [
+const defaultTurkuazGradient = const LinearGradient(begin: Alignment.topCenter, colors: [
   Color.fromRGBO(65, 202, 198, 1),
   Color.fromRGBO(65, 202, 198, 0.8),
   Color.fromRGBO(65, 202, 198, 0.6),
@@ -2138,13 +2137,7 @@ List yearList = [
   "1921",
 ];
 
-List allDegrees = [
-  "Seçim Yapınız",
-  "Ön Lisans",
-  "Lisans",
-  "Yüksek Lisans",
-  "Doktora"
-];
+List allDegrees = ["Seçim Yapınız", "Ön Lisans", "Lisans", "Yüksek Lisans", "Doktora"];
 
 List allDepartments = [
   "Seçim Yapınız",
@@ -2775,12 +2768,17 @@ List saatList = [
   "00.00"
 ];
 
-List haftaninGunleri = [
-  "Pazartesi",
-  "Salı",
-  "Çarşamba",
-  "Perşembe",
-  "Cuma",
-  "Cumartesi",
-  "Pazar"
-];
+List haftaninGunleri = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
+
+String checkPrms(Map<String, dynamic> map, String deger) {
+  try {
+    if (map.containsKey(deger)) {
+      return map[deger].toString();
+    } else {
+      return "";
+    }
+  } catch (e) {
+    print("map:" + map.toString());
+    print("deger:" + deger.toString());
+  }
+}

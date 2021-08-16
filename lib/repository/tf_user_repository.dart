@@ -15,8 +15,7 @@ class TfUserRepository implements AuthBase {
   @override
   Future<TfUser> getCurrentUser() async {
     if (_appMode == AppMode.RELEASE) {
-      return girisYapilanKullanici =
-          await _firebaseAuthService.getCurrentUser();
+      return girisYapilanKullanici = await _firebaseAuthService.getCurrentUser();
     }
     return null;
   }
@@ -42,9 +41,14 @@ class TfUserRepository implements AuthBase {
     if (_appMode == AppMode.RELEASE) {
       var girisYapilanTfUser = await _firebaseAuthService.signInWithGoogle();
       girisYapilanKullanici = girisYapilanTfUser;
-      bool _resultFromDB =
-          await _firebaseDBService.saveUserToDB(girisYapilanTfUser, {});
-      if (_resultFromDB)
+
+      bool _kayitVarMi = await _firebaseDBService.kullaniciVarMi(girisYapilanTfUser.userID);
+      bool _resultFromDB = true;
+      if (!_kayitVarMi) {
+        _resultFromDB = await _firebaseDBService.saveUserToDB(girisYapilanTfUser, {});
+      }
+
+      if (_resultFromDB || _kayitVarMi)
         return girisYapilanTfUser;
       else
         return null;
@@ -53,14 +57,11 @@ class TfUserRepository implements AuthBase {
   }
 
   @override
-  Future<TfUser> createTfUserWithEmail(
-      String email, String password, Map<String, dynamic> extraPrms) async {
+  Future<TfUser> createTfUserWithEmail(String email, String password, Map<String, dynamic> extraPrms) async {
     if (_appMode == AppMode.RELEASE) {
-      TfUser _tfuser = await _firebaseAuthService.createTfUserWithEmail(
-          email, password, extraPrms);
+      TfUser _tfuser = await _firebaseAuthService.createTfUserWithEmail(email, password, extraPrms);
       girisYapilanKullanici = _tfuser;
-      bool _resultFromDB =
-          await _firebaseDBService.saveUserToDB(_tfuser, extraPrms);
+      bool _resultFromDB = await _firebaseDBService.saveUserToDB(_tfuser, extraPrms);
       if (_resultFromDB)
         return _tfuser;
       else
@@ -72,8 +73,7 @@ class TfUserRepository implements AuthBase {
   @override
   Future<TfUser> signInWithEmail(String email, String password) async {
     if (_appMode == AppMode.RELEASE) {
-      return girisYapilanKullanici =
-          await _firebaseAuthService.signInWithEmail(email, password);
+      return girisYapilanKullanici = await _firebaseAuthService.signInWithEmail(email, password);
     }
     return null;
   }

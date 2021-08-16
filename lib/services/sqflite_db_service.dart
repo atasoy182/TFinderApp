@@ -19,4 +19,16 @@ class DBSQFLiteService implements DBBase {
     // TODO: implement getCurrentTfUser
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> kullaniciVarMi(String userID) {
+    // TODO: implement kullaniciVarMi
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TfUser> getCurrentTfUserDetayli(String userID) {
+    // TODO: implement getCurrentTfUserDetayli
+    throw UnimplementedError();
+  }
 }

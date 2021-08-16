@@ -29,7 +29,24 @@ class ProfileEditRepository implements DBBase {
   }
 
   @override
+  Future<bool> kullaniciVarMi(String userID) {
+    // TODO: implement kullaniciVarMi
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<TfUser> getCurrentTfUserDetayli(String userID) async {
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseDBService.getCurrentTfUserDetayli(userID);
+    }
+    return null;
+  }
+
+  @override
   Future<TfUser> getCurrentTfUser() async {
-    return await _firebaseAuthService.getCurrentUser();
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseAuthService.getCurrentUser();
+    }
+    return null;
   }
 }

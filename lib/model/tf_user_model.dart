@@ -55,6 +55,32 @@ class TfUser {
 
   TfUser({@required this.userID, @required this.email, this.adSoyad});
 
+  TfUser.full({
+    @required this.userID,
+    @required this.email,
+    this.adSoyad,
+    this.profilFotoURL,
+    this.videoURL,
+    this.createdAt,
+    this.updatedAt,
+    this.seviye = 0,
+    this.oneCikarilanAlan,
+    this.il,
+    this.ilce,
+    this.dersVerdigiAlanlar,
+    this.dersUcretAraligi,
+    this.yas,
+    this.hakkinda,
+    this.egitimler,
+    this.deneyimler,
+    this.locationX,
+    this.locationY,
+    this.cepTel,
+    this.cepTelOnay,
+    this.onaylanmisOgretmen,
+    this.sosyalMedya,
+  });
+
   @override
   String toString() {
     return 'TfUser{userID: $userID, email: $email, profilFotoURL: $profilFotoURL, videoURL: $videoURL, createdAt: $createdAt, updatedAt: $updatedAt, seviye: $seviye, oneCikarilanAlan: $oneCikarilanAlan, il: $il,  ilce: $ilce, dersVerdigiAlanlar: $dersVerdigiAlanlar, dersUcretAraligi: $dersUcretAraligi, adSoyad: $adSoyad, yas: $yas, hakkinda: $hakkinda, egitimler: $egitimler, deneyimler: $deneyimler, locationX: $locationX, locationY: $locationY, cepTel: $cepTel , cepTelOnay: $cepTelOnay, onaylanmisOgretmen: $onaylanmisOgretmen , sosyalMedya: $sosyalMedya}';

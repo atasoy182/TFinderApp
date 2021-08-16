@@ -23,8 +23,7 @@ class AuthFirebaseService implements AuthBase {
      */
     if (user == null) return null;
 
-    return TfUser(
-        userID: user.uid, email: user.email, adSoyad: user.displayName);
+    return TfUser(userID: user.uid, email: user.email, adSoyad: user.displayName);
   }
 
   @override
@@ -57,13 +56,10 @@ class AuthFirebaseService implements AuthBase {
       GoogleSignIn _googleSignIn = GoogleSignIn();
       GoogleSignInAccount _googleUser = await _googleSignIn.signIn();
       if (_googleUser != null) {
-        GoogleSignInAuthentication _googleAuth =
-            await _googleUser.authentication;
+        GoogleSignInAuthentication _googleAuth = await _googleUser.authentication;
         if (_googleAuth.accessToken != null && _googleAuth.idToken != null) {
-          UserCredential authResult = await _firebaseAuth.signInWithCredential(
-              GoogleAuthProvider.credential(
-                  idToken: _googleAuth.idToken,
-                  accessToken: _googleAuth.accessToken));
+          UserCredential authResult = await _firebaseAuth
+              .signInWithCredential(GoogleAuthProvider.credential(idToken: _googleAuth.idToken, accessToken: _googleAuth.accessToken));
           User user = authResult.user;
           return _userFromFirebase(user);
         } else {
@@ -79,11 +75,9 @@ class AuthFirebaseService implements AuthBase {
   }
 
   @override
-  Future<TfUser> createTfUserWithEmail(
-      String email, String password, Map<String, dynamic> extraPrms) async {
+  Future<TfUser> createTfUserWithEmail(String email, String password, Map<String, dynamic> extraPrms) async {
     try {
-      UserCredential _userCredential = await _firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      UserCredential _userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       return _userFromFirebase(_userCredential.user);
     } catch (e) {
       print("createTfUserWithEmail  hatası: " + e.toString());
@@ -94,8 +88,7 @@ class AuthFirebaseService implements AuthBase {
   @override
   Future<TfUser> signInWithEmail(String email, String password) async {
     try {
-      UserCredential _userCredential = await _firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
+      UserCredential _userCredential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       return _userFromFirebase(_userCredential.user);
     } catch (e) {
       print("signInWithEmail  hatası: " + e.toString());

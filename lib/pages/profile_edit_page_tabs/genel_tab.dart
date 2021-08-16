@@ -6,6 +6,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 import 'package:tfinder_app/widgets/look_up.dart';
 import 'dart:io';
@@ -18,17 +19,17 @@ class ProfileEditGenelTab extends StatefulWidget {
 }
 
 class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with AutomaticKeepAliveClientMixin {
-  String _ppUrl = "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
+  String _ppUrl = "";
 
-  String _adSoyad = "Mehmet Berkay Atasoy";
-  String _email = "atasoy182@gmail.com";
-  String _ceptel = "+90 (555) 555-55-55";
-  String _sehir = "Ankara";
-  String _ilce = "Çankaya";
-  String _ucretAraligi = "50-100";
+  String _adSoyad = "";
+  String _email = "";
+  String _ceptel = "";
+  String _sehir = "Seçim Yapınız";
+  String _ilce = "Seçim Yapınız";
+  String _ucretAraligi = "";
   String _ucretAraligi1;
   String _ucretAraligi2;
-  String _yas = "24";
+  String _yas = "";
 
   File _pickedImage;
   int operation = 0;
@@ -42,6 +43,19 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
   @override
   void initState() {
     super.initState();
+    setInitialPrms();
+  }
+
+  void setInitialPrms() {
+    final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
+    _adSoyad = checkPrms(_profileEditModel.extraPrms, TFC.adSoyad);
+    _email = checkPrms(_profileEditModel.extraPrms, TFC.email);
+    _ceptel = checkPrms(_profileEditModel.extraPrms, TFC.cepTel);
+    _sehir = checkPrms(_profileEditModel.extraPrms, TFC.il);
+    _ilce = checkPrms(_profileEditModel.extraPrms, TFC.ilce);
+    _ucretAraligi = checkPrms(_profileEditModel.extraPrms, TFC.dersUcretAraligi);
+    _yas = checkPrms(_profileEditModel.extraPrms, TFC.yas);
+    _ppUrl = checkPrms(_profileEditModel.extraPrms, TFC.profilFotoURL);
     _ucretAraligi1 = _ucretAraligi.split("-")[0];
     _ucretAraligi2 = _ucretAraligi.split("-")[1];
   }
@@ -149,7 +163,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                   child: Form(
                     key: _formAdsoyadKey,
                     child: TextFormField(
-                      initialValue: _profileEditModel.extraPrms.containsKey('adsoyad') ? _profileEditModel.extraPrms['adsoyad'] : "",
+                      initialValue: _adSoyad,
                       onSaved: (String adSoyadInput) => _adSoyad = adSoyadInput,
                       decoration: InputDecoration(
                         icon: Icon(Icons.person, color: defaultLink),

@@ -72,8 +72,7 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
       _tfUser = await _tfUserRepository.signInWithGoogle();
       return _tfUser;
     } catch (e) {
-      debugPrint(
-          "UserModel View modeldeki signInWithGmail hatası ${e.toString()}");
+      debugPrint("UserModel View modeldeki signInWithGmail hatası ${e.toString()}");
       return null;
     } finally {
       state = ViewState.Idle;
@@ -81,16 +80,13 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
   }
 
   @override
-  Future<TfUser> createTfUserWithEmail(
-      String email, String password, Map<String, dynamic> extraPrms) async {
+  Future<TfUser> createTfUserWithEmail(String email, String password, Map<String, dynamic> extraPrms) async {
     try {
       state = ViewState.Busy;
-      _tfUser = await _tfUserRepository.createTfUserWithEmail(
-          email, password, extraPrms);
+      _tfUser = await _tfUserRepository.createTfUserWithEmail(email, password, extraPrms);
       return _tfUser;
     } catch (e) {
-      debugPrint(
-          "UserModel View modeldeki createTfUserWithEmail hatası ${e.toString()}");
+      debugPrint("UserModel View modeldeki createTfUserWithEmail hatası ${e.toString()}");
       return null;
     } finally {
       state = ViewState.Idle;
@@ -104,8 +100,7 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
       _tfUser = await _tfUserRepository.signInWithEmail(email, password);
       return _tfUser;
     } catch (e) {
-      debugPrint(
-          "UserModel View modeldeki signInWithEmail hatası ${e.toString()}");
+      debugPrint("UserModel View modeldeki signInWithEmail hatası ${e.toString()}");
       return null;
     } finally {
       state = ViewState.Idle;
@@ -128,8 +123,7 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
 
       return result;
     } catch (e) {
-      debugPrint(
-          "UserModel View modeldeki forgotPassword hatası ${e.toString()}");
+      debugPrint("UserModel View modeldeki forgotPassword hatası ${e.toString()}");
       return null;
     } finally {
       state = ViewState.Idle;
