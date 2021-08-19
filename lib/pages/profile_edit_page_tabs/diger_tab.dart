@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
+import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 import 'package:tfinder_app/widgets/chewie.dart';
 import 'package:tfinder_app/widgets/education_experince_widget.dart';
 
 class ProfileEditDigerTab extends StatefulWidget {
-  const ProfileEditDigerTab({Key key}) : super(key: key);
+  final Function callback;
+  const ProfileEditDigerTab({Key key, @required this.callback}) : super(key: key);
 
   @override
   _ProfileEditDigerTabState createState() => _ProfileEditDigerTabState();
@@ -13,31 +17,45 @@ class ProfileEditDigerTab extends StatefulWidget {
 
 class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with AutomaticKeepAliveClientMixin {
   String hakkinda = "";
-  String videoUrl = "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4";
-  List egitimler = [
-    {
-      "yil": "2021",
-      "okul": "İstanbul Arel Üniversitesi",
-      "bolum": "Bilgisayar Mühendisliği",
-      "derece": "Lisans",
-    },
-    {
-      "yil": "2021",
-      "okul": "İstanbul Arel Üniversitesi",
-      "bolum": "Bilgisayar Mühendisliği",
-      "derece": "Lisans",
-    }
-  ];
-  List deneyimler = [
-    {"yil": "2021", "isyeri": "Dia yazılım", "alan": "Yazılım Geliştirici"},
-    {"yil": "2021", "isyeri": "Dia yazılım", "alan": "Yazılım Geliştirici"}
-  ];
+  String videoUrl = "";
+  List egitimler;
+  // {
+  //   "yil": "2021",
+  //   "okul": "İstanbul Arel Üniversitesi",
+  //   "bolum": "Bilgisayar Mühendisliği",
+  //   "derece": "Lisans",
+  // },
+  // {
+  //   "yil": "2021",
+  //   "okul": "İstanbul Arel Üniversitesi",
+  //   "bolum": "Bilgisayar Mühendisliği",
+  //   "derece": "Lisans",
+  // }
+  List deneyimler;
+  // = [
+  //   // {"yil": "2021", "isyeri": "Dia yazılım", "alan": "Yazılım Geliştirici"},
+  //   // {"yil": "2021", "isyeri": "Dia yazılım", "alan": "Yazılım Geliştirici"}
+  // ]
 
   final _formHakkindaKey = GlobalKey<FormState>();
 
   XFile _pickedVideo;
   final ImagePicker _picker = ImagePicker();
   bool fromUrl = true;
+
+  @override
+  void initState() {
+    super.initState();
+    setInitialPrms();
+  }
+
+  setInitialPrms() {
+    final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
+    hakkinda = checkPrms(_profileEditModel.extraPrms, TFC.hakkinda);
+    videoUrl = checkPrms(_profileEditModel.extraPrms, TFC.videoURL);
+    egitimler = checkPrms(_profileEditModel.extraPrms, TFC.egitimler);
+    deneyimler = checkPrms(_profileEditModel.extraPrms, TFC.deneyimler);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,10 +152,12 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
             child: Form(
               key: _formHakkindaKey,
               child: TextFormField(
+                initialValue: hakkinda,
                 keyboardType: TextInputType.multiline,
                 maxLength: null,
                 maxLines: 7,
                 onSaved: (String input) => hakkinda = input,
+                onChanged: (String input) => widget.callback({TFC.hakkinda: input}),
                 decoration: InputDecoration(
                   icon: ImageIcon(
                     AssetImage("assets/images/about.png"),
@@ -223,10 +243,12 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
                     kaydetCliked: (kaydedilecekDeger) {
                       egitimler[index] = kaydedilecekDeger;
                       setState(() {});
+                      widget.callback({TFC.egitimler: egitimler});
                     },
                     silCliked: (silinecekDeger) {
                       egitimler.removeAt(index);
                       setState(() {});
+                      widget.callback({TFC.egitimler: egitimler});
                     },
                   ),
                 ),
@@ -242,6 +264,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
             kaydetCliked: (kaydedilecekDeger) {
               egitimler.add(kaydedilecekDeger);
               setState(() {});
+              widget.callback({TFC.egitimler: egitimler});
             },
             silCliked: (silinecekDeger) {},
           ),
@@ -297,10 +320,12 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
                   kaydetCliked: (kaydedilecekDeger) {
                     deneyimler[index] = kaydedilecekDeger;
                     setState(() {});
+                    widget.callback({TFC.deneyimler: deneyimler});
                   },
                   silCliked: (silinecekDeger) {
                     deneyimler.removeAt(index);
                     setState(() {});
+                    widget.callback({TFC.deneyimler: deneyimler});
                   },
                 ),
               ],
@@ -317,6 +342,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
 
               deneyimler.add(kaydedilecekDeger);
               setState(() {});
+              widget.callback({TFC.deneyimler: deneyimler});
             },
             silCliked: (silinecekDeger) {},
           ),

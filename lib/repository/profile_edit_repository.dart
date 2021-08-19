@@ -11,6 +11,7 @@ class ProfileEditRepository implements DBBase {
   DBFirebaseService _firebaseDBService = locator.get<DBFirebaseService>();
   DBSQFLiteService _sqfLiteDBService = locator.get<DBSQFLiteService>();
   AuthFirebaseService _firebaseAuthService = locator.get<AuthFirebaseService>();
+  String currentUserID;
 
   @override
   Future<bool> eMailVarMi(String email) async {
@@ -45,7 +46,18 @@ class ProfileEditRepository implements DBBase {
   @override
   Future<TfUser> getCurrentTfUser() async {
     if (_appMode == AppMode.RELEASE) {
-      return await _firebaseAuthService.getCurrentUser();
+      var res = await _firebaseAuthService.getCurrentUser();
+      currentUserID = res.userID;
+      return res;
+    }
+    return null;
+  }
+
+  @override
+  Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
+    if (_appMode == AppMode.RELEASE) {
+      var res = await _firebaseDBService.updateUserToDB(currentUserID, extraPrms);
+      return res;
     }
     return null;
   }

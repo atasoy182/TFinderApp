@@ -12,7 +12,8 @@ import 'package:tfinder_app/widgets/look_up.dart';
 import 'dart:io';
 
 class ProfileEditGenelTab extends StatefulWidget {
-  const ProfileEditGenelTab({Key key}) : super(key: key);
+  final Function callback;
+  const ProfileEditGenelTab({Key key, @required this.callback}) : super(key: key);
 
   @override
   _ProfileEditGenelTabState createState() => _ProfileEditGenelTabState();
@@ -58,6 +59,10 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
     _ppUrl = checkPrms(_profileEditModel.extraPrms, TFC.profilFotoURL);
     _ucretAraligi1 = _ucretAraligi.split("-")[0];
     _ucretAraligi2 = _ucretAraligi.split("-")[1];
+  }
+
+  callBack(String key, dynamic value) {
+    widget.callback({key: value});
   }
 
   @override
@@ -164,6 +169,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                     key: _formAdsoyadKey,
                     child: TextFormField(
                       initialValue: _adSoyad,
+                      onChanged: (String input) {
+                        callBack(TFC.adSoyad, input);
+                      },
                       onSaved: (String adSoyadInput) => _adSoyad = adSoyadInput,
                       decoration: InputDecoration(
                         icon: Icon(Icons.person, color: defaultLink),
@@ -193,6 +201,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                     key: _formCepTelKey,
                     child: TextFormField(
                       initialValue: _ceptel,
+                      onChanged: (String input) {
+                        callBack(TFC.cepTel, input);
+                      },
                       inputFormatters: [phoneFormatter],
                       keyboardType: TextInputType.phone,
                       onSaved: (String input) => _ceptel = input,
@@ -223,6 +234,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                     key: _formEmailKey,
                     child: TextFormField(
                       initialValue: _email,
+                      onChanged: (String input) {
+                        callBack(TFC.email, input);
+                      },
                       onSaved: (String input) => _email = input,
                       decoration: InputDecoration(
                         icon: Icon(Icons.mail, color: defaultLink),
@@ -255,6 +269,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                         child: TextFormField(
                           initialValue: _yas,
                           onSaved: (String input) => _yas = input,
+                          onChanged: (String input) {
+                            callBack(TFC.yas, input);
+                          },
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
@@ -294,7 +311,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                           baslangicDegerleri: ["Bilgisayar"],
                           hintText: "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                           okCliked: (secilenler) {
-                            print("Secilenler:" + secilenler.toString());
+                            callBack(TFC.oneCikarilanAlan, secilenler);
                           },
                         ),
                       )
@@ -322,7 +339,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                           baslangicDegerleri: ["Bilgisayar", "İngilizce"],
                           hintText: "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                           okCliked: (secilenler) {
-                            print("Secilenler:" + secilenler.toString());
+                            callBack(TFC.dersVerdigiAlanlar, secilenler);
                           },
                         ),
                       )
@@ -350,6 +367,8 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                               _ilce = "Seçim Yapınız";
                               _sehir = newValue;
                             });
+                            callBack(TFC.il, newValue);
+                            callBack(TFC.ilce, "Seçim Yapınız");
                           },
                           items: allStatesOfTurkey.map((item) => buildDropdownMenuItem(item)).toList(),
                         ),
@@ -377,6 +396,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                             setState(() {
                               _ilce = newValue;
                             });
+                            callBack(TFC.ilce, _ilce);
                           },
                           items: _buildIlceItemsForDropDown(),
                         ),
@@ -398,6 +418,10 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                         flex: 3,
                         child: TextFormField(
                           initialValue: _ucretAraligi1,
+                          onChanged: (input) {
+                            _ucretAraligi1 = input;
+                            callBack(TFC.dersUcretAraligi, input + "-" + _ucretAraligi2);
+                          },
                           onSaved: (String input) => _ucretAraligi1 = input,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -420,6 +444,10 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                           initialValue: _ucretAraligi2,
                           keyboardType: TextInputType.number,
                           onSaved: (String input) => _ucretAraligi2 = input,
+                          onChanged: (input) {
+                            _ucretAraligi2 = input;
+                            callBack(TFC.dersUcretAraligi, _ucretAraligi1 + "-" + input);
+                          },
                           decoration: InputDecoration(
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
+import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 import 'package:tfinder_app/widgets/base_button.dart';
 
 class ProfileEditProgramTab extends StatefulWidget {
   final List secimler;
+  final Function callback;
 
-  const ProfileEditProgramTab({Key key, this.secimler}) : super(key: key);
+  const ProfileEditProgramTab({Key key, this.secimler, @required this.callback}) : super(key: key);
 
   @override
   _ProfileEditProgramTabState createState() => _ProfileEditProgramTabState();
@@ -17,16 +21,28 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> with Auto
   @override
   void initState() {
     super.initState();
-    secimler = {
-      "0": ["08.00", "09.00", "10.00", "11.00"],
-      "1": ["13.00", "14.00"],
-      "2": ["13.00", "14.00"],
-      "3": ["13.00", "14.00"],
-      "4": ["13.00", "14.00"],
-      "5": ["13.00", "14.00"],
-      "6": ["13.00", "14.00"],
-    };
+    setInitialPrms();
+    // secimler = {
+    //   "0": ["08.00", "09.00", "10.00", "11.00"],
+    //   "1": ["13.00", "14.00"],
+    //   "2": ["13.00", "14.00"],
+    //   "3": ["13.00", "14.00"],
+    //   "4": ["13.00", "14.00"],
+    //   "5": ["13.00", "14.00"],
+    //   "6": ["13.00", "14.00"],
+    // };
     // add all düşünülebilir.
+  }
+
+  setInitialPrms() {
+    final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
+    secimler = checkPrms(_profileEditModel.extraPrms, TFC.program);
+  }
+
+  @override
+  void setState(fn) {
+    super.setState(fn);
+    widget.callback({TFC.program: secimler});
   }
 
   @override

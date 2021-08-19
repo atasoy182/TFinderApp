@@ -74,6 +74,18 @@ class DBFirebaseService implements DBBase {
       cepTelOnay: snapshot.get(TFC.cepTelOnay),
       onaylanmisOgretmen: snapshot.get(TFC.onaylanmisOgretmen),
       sosyalMedya: snapshot.get(TFC.sosyalMedya),
+      program: snapshot.get(TFC.program),
     );
+  }
+
+  @override
+  Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
+    print("==================================");
+    try {
+      await _firestore.collection("users").doc(userID).update(extraPrms);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

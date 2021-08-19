@@ -31,4 +31,10 @@ class DBSQFLiteService implements DBBase {
     // TODO: implement getCurrentTfUserDetayli
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) {
+    // TODO: implement updateUserToDB
+    throw UnimplementedError();
+  }
 }

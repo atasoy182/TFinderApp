@@ -2770,9 +2770,12 @@ List saatList = [
 
 List haftaninGunleri = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
 
-String checkPrms(Map<String, dynamic> map, String deger) {
+checkPrms(Map<String, dynamic> map, String deger) {
   try {
     if (map.containsKey(deger)) {
+      if (map[deger] is List || map[deger] is Map) {
+        return map[deger];
+      }
       return map[deger].toString();
     } else {
       return "";

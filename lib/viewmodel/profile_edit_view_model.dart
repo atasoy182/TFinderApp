@@ -55,6 +55,11 @@ class ProfileEditViewModel with ChangeNotifier implements DBBase {
     extraPrms[TFC.dersUcretAraligi] = _user.dersUcretAraligi;
     extraPrms[TFC.yas] = _user.yas;
     extraPrms[TFC.profilFotoURL] = _user.profilFotoURL;
+    extraPrms[TFC.videoURL] = _user.videoURL;
+    extraPrms[TFC.hakkinda] = _user.hakkinda;
+    extraPrms[TFC.deneyimler] = _user.deneyimler;
+    extraPrms[TFC.egitimler] = _user.egitimler;
+    extraPrms[TFC.program] = _user.program;
 
     state = ViewState.Idle;
 
@@ -71,5 +76,10 @@ class ProfileEditViewModel with ChangeNotifier implements DBBase {
   Future<TfUser> getCurrentTfUserDetayli(String userID) {
     // TODO: implement getCurrentTfUserDetayli
     throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
+    return await _profileRepository.updateUserToDB(userID, extraPrms);
   }
 }
