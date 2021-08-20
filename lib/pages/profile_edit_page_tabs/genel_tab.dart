@@ -13,7 +13,8 @@ import 'dart:io';
 
 class ProfileEditGenelTab extends StatefulWidget {
   final Function callback;
-  const ProfileEditGenelTab({Key key, @required this.callback}) : super(key: key);
+  final Function callbackFoto;
+  const ProfileEditGenelTab({Key key, @required this.callback, @required this.callbackFoto}) : super(key: key);
 
   @override
   _ProfileEditGenelTabState createState() => _ProfileEditGenelTabState();
@@ -21,6 +22,7 @@ class ProfileEditGenelTab extends StatefulWidget {
 
 class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with AutomaticKeepAliveClientMixin {
   String _ppUrl = "";
+  String _oldPPUrl = "";
 
   String _adSoyad = "";
   String _email = "";
@@ -57,6 +59,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
     _ucretAraligi = checkPrms(_profileEditModel.extraPrms, TFC.dersUcretAraligi);
     _yas = checkPrms(_profileEditModel.extraPrms, TFC.yas);
     _ppUrl = checkPrms(_profileEditModel.extraPrms, TFC.profilFotoURL);
+    _oldPPUrl = _ppUrl;
     _ucretAraligi1 = _ucretAraligi.split("-")[0];
     _ucretAraligi2 = _ucretAraligi.split("-")[1];
   }
@@ -138,6 +141,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                                               _pickedImage = null;
                                               _ppUrl = "https://img.icons8.com/pastel-glyph/2x/person-male--v2.png";
                                             });
+                                            widget.callbackFoto("sil", "https://img.icons8.com/pastel-glyph/2x/person-male--v2.png");
                                             Navigator.pop(context);
                                           },
                                         ),
@@ -541,7 +545,12 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
   }
 
   void _loadPicker(ImageSource imageSource) async {
-    final XFile picked = await _picker.pickImage(source: imageSource);
+    XFile picked;
+    try {
+      picked = await _picker.pickImage(imageQuality: 80, source: imageSource);
+    } catch (e) {
+      return null;
+    }
 
     if (picked != null) {
       File cropped = await ImageCropper.cropImage(
@@ -562,6 +571,12 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
       setState(() {
         _pickedImage = null;
       });
+    }
+
+    if (_pickedImage != null) {
+      widget.callbackFoto("resimekle", _pickedImage);
+    } else {
+      widget.callbackFoto("sil", "https://img.icons8.com/pastel-glyph/2x/person-male--v2.png");
     }
   }
 

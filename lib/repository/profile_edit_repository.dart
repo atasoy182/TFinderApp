@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/repository/tf_user_repository.dart';
 import 'package:tfinder_app/services/auth_firebase_service.dart';
 import 'package:tfinder_app/services/database_base.dart';
 import 'package:tfinder_app/services/firebase_db_service.dart';
+import 'package:tfinder_app/services/firebase_storage_service.dart';
 import 'package:tfinder_app/services/sqflite_db_service.dart';
 
 class ProfileEditRepository implements DBBase {
@@ -11,6 +14,7 @@ class ProfileEditRepository implements DBBase {
   DBFirebaseService _firebaseDBService = locator.get<DBFirebaseService>();
   DBSQFLiteService _sqfLiteDBService = locator.get<DBSQFLiteService>();
   AuthFirebaseService _firebaseAuthService = locator.get<AuthFirebaseService>();
+  FirebaseStorageService _firebaseStorageService = locator.get<FirebaseStorageService>();
   String currentUserID;
 
   @override
@@ -60,5 +64,10 @@ class ProfileEditRepository implements DBBase {
       return res;
     }
     return null;
+  }
+
+  Future<String> uploadFile(String fileType, File yeniImage) async {
+    var _indirmeLinki = await _firebaseStorageService.uploadFile(currentUserID, fileType, yeniImage);
+    return _indirmeLinki;
   }
 }

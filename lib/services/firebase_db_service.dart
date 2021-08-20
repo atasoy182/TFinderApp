@@ -80,7 +80,6 @@ class DBFirebaseService implements DBBase {
 
   @override
   Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
-    print("==================================");
     try {
       await _firestore.collection("users").doc(userID).update(extraPrms);
       return true;

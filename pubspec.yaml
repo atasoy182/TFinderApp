@@ -48,6 +48,7 @@ dependencies:
   http: ^0.13.0
   image_picker: ^0.8.3+2
   image_cropper: any
+  firebase_storage: ^10.0.2
 
 #  video_player:
 #    git:

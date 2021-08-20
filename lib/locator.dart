@@ -3,6 +3,7 @@ import 'package:tfinder_app/repository/profile_edit_repository.dart';
 import 'package:tfinder_app/repository/tf_user_repository.dart';
 import 'package:tfinder_app/services/auth_firebase_service.dart';
 import 'package:tfinder_app/services/firebase_db_service.dart';
+import 'package:tfinder_app/services/firebase_storage_service.dart';
 
 import 'services/sqflite_db_service.dart';
 
@@ -14,4 +15,5 @@ void setupLocator() {
   locator.registerLazySingleton(() => DBFirebaseService());
   locator.registerLazySingleton(() => ProfileEditRepository());
   locator.registerLazySingleton(() => DBSQFLiteService());
+  locator.registerLazySingleton(() => FirebaseStorageService());
 }

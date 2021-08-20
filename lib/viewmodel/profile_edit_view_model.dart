@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
@@ -81,5 +83,10 @@ class ProfileEditViewModel with ChangeNotifier implements DBBase {
   @override
   Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
     return await _profileRepository.updateUserToDB(userID, extraPrms);
+  }
+
+  Future<String> uploadFile(String fileType, File yeniImage) async {
+    var _indirmeLinki = await _profileRepository.uploadFile(fileType, yeniImage);
+    return _indirmeLinki;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +11,8 @@ import 'package:tfinder_app/pages/profile_edit_page_tabs/genel_tab.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/program_tab.dart';
 import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 
+import '../model/tf_user_model.dart';
+
 class ProfileEditPage extends StatefulWidget {
   ProfileEditPage({Key key}) : super(key: key);
 
@@ -18,6 +22,8 @@ class ProfileEditPage extends StatefulWidget {
 
 class _ProfileEditPageState extends State<ProfileEditPage> {
   var dictForSave = {};
+  var resimEklenecek = false;
+  File file;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -38,9 +44,19 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           elevation: 1,
           child: IconButton(
             onPressed: () async {
-              print(" FLOATİNG ACTİON BUTTONA TIKLANDI!!!");
-              print("dictForSave:" + dictForSave.toString());
-              print("dictForSave:" + dictForSave.runtimeType.toString());
+              var msg = "";
+
+              if (resimEklenecek && file != null) {
+                try {
+                  var indirmeLinki = await _profileEditModel.uploadFile("profil_foto", file);
+                  if (indirmeLinki != null) {
+                    saveDict({TFC.profilFotoURL: indirmeLinki});
+                  }
+                } catch (e) {
+                  msg = "Resim Kaydedilemedi.";
+                }
+              }
+
               var myMap = dictForSave.map((key, value) => MapEntry(key.toString(), value));
               var res = await _profileEditModel.updateUserToDB("", myMap);
               if (res) {
@@ -106,6 +122,16 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           children: [
             ProfileEditGenelTab(
               callback: (myDict) => saveDict(myDict),
+              callbackFoto: (islem, veri) async {
+                if (islem == "resimekle") {
+                  resimEklenecek = true;
+                  file = veri;
+                } else {
+                  resimEklenecek = false;
+                  file = null;
+                  saveDict({TFC.profilFotoURL: veri});
+                }
+              },
             ),
             ProfileEditDigerTab(
               callback: (myDict) => saveDict(myDict),
