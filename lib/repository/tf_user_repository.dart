@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/services/auth_base.dart';

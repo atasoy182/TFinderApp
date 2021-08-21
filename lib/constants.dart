@@ -38,6 +38,8 @@ const turkuazWithOpacity2 = Color.fromRGBO(65, 202, 198, 0.6);
 const turkuazWithOpacity3 = Color.fromRGBO(65, 202, 198, 0.4);
 const turkuazWithOpacity4 = Color.fromRGBO(65, 202, 198, 0.2);
 
+const semiTransparent = Color.fromRGBO(255, 255, 255, 0.5);
+
 const morDefault = Color.fromRGBO(82, 67, 101, 1);
 
 const MaterialColor turkuazMaterialColor = const MaterialColor(
@@ -82,6 +84,9 @@ const defaultTurkuazGradient = const LinearGradient(begin: Alignment.topCenter, 
 Color hexToColor(String code) {
   return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
+
+// MB cinsinden yuklenebilecekMaksimumVideoBoyutu
+int yuklenebilecekMaksimumVideoBoyutu = 50;
 
 // Bütün kategoriler
 List<String> allCategories = [

@@ -46,11 +46,29 @@ class ProfileEditViewModel with ChangeNotifier {
   }
 
   Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
-    return await _tfUserRepository.updateUserToDB(userID, extraPrms);
+    state = ViewState.Busy;
+    var res;
+    try {
+      res = await _tfUserRepository.updateUserToDB(userID, extraPrms);
+    } catch (e) {
+      res = false;
+    } finally {
+      state = ViewState.Idle;
+    }
+    return res;
   }
 
   Future<String> uploadFile(String fileType, File yeniImage) async {
-    var _indirmeLinki = await _tfUserRepository.uploadFile(fileType, yeniImage);
-    return _indirmeLinki;
+    state = ViewState.Busy;
+    var res;
+    try {
+      res = await _tfUserRepository.uploadFile(fileType, yeniImage);
+    } catch (e) {
+      res = "";
+    } finally {
+      state = ViewState.Idle;
+    }
+
+    return res;
   }
 }

@@ -43,7 +43,7 @@ class TfUser {
   List dersVerdigiAlanlar;
   String dersUcretAraligi;
   String adSoyad;
-  int yas;
+  String yas;
   String hakkinda;
   List egitimler;
   List deneyimler;

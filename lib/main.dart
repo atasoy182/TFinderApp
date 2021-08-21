@@ -49,6 +49,7 @@ class MyApp extends StatelessWidget {
         routes: {
           '/': (context) => StartPage(),
           '/login': (context) => LoginPage(),
+          '/profile': (context) => ProfilePage(pageMode: ProfilePageMode.Degistir),
         },
       ),
     );

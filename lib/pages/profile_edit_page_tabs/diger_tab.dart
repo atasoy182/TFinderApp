@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -9,7 +11,8 @@ import 'package:tfinder_app/widgets/education_experince_widget.dart';
 
 class ProfileEditDigerTab extends StatefulWidget {
   final Function callback;
-  const ProfileEditDigerTab({Key key, @required this.callback}) : super(key: key);
+  final Function callbackVideo;
+  const ProfileEditDigerTab({Key key, @required this.callback, @required this.callbackVideo}) : super(key: key);
 
   @override
   _ProfileEditDigerTabState createState() => _ProfileEditDigerTabState();
@@ -18,6 +21,7 @@ class ProfileEditDigerTab extends StatefulWidget {
 class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with AutomaticKeepAliveClientMixin {
   String hakkinda = "";
   String videoUrl = "";
+  String oldVideoUrl = "";
   List egitimler;
   // {
   //   "yil": "2021",
@@ -53,6 +57,7 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
     final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
     hakkinda = checkPrms(_profileEditModel.extraPrms, TFC.hakkinda);
     videoUrl = checkPrms(_profileEditModel.extraPrms, TFC.videoURL);
+    oldVideoUrl = videoUrl;
     egitimler = checkPrms(_profileEditModel.extraPrms, TFC.egitimler);
     deneyimler = checkPrms(_profileEditModel.extraPrms, TFC.deneyimler);
   }
@@ -362,18 +367,35 @@ class _ProfileEditDigerTabState extends State<ProfileEditDigerTab> with Automati
   }
 
   void _loadPicker(ImageSource imageSource) async {
-    if (imageSource != null) {
-      final XFile picked = await _picker.pickVideo(source: imageSource);
-
+    try {
+      if (imageSource != null) {
+        final XFile picked = await _picker.pickVideo(source: imageSource);
+        var boyut = await picked.length();
+        // print("PICKED VALUE:" + boyut.toString());
+        var kacMB = boyut / 1048576;
+        if (kacMB > yuklenebilecekMaksimumVideoBoyutu) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(SnackBar(content: Text('En Fazla ' + yuklenebilecekMaksimumVideoBoyutu.toString() + "MB" + " Video Yüklenebilir.")));
+        } else {
+          setState(() {
+            videoUrl = "";
+            fromUrl = false;
+            _pickedVideo = picked;
+          });
+          widget.callbackVideo("videoekle", File(picked.path));
+        }
+      } else {
+        setState(() {
+          _pickedVideo = null;
+          videoUrl = "kaldir";
+        });
+        widget.callbackVideo("sil", null);
+      }
+    } catch (e) {
       setState(() {
-        videoUrl = "";
-        fromUrl = false;
-        _pickedVideo = picked;
-      });
-    } else {
-      setState(() {
+        videoUrl = oldVideoUrl;
+        fromUrl = true;
         _pickedVideo = null;
-        videoUrl = "kaldir";
       });
     }
   }
