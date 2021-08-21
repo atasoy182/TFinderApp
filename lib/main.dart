@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/login_page.dart';
+import 'package:tfinder_app/pages/profile_page.dart';
 import 'package:tfinder_app/pages/start_page.dart';
 import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';

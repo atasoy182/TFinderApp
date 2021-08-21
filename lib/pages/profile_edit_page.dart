@@ -9,6 +9,7 @@ import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/diger_tab.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/genel_tab.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/program_tab.dart';
+import 'package:tfinder_app/pages/profile_page.dart';
 import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 
 import '../model/tf_user_model.dart';
@@ -39,13 +40,9 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
       child: Scaffold(
         key: scaffoldKey,
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {},
-          backgroundColor: defaultLink,
-          elevation: 1,
-          child: IconButton(
-            onPressed: () async {
+          onPressed: () async {
+            if (dictForSave.keys.length > 0 || resimEklenecek) {
               var msg = "";
-
               if (resimEklenecek && file != null) {
                 try {
                   var indirmeLinki = await _profileEditModel.uploadFile("profil_foto", file);
@@ -56,10 +53,10 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                   msg = "Resim Kaydedilemedi.";
                 }
               }
-
               var myMap = dictForSave.map((key, value) => MapEntry(key.toString(), value));
               var res = await _profileEditModel.updateUserToDB("", myMap);
               if (res) {
+                dictForSave = {};
                 var message = MotionToast.success(
                     title: "Başarılı !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Başarıyla Kaydedildi !");
                 scaffoldKey.currentState.showBottomSheet((context) => message);
@@ -67,13 +64,19 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 var message = MotionToast.error(title: "Hata !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Kaydedilemedi !");
                 scaffoldKey.currentState.showBottomSheet((context) => message);
               }
-            },
-            padding: EdgeInsets.all(0),
-            icon: Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 35,
-            ),
+              await Future.delayed(Duration(seconds: 2));
+            } else {
+              var message =
+                  MotionToast.info(title: "Veri yok !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Kaydedilecek veri yok!");
+              scaffoldKey.currentState.showBottomSheet((context) => message);
+            }
+          },
+          backgroundColor: defaultLink,
+          elevation: 1,
+          child: Icon(
+            Icons.check,
+            color: Colors.white,
+            size: 35,
           ),
         ),
         appBar: AppBar(
