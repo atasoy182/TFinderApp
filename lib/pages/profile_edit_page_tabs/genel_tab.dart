@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
+import 'package:tfinder_app/widgets/location.dart';
 import 'package:tfinder_app/widgets/look_up.dart';
 import 'dart:io';
 
@@ -33,6 +34,8 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
   String _ucretAraligi1;
   String _ucretAraligi2;
   String _yas = "";
+  String locationX = "";
+  String locationY = "";
 
   File _pickedImage;
   int operation = 0;
@@ -62,6 +65,8 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
     _oldPPUrl = _ppUrl;
     _ucretAraligi1 = _ucretAraligi.split("-")[0];
     _ucretAraligi2 = _ucretAraligi.split("-")[1];
+    locationX = checkPrms(_profileEditModel.extraPrms, TFC.locationX);
+    locationY = checkPrms(_profileEditModel.extraPrms, TFC.locationY);
   }
 
   callBack(String key, dynamic value) {
@@ -479,7 +484,18 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                   height: 60,
                   child: Center(
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        var result = await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                          return ShowChangeLocation(
+                            locationX: locationX,
+                            locationY: locationY,
+                          );
+                        }));
+                        if (result != null) {
+                          callBack(TFC.locationX, result[0].toString());
+                          callBack(TFC.locationY, result[1].toString());
+                        }
+                      },
                       child: const Text(
                         'Konum Değiştir',
                         style: TextStyle(color: defaultLink, fontSize: 18),

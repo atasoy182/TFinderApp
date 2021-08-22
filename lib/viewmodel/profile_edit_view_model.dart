@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/repository/tf_user_repository.dart';
-import 'package:tfinder_app/services/database_base.dart';
 
 enum ViewState { Idle, Busy }
 
@@ -39,6 +38,8 @@ class ProfileEditViewModel with ChangeNotifier {
     extraPrms[TFC.deneyimler] = _user.deneyimler;
     extraPrms[TFC.egitimler] = _user.egitimler;
     extraPrms[TFC.program] = _user.program;
+    extraPrms[TFC.locationX] = _user.locationX;
+    extraPrms[TFC.locationY] = _user.locationY;
 
     state = ViewState.Idle;
 
