@@ -36,6 +36,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
   String _yas = "";
   String locationX = "";
   String locationY = "";
+  List oneCikarilanAlan = [];
+  List dersVerilenAlanlar = [];
+  List dersVerilenYerler = [];
 
   File _pickedImage;
   int operation = 0;
@@ -67,6 +70,9 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
     _ucretAraligi2 = _ucretAraligi.split("-")[1];
     locationX = checkPrms(_profileEditModel.extraPrms, TFC.locationX);
     locationY = checkPrms(_profileEditModel.extraPrms, TFC.locationY);
+    dersVerilenAlanlar = checkPrms(_profileEditModel.extraPrms, TFC.dersVerdigiAlanlar);
+    dersVerilenYerler = checkPrms(_profileEditModel.extraPrms, TFC.dersVerilenYerler);
+    oneCikarilanAlan = checkPrms(_profileEditModel.extraPrms, TFC.oneCikarilanAlan);
   }
 
   callBack(String key, dynamic value) {
@@ -200,7 +206,6 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                 ),
               ),
               // Ceptel
-              // TODO ceptel onaylama yapılacak.. Numaram görünsün mü ? yapılacak
               SliverToBoxAdapter(
                 child: Container(
                   margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
@@ -317,7 +322,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                           lookupMode: LookupMode.SingleSelect,
                           allItems: allCategories,
                           dialogTitle: "Kategori Seçiniz",
-                          baslangicDegerleri: ["Bilgisayar"],
+                          baslangicDegerleri: oneCikarilanAlan,
                           hintText: "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                           okCliked: (secilenler) {
                             callBack(TFC.oneCikarilanAlan, secilenler);
@@ -345,10 +350,37 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                           lookupMode: LookupMode.MultiSelect,
                           allItems: allCategories,
                           dialogTitle: "Kategori Seçiniz",
-                          baslangicDegerleri: ["Bilgisayar", "İngilizce"],
+                          baslangicDegerleri: dersVerilenAlanlar,
                           hintText: "İngilizce, Python, Gitar, Psikoloji, TYT, Gölge Öğretmen aratabilirsiniz",
                           okCliked: (secilenler) {
                             callBack(TFC.dersVerdigiAlanlar, secilenler);
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              // Ders Verilen Yerler
+              SliverToBoxAdapter(
+                child: Container(
+                  margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  //color: Colors.green,
+                  height: 60,
+                  child: Row(
+                    children: [
+                      Expanded(flex: 3, child: Text("Ders verilen yerler")),
+                      Expanded(
+                        flex: 7,
+                        child: Lookup(
+                          btnColor: defaultLink,
+                          iconColor: defaultLink,
+                          lookupMode: LookupMode.MultiSelect,
+                          allItems: ["Online", "Öğretmenin evinde", "Öğrencinin evinde", "Kafede"],
+                          dialogTitle: "Yerleri Seçiniz",
+                          baslangicDegerleri: dersVerilenYerler,
+                          okCliked: (secilenler) {
+                            callBack(TFC.dersVerilenYerler, secilenler);
                           },
                         ),
                       )

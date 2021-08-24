@@ -120,7 +120,8 @@ class TfUserRepository implements AuthBase {
       if (detayliGirisYapilanKullanici != null) {
         return detayliGirisYapilanKullanici;
       } else {
-        return await _firebaseDBService.getCurrentTfUserDetayli(userID);
+        var res = await _firebaseDBService.getCurrentTfUserDetayli(userID);
+        return res;
       }
     }
     return null;

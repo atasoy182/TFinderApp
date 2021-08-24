@@ -100,8 +100,7 @@ class _LookupState extends State<Lookup> {
                             return AlertDialog(
                               title: Align(child: Text(widget.dialogTitle)),
                               content: Container(
-                                  height:
-                                      MediaQuery.of(context).size.height / 2,
+                                  height: MediaQuery.of(context).size.height / 2,
                                   //color: Colors.green,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
@@ -114,22 +113,14 @@ class _LookupState extends State<Lookup> {
                                               color: Colors.black,
                                             ),
                                             decoration: new InputDecoration(
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: widget.iconColor,
-                                                      width: 0.5),
+                                                focusedBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: widget.iconColor, width: 0.5),
                                                 ),
-                                                enabledBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                      color: widget.iconColor,
-                                                      width: 0.5),
+                                                enabledBorder: OutlineInputBorder(
+                                                  borderSide: BorderSide(color: widget.iconColor, width: 0.5),
                                                 ),
                                                 border: OutlineInputBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          15.0),
+                                                  borderRadius: BorderRadius.circular(15.0),
                                                 ),
                                                 filled: true,
                                                 prefixIcon: IconButton(
@@ -140,15 +131,13 @@ class _LookupState extends State<Lookup> {
                                                     size: 32,
                                                   ),
                                                   onPressed: () {
-                                                    searchOperation(
-                                                        _controller.text);
+                                                    searchOperation(_controller.text);
                                                   },
                                                 ),
                                                 suffixIcon: IconButton(
                                                   padding: EdgeInsets.all(0),
                                                   icon: Icon(
-                                                    Icons
-                                                        .highlight_remove_sharp,
+                                                    Icons.highlight_remove_sharp,
                                                     color: Colors.redAccent,
                                                     size: 32,
                                                   ),
@@ -158,67 +147,45 @@ class _LookupState extends State<Lookup> {
                                                   },
                                                 ),
                                                 hintText: "Arama...",
-                                                hintStyle: new TextStyle(
-                                                    color: Colors.black)),
+                                                hintStyle: new TextStyle(color: Colors.black)),
                                             onChanged: searchOperation,
                                           )),
                                       widget.hintText.length > 0
                                           ? Expanded(
                                               flex: 1,
                                               child: Container(
-                                                margin:
-                                                    EdgeInsets.only(bottom: 5),
+                                                margin: EdgeInsets.only(bottom: 5),
                                                 child: Center(
                                                   child: Text(
                                                     widget.hintText,
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: Colors.grey),
+                                                    style: TextStyle(fontSize: 12, color: Colors.grey),
                                                   ),
                                                 ),
                                               ))
-                                          : null,
+                                          : Container(),
                                       Expanded(
                                         flex: 7,
                                         child: ListView.builder(
-                                            padding: const EdgeInsets.only(
-                                                left: 5, right: 5, top: 5),
-                                            itemCount: filteredItems.length +
-                                                selectedItems.length,
-                                            itemBuilder: (BuildContext context,
-                                                int index) {
-                                              filteredItems = [
-                                                ...selectedItems..sort(),
-                                                ...filteredItems..sort()
-                                              ].toSet().toList();
+                                            padding: const EdgeInsets.only(left: 5, right: 5, top: 5),
+                                            itemCount: filteredItems.length + selectedItems.length,
+                                            itemBuilder: (BuildContext context, int index) {
+                                              filteredItems = [...selectedItems..sort(), ...filteredItems..sort()].toSet().toList();
                                               try {
                                                 return ListTile(
                                                   onTap: () {
-                                                    if (!selectedItems.contains(
-                                                        filteredItems[index])) {
-                                                      if (widget.lookupMode ==
-                                                          LookupMode
-                                                              .MultiSelect) {
-                                                        selectedItems.add(
-                                                            filteredItems[
-                                                                index]);
+                                                    if (!selectedItems.contains(filteredItems[index])) {
+                                                      if (widget.lookupMode == LookupMode.MultiSelect) {
+                                                        selectedItems.add(filteredItems[index]);
                                                       } else {
-                                                        selectedItems = [
-                                                          filteredItems[index]
-                                                        ];
+                                                        selectedItems = [filteredItems[index]];
                                                       }
                                                     } else {
-                                                      selectedItems.remove(
-                                                          filteredItems[index]);
+                                                      selectedItems.remove(filteredItems[index]);
                                                     }
                                                     setState(() {});
                                                   },
-                                                  title: Text(
-                                                      '${filteredItems[index]}'),
-                                                  trailing: selectedItems
-                                                          .contains(
-                                                              filteredItems[
-                                                                  index])
+                                                  title: Text('${filteredItems[index]}'),
+                                                  trailing: selectedItems.contains(filteredItems[index])
                                                       ? Icon(
                                                           Icons.check,
                                                           color: Colors.green,

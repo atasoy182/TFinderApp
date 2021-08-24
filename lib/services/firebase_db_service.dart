@@ -50,32 +50,40 @@ class DBFirebaseService implements DBBase {
   }
 
   userFromFireBase(QueryDocumentSnapshot snapshot) {
-    return TfUser.full(
-      userID: snapshot.get(TFC.userID),
-      email: snapshot.get(TFC.email),
-      adSoyad: snapshot.get(TFC.adSoyad),
-      profilFotoURL: snapshot.get(TFC.profilFotoURL),
-      videoURL: snapshot.get(TFC.videoURL),
-      createdAt: snapshot.get(TFC.createdAt).toDate(),
-      updatedAt: snapshot.get(TFC.updatedAt).toDate(),
-      seviye: snapshot.get(TFC.seviye),
-      oneCikarilanAlan: snapshot.get(TFC.oneCikarilanAlan),
-      il: snapshot.get(TFC.il),
-      ilce: snapshot.get(TFC.ilce),
-      dersVerdigiAlanlar: snapshot.get(TFC.dersVerdigiAlanlar),
-      dersUcretAraligi: snapshot.get(TFC.dersUcretAraligi),
-      yas: snapshot.get(TFC.yas),
-      hakkinda: snapshot.get(TFC.hakkinda),
-      egitimler: snapshot.get(TFC.egitimler),
-      deneyimler: snapshot.get(TFC.deneyimler),
-      locationX: snapshot.get(TFC.locationX),
-      locationY: snapshot.get(TFC.locationY),
-      cepTel: snapshot.get(TFC.cepTel),
-      cepTelOnay: snapshot.get(TFC.cepTelOnay),
-      onaylanmisOgretmen: snapshot.get(TFC.onaylanmisOgretmen),
-      sosyalMedya: snapshot.get(TFC.sosyalMedya),
-      program: snapshot.get(TFC.program),
-    );
+    try {
+      return TfUser.full(
+        userID: snapshot.get(TFC.userID),
+        email: snapshot.get(TFC.email),
+        adSoyad: snapshot.get(TFC.adSoyad),
+        profilFotoURL: snapshot.get(TFC.profilFotoURL),
+        videoURL: snapshot.get(TFC.videoURL),
+        createdAt: snapshot.get(TFC.createdAt).toDate(),
+        updatedAt: snapshot.get(TFC.updatedAt).toDate(),
+        seviye: snapshot.get(TFC.seviye),
+        oneCikarilanAlan: snapshot.get(TFC.oneCikarilanAlan),
+        il: snapshot.get(TFC.il),
+        ilce: snapshot.get(TFC.ilce),
+        dersVerdigiAlanlar: snapshot.get(TFC.dersVerdigiAlanlar),
+        dersUcretAraligi: snapshot.get(TFC.dersUcretAraligi),
+        yas: snapshot.get(TFC.yas),
+        hakkinda: snapshot.get(TFC.hakkinda),
+        egitimler: snapshot.get(TFC.egitimler),
+        deneyimler: snapshot.get(TFC.deneyimler),
+        locationX: snapshot.get(TFC.locationX),
+        locationY: snapshot.get(TFC.locationY),
+        cepTel: snapshot.get(TFC.cepTel),
+        cepTelOnay: snapshot.get(TFC.cepTelOnay),
+        onaylanmisOgretmen: snapshot.get(TFC.onaylanmisOgretmen),
+        sosyalMedya: snapshot.get(TFC.sosyalMedya),
+        program: snapshot.get(TFC.program),
+        pro: snapshot.get(TFC.pro),
+        proBitisTarihi: snapshot.get(TFC.proBitisTarihi).toDate(),
+        proBaslangicTarihi: snapshot.get(TFC.proBaslangicTarihi).toDate(),
+        dersVerilenYerler: snapshot.get(TFC.dersVerilenYerler),
+      );
+    } catch (e) {
+      print("userFromFireBase HATASI :::::: " + e.toString());
+    }
   }
 
   @override

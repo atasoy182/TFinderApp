@@ -40,6 +40,9 @@ class ProfileEditViewModel with ChangeNotifier {
     extraPrms[TFC.program] = _user.program;
     extraPrms[TFC.locationX] = _user.locationX;
     extraPrms[TFC.locationY] = _user.locationY;
+    extraPrms[TFC.dersVerilenYerler] = _user.dersVerilenYerler;
+    extraPrms[TFC.oneCikarilanAlan] = _user.oneCikarilanAlan;
+    extraPrms[TFC.dersVerdigiAlanlar] = _user.dersVerdigiAlanlar;
 
     state = ViewState.Idle;
 

@@ -91,11 +91,16 @@ class MapSampleState extends State<MapSample> {
   Set<Marker> _markers = {};
   String locationX;
   String locationY;
+  BitmapDescriptor mapMarker;
+
+  void setCustomMarker() async {
+    mapMarker = await BitmapDescriptor.fromAssetImage(ImageConfiguration(), "assets/images/marker.png");
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    setCustomMarker();
     locationX = widget.locationX;
     locationY = widget.locationY;
   }
@@ -123,7 +128,7 @@ class MapSampleState extends State<MapSample> {
 
     if (locationX != null && locationY != null && locationX.length > 0 && locationY.length > 0) {
       setState(() {
-        _markers.add(Marker(markerId: MarkerId("ID - 1"), position: LatLng(double.parse(locationX), double.parse(locationY))));
+        _markers.add(Marker(icon: mapMarker, markerId: MarkerId("ID - 1"), position: LatLng(double.parse(locationX), double.parse(locationY))));
       });
     }
   }
@@ -140,9 +145,9 @@ class MapSampleState extends State<MapSample> {
       initialCameraPosition: locationX != null ? _getMySavedLocation() : _kGooglePlex,
       onMapCreated: _onMapCreated,
       markers: _markers,
-      onLongPress: (LatLng) {
+      onTap: (LatLng) {
         setState(() {
-          _markers.add(Marker(markerId: MarkerId("ID - 1"), position: LatLng));
+          _markers.add(Marker(icon: mapMarker, markerId: MarkerId("ID - 1"), position: LatLng));
         });
         widget.callback(LatLng);
       },

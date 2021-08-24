@@ -343,6 +343,7 @@ class ProfilPageVideo extends StatelessWidget {
                 width: _size.width - 10,
                 height: 200,
                 child: ChewieVideoPlayer(
+                  fromUrl: true,
                   videoUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
                 ),
               ),
