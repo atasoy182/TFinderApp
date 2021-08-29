@@ -31,7 +31,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   PageController _pageController = PageController(initialPage: 0);
-  int _currentPageIndex = 0;
+  var loading = false;
 
   @override
   void initState() {
@@ -48,46 +48,57 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
     var _size = MediaQuery.of(context).size;
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-          body: Stack(
-            children: [
-              NestedScrollView(
-                headerSliverBuilder: (context, value) {
-                  return [
-                    buildSliverAppBarForProfilePage(_size, _pageController),
-                  ];
-                },
-                body: buildBodyForProfilePage(),
-              ),
-              widget.pageMode == ProfilePageMode.Degistir
-                  ? Positioned(
-                      left: 15,
-                      bottom: 16,
-                      child: FloatingActionButton(
-                          heroTag: "Edit",
-                          onPressed: () async {
-                            var res = await _profileEditModel.doldurBilgiler();
-                            if (res) {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                                return ProfileEditPage();
-                              }));
-                            }
-                          },
-                          child: const ImageIcon(
-                            AssetImage("assets/images/pen.png"),
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Theme.of(context).primaryColor),
-                    )
-                  : Container(),
-            ],
-          ),
-          floatingActionButton: ExampleExpandableFab(
-            tabIndex: 3,
-          )),
-    );
+    return !loading
+        ? DefaultTabController(
+            length: 3,
+            child: Scaffold(
+                body: Stack(
+                  children: [
+                    NestedScrollView(
+                      headerSliverBuilder: (context, value) {
+                        return [
+                          buildSliverAppBarForProfilePage(_size, _pageController),
+                        ];
+                      },
+                      body: buildBodyForProfilePage(),
+                    ),
+                    widget.pageMode == ProfilePageMode.Degistir
+                        ? Positioned(
+                            left: 15,
+                            bottom: 16,
+                            child: FloatingActionButton(
+                                heroTag: "Edit",
+                                onPressed: () async {
+                                  var res = await _profileEditModel.doldurBilgiler();
+                                  setState(() {
+                                    loading = true;
+                                  });
+                                  try {
+                                    if (res) {
+                                      await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                        return ProfileEditPage();
+                                      }));
+                                    }
+                                  } catch (e) {} finally {
+                                    setState(() {
+                                      loading = false;
+                                    });
+                                  }
+                                },
+                                child: const ImageIcon(
+                                  AssetImage("assets/images/pen.png"),
+                                  color: Colors.white,
+                                ),
+                                backgroundColor: Theme.of(context).primaryColor),
+                          )
+                        : Container(),
+                  ],
+                ),
+                floatingActionButton: ExampleExpandableFab(
+                  tabIndex: 3,
+                )),
+          )
+        : CircularProgressIndicator();
   }
 
   Container buildBodyForProfilePage() {
@@ -102,7 +113,24 @@ class _ProfilePageState extends State<ProfilePage> {
           Expanded(
             child: TabBarView(
               children: [
-                ProfileGeneralTab(),
+                FutureBuilder<TfUser>(
+                    future: getirGosterilecekKullanici(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ProfileGeneralTab(
+                          tfUser: snapshot.data,
+                        );
+                      } else {
+                        return Center(
+                            child: Container(
+                                height: 50,
+                                width: 50,
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.ballRotateChase,
+                                  color: turkuazDefault.withOpacity(0.4),
+                                )));
+                      }
+                    }),
                 ProfileReviewTab(),
                 ProfileProgramTab(),
               ],
@@ -115,7 +143,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   SliverAppBar buildSliverAppBarForProfilePage(Size _size, PageController pageController) {
     _pageController = pageController;
-    String _ppUrl = "https://fantastikcanavarlar.com/wp-content/uploads/2017/12/severus-snape-650x365.jpg";
 
     return SliverAppBar(
         backgroundColor: morDefault,
