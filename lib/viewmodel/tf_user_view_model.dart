@@ -29,6 +29,7 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
   Future<TfUser> getCurrentUser() async {
     try {
       state = ViewState.Busy;
+      //await Future.delayed(Duration(seconds: 3));
       return await _tfUserRepository.getCurrentUser();
     } catch (e) {
       print("View model get Current User hatası:" + e.toString());

@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/pages/locations_page.dart';
 import 'package:tfinder_app/pages/login_page.dart';
 import 'package:tfinder_app/pages/profile_edit_page.dart';
@@ -135,32 +137,56 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             child: NotificationListener(
-              onNotification: (OverscrollIndicatorNotification overscroll) {
-                overscroll.disallowGlow();
-                return;
-              },
-              child: Stack(
-                children: [
-                  PageView.builder(
-                    scrollDirection: Axis.horizontal,
-                    controller: _pageController,
-                    itemCount: 2,
-                    onPageChanged: (ix) {
-                      setState(() {
-                        // TODO
-                        // Bütün sayfa set state olduğu için video tekrar yükleniyor. Provider ile çözülecek
-                        _currentPageIndex = ix;
-                      });
-                    },
-                    itemBuilder: (ctx, ix) {
-                      return ix == 0 ? ProfilPageMainInfos(ppUrl: _ppUrl) : ProfilPageVideo();
-                      //: ProfilPageLocation();
-                    },
-                  ),
-                  pageDots(_currentPageIndex, context),
-                ],
-              ),
-            ),
+                onNotification: (OverscrollIndicatorNotification overscroll) {
+                  overscroll.disallowGlow();
+                  return;
+                },
+                child: FutureBuilder<TfUser>(
+                  future: getirGosterilecekKullanici(context),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView(
+                        physics: PageScrollPhysics(),
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            color: morDefault,
+                            child: Stack(
+                              children: [
+                                ProfilPageMainInfos(
+                                  tfUser: snapshot.data,
+                                ),
+                                Positioned.fill(
+                                  child: Align(
+                                      alignment: Alignment.bottomCenter, child: Container(margin: EdgeInsets.only(bottom: 35), child: gifWidget())),
+                                ),
+                              ],
+                            ),
+                          ),
+                          ProfilPageVideo(
+                            tfUser: snapshot.data,
+                          )
+                        ],
+                      );
+                    }
+                    return Container(
+                      height: 220,
+                      width: _size.width,
+                      color: morDefault,
+                      child: Center(
+                        child: Container(
+                          height: 100,
+                          width: 100,
+                          child: LoadingIndicator(
+                            indicatorType: Indicator.ballRotateChase,
+                            color: turkuazDefault.withOpacity(0.4),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                )),
           ),
         ),
         bottom: TabBar(
@@ -177,102 +203,53 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ));
   }
+}
 
-  Positioned pageDots(int currentPageIx, BuildContext context) {
-    double _pasifBoyut = 10;
-    double _aktifBoyut = 15;
-    int _currentPageIndex = currentPageIx;
-    return Positioned.fill(
-      child: Align(
-        alignment: Alignment.bottomCenter,
-        child: Container(
-          margin: EdgeInsets.only(bottom: 47),
-          child: _currentPageIndex == 0
-              ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: _aktifBoyut,
-                      width: _aktifBoyut,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Container(
-                      height: _pasifBoyut,
-                      width: _pasifBoyut,
-                      decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-//                    Container(
-//                      height: _pasifBoyut,
-//                      width: _pasifBoyut,
-//                      decoration: BoxDecoration(
-//                          shape: BoxShape.circle, color: Colors.grey),
-//                    )
-                  ],
-                )
-              : _currentPageIndex == 1
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: _pasifBoyut,
-                          width: _pasifBoyut,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Container(
-                          height: _aktifBoyut,
-                          width: _aktifBoyut,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white),
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-//                        Container(
-//                          height: _pasifBoyut,
-//                          width: _pasifBoyut,
-//                          decoration: BoxDecoration(
-//                              shape: BoxShape.circle, color: Colors.grey),
-//                        ),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: _pasifBoyut,
-                          width: _pasifBoyut,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-                        Container(
-                          height: _pasifBoyut,
-                          width: _pasifBoyut,
-                          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.grey),
-                        ),
-                        SizedBox(
-                          width: 15,
-                        ),
-//                        Container(
-//                          height: _aktifBoyut,
-//                          width: _aktifBoyut,
-//                          decoration: BoxDecoration(
-//                              shape: BoxShape.circle, color: Colors.white),
-//                        ),
-                      ],
-                    ),
-        ),
-      ),
-    );
+class gifWidget extends StatefulWidget {
+  const gifWidget({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  _gifWidgetState createState() => _gifWidgetState();
+}
+
+class _gifWidgetState extends State<gifWidget> {
+  var visible = true;
+
+  Future<bool> visibleAyarla() async {
+    await Future.delayed(Duration(seconds: 5));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    visibleAyarla().then((value) => setState(() {
+          visible = false;
+        }));
+
+    return visible
+        ? Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Video için sola kaydırınız!",
+                maxLines: 4,
+                style: TextStyle(color: Colors.white),
+              ),
+              Image.asset(
+                "assets/gifs/dragleft.gif",
+                height: 30.0,
+                width: 30.0,
+              ),
+            ],
+          )
+        : Container();
   }
 }
 
@@ -320,9 +297,9 @@ class _ProfilPageLocationState extends State<ProfilPageLocation> {
 }
 
 class ProfilPageVideo extends StatelessWidget {
-  const ProfilPageVideo({
-    Key key,
-  }) : super(key: key);
+  final TfUser tfUser;
+
+  const ProfilPageVideo({Key key, @required this.tfUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -344,7 +321,7 @@ class ProfilPageVideo extends StatelessWidget {
                 height: 200,
                 child: ChewieVideoPlayer(
                   fromUrl: true,
-                  videoUrl: "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
+                  videoUrl: tfUser.videoURL,
                 ),
               ),
             ),
@@ -362,112 +339,102 @@ class ProfilPageVideo extends StatelessWidget {
 }
 
 class ProfilPageMainInfos extends StatelessWidget {
-  const ProfilPageMainInfos({
-    Key key,
-    @required String ppUrl,
-  })  : _ppUrl = ppUrl,
-        super(key: key);
+  final TfUser tfUser;
 
-  final String _ppUrl;
+  const ProfilPageMainInfos({Key key, @required this.tfUser}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var _size = MediaQuery.of(context).size;
-    final _tfUserModel = Provider.of<TfUserViewModel>(context);
+    final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
 
-    return Container(
-      height: 220,
-      width: _size.width,
-      color: morDefault,
-//                      decoration: BoxDecoration(
-//                          color: morDefault,
-//                          borderRadius: BorderRadius.only(
-//                              bottomLeft: Radius.circular(25),
-//                              bottomRight: Radius.circular(25))),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Container(
-                child: Container(
-                    margin: EdgeInsets.only(top: 10, left: 10, right: 0, bottom: 5),
-                    height: 40,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Profil",
-                          style: TextStyle(fontSize: 24, color: Colors.white),
-                        ),
-                        Container(
+    return Column(
+      children: [
+        Expanded(
+          flex: 3,
+          child: Container(
+              child: Container(
+                  margin: EdgeInsets.only(top: 10, left: 10, right: 0, bottom: 5),
+                  height: 40,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Profil",
+                        style: TextStyle(fontSize: 24, color: Colors.white),
+                      ),
+                      Container(
+                        //color: Colors.green,
+                        //decoration: BoxDecoration(border: Border.all()),
+                        //margin: EdgeInsets.only(bottom: 20),
+                        child: Container(
                           //color: Colors.green,
-                          //decoration: BoxDecoration(border: Border.all()),
-                          //margin: EdgeInsets.only(bottom: 20),
-                          child: Container(
-                            //color: Colors.green,
-                            height: 50,
-                            child: IconButton(
-                              padding: EdgeInsets.all(0),
-                              icon: Icon(
-                                Icons.settings,
-                                color: Colors.white,
-                                size: 32,
-                              ),
-                              onPressed: () async {
-                                // TODO drop down ile editleme,mesaj atma,tel numarası görme, alanları yapılabilir.
-                                MotionToast.info(title: "Çıkış !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Çıkış Yapılıyor")
-                                    .show(context);
-                                await Future.delayed(Duration(seconds: 1));
-                                var sonuc = await _tfUserModel.signOut();
-                                if (sonuc) {
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => LoginPage(),
-                                      ),
-                                      ModalRoute.withName("/login"));
-                                }
-                              },
+                          height: 50,
+                          child: IconButton(
+                            padding: EdgeInsets.all(0),
+                            icon: Icon(
+                              Icons.settings,
+                              color: Colors.white,
+                              size: 32,
                             ),
+                            onPressed: () async {
+                              // TODO drop down ile editleme,mesaj atma,tel numarası görme, alanları yapılabilir.
+                              MotionToast.info(title: "Çıkış !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Çıkış Yapılıyor")
+                                  .show(context);
+                              await Future.delayed(Duration(seconds: 1));
+                              var sonuc = await _tfUserModel.signOut();
+                              if (sonuc) {
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => LoginPage(),
+                                    ),
+                                    ModalRoute.withName("/login"));
+                              }
+                            },
                           ),
                         ),
-                      ],
-                    ))),
+                      ),
+                    ],
+                  ))),
+        ),
+        Expanded(
+          flex: 5,
+          child: CircleAvatar(radius: 50, backgroundColor: Colors.white, backgroundImage: CachedNetworkImageProvider(tfUser.profilFotoURL)),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        Expanded(
+          flex: 2,
+          child: Text(
+            tfUser.adSoyad,
+            style: TextStyle(color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
           ),
-          Expanded(
-            flex: 5,
-            child: CircleAvatar(radius: 50, backgroundColor: Colors.white, backgroundImage: CachedNetworkImageProvider(_ppUrl)),
+        ),
+        Expanded(
+          flex: 1,
+          child: Text(
+            tfUser.oneCikarilanAlan[0],
+            style: TextStyle(color: Colors.white, fontFamily: "Raleway"),
           ),
-          SizedBox(
-            height: 5,
+        ),
+        Expanded(
+          flex: 1,
+          child: Text(
+            tfUser.il + "/" + tfUser.ilce,
+            style: TextStyle(color: Colors.white, fontFamily: "Raleway"),
           ),
-          Expanded(
-            flex: 2,
-            child: Text(
-              "Severus Snape",
-              style: TextStyle(color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              " Karanlık Sanatlara Karşı Savunma",
-              style: TextStyle(color: Colors.white, fontFamily: "Raleway"),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              "Ankara",
-              style: TextStyle(color: Colors.white, fontFamily: "Raleway"),
-            ),
-          ),
-          SizedBox(
-            height: 70,
-          ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 70,
+        ),
+      ],
     );
   }
+}
+
+Future<TfUser> getirGosterilecekKullanici(BuildContext context) async {
+  final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
+  return await _tfUserModel.getCurrentUser();
 }
