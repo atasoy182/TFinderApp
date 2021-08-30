@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/widgets/general_tab_widgets.dart';
 
@@ -16,6 +17,9 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
   List<String> _dersVerilenAlanlar;
   List _egitimler;
   List _deneyimler;
+  List _dersVerilenYerler;
+  String _yas;
+  String _dersUcretAraligi;
 
   @override
   void initState() {
@@ -24,6 +28,10 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
     _dersVerilenAlanlar = widget.tfUser.dersVerdigiAlanlar.cast<String>();
     _egitimler = widget.tfUser.egitimler;
     _deneyimler = widget.tfUser.deneyimler;
+    _dersVerilenYerler = widget.tfUser.dersVerilenYerler;
+    _yas = widget.tfUser.yas;
+    _dersUcretAraligi = widget.tfUser.dersUcretAraligi;
+    print("tfuser " + widget.tfUser.toString());
   }
 
   @override
@@ -31,6 +39,41 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
     return CustomScrollView(slivers: [
       SliverToBoxAdapter(
         child: GeneralTabChips(assetIconPath: "assets/images/books.png", chipList: _dersVerilenAlanlar),
+      ),
+      SliverToBoxAdapter(
+        child: Wrap(
+          children: getOtherChip(_dersVerilenYerler),
+        ),
+      ),
+      SliverToBoxAdapter(
+        child: Wrap(
+          children: [
+            Chip(
+              backgroundColor: Colors.transparent,
+              avatar: Icon(
+                Icons.cake,
+                color: morDefault,
+              ),
+              label: Text(
+                _yas ?? "",
+                maxLines: 1,
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+            ),
+            Chip(
+              backgroundColor: Colors.transparent,
+              avatar: Icon(
+                Icons.money,
+                color: morDefault,
+              ),
+              label: Text(
+                _dersUcretAraligi ?? "",
+                maxLines: 1,
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+            ),
+          ],
+        ),
       ),
       SliverToBoxAdapter(
         child: GeneralTabCard(
@@ -56,4 +99,20 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
 
   @override
   bool get wantKeepAlive => true;
+
+  List<Widget> getOtherChip(dersverilenYerler) {
+    List<Widget> widgetList = [];
+
+    for (var i = 0; i < _dersVerilenYerler.length; i++) {
+      widgetList.add(Chip(
+          backgroundColor: Colors.transparent,
+          avatar: Icon(
+            Icons.location_on_outlined,
+            color: morDefault,
+          ),
+          label: Text(_dersVerilenYerler[i].toString())));
+    }
+
+    return widgetList;
+  }
 }

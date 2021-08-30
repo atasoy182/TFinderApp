@@ -458,7 +458,7 @@ class ProfilPageMainInfos extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Text(
-            tfUser.adSoyad + adSoyadTextAyarla(tfUser.yas),
+            tfUser.adSoyad,
             style: TextStyle(color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
           ),
         ),
@@ -481,14 +481,6 @@ class ProfilPageMainInfos extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String adSoyadTextAyarla(String yas) {
-    if (yas != null && yas != "") {
-      return " (" + tfUser.yas + ")";
-    } else {
-      return "";
-    }
   }
 }
 
