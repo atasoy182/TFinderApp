@@ -69,13 +69,14 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: FloatingActionButton(
                                 heroTag: "Edit",
                                 onPressed: () async {
+                                  var kaydedildi;
                                   var res = await _profileEditModel.doldurBilgiler();
                                   setState(() {
                                     loading = true;
                                   });
                                   try {
                                     if (res) {
-                                      await Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                      kaydedildi = await Navigator.push(context, MaterialPageRoute(builder: (context) {
                                         return ProfileEditPage();
                                       }));
                                     }
@@ -132,7 +133,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       }
                     }),
                 ProfileReviewTab(),
-                ProfileProgramTab(),
+                FutureBuilder<TfUser>(
+                    future: getirGosterilecekKullanici(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ProfileProgramTab(
+                          tfUser: snapshot.data,
+                        );
+                      } else {
+                        return Center(
+                            child: Container(
+                                height: 50,
+                                width: 50,
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.ballRotateChase,
+                                  color: turkuazDefault.withOpacity(0.4),
+                                )));
+                      }
+                    }),
               ],
             ),
           ),
@@ -192,6 +210,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           ProfilPageVideo(
+                            key: UniqueKey(),
                             tfUser: snapshot.data,
                           )
                         ],
@@ -255,9 +274,13 @@ class _gifWidgetState extends State<gifWidget> {
 
   @override
   Widget build(BuildContext context) {
-    visibleAyarla().then((value) => setState(() {
+    visibleAyarla().then((value) {
+      if (mounted) {
+        setState(() {
           visible = false;
-        }));
+        });
+      }
+    });
 
     return visible
         ? Row(
@@ -435,7 +458,7 @@ class ProfilPageMainInfos extends StatelessWidget {
         Expanded(
           flex: 2,
           child: Text(
-            tfUser.adSoyad,
+            tfUser.adSoyad + adSoyadTextAyarla(tfUser.yas),
             style: TextStyle(color: Colors.white, fontSize: 23, fontFamily: "Raleway"),
           ),
         ),
@@ -459,9 +482,17 @@ class ProfilPageMainInfos extends StatelessWidget {
       ],
     );
   }
+
+  String adSoyadTextAyarla(String yas) {
+    if (yas != null && yas != "") {
+      return " (" + tfUser.yas + ")";
+    } else {
+      return "";
+    }
+  }
 }
 
 Future<TfUser> getirGosterilecekKullanici(BuildContext context) async {
   final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
-  return await _tfUserModel.getCurrentUser();
+  return await _tfUserModel.getCurrentUserWithoutState();
 }

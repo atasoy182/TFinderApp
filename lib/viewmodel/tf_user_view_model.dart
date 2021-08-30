@@ -39,6 +39,15 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
     }
   }
 
+  Future<TfUser> getCurrentUserWithoutState() async {
+    try {
+      var res = await _tfUserRepository.getCurrentUser();
+      return res;
+    } catch (e) {
+      return null;
+    }
+  }
+
   @override
   Future<TfUser> signInAnonymously() async {
     try {

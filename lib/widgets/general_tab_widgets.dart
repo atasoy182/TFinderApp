@@ -7,9 +7,7 @@ class GeneralTabCard extends StatelessWidget {
   final String baslikText;
   final String assetIconPath;
 
-  const GeneralTabCard(
-      {Key key, this.longString, this.assetIconPath, this.baslikText})
-      : super(key: key);
+  const GeneralTabCard({Key key, this.longString, this.assetIconPath, this.baslikText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +41,7 @@ class GeneralTabCard extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         baslikText,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            fontFamily: "Raleway"),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Raleway"),
                       ),
                     ),
                     SizedBox(
@@ -74,18 +69,9 @@ class GeneralTabCard extends StatelessWidget {
 class GeneralEducationTabCard extends StatelessWidget {
   final String baslikText;
   final String assetIconPath;
-  final String year;
-  final String calisilanyerText;
-  final String calisilanbolumText;
+  final List gosterilecekListe;
 
-  const GeneralEducationTabCard(
-      {Key key,
-      this.baslikText,
-      this.assetIconPath,
-      this.year,
-      this.calisilanyerText,
-      this.calisilanbolumText})
-      : super(key: key);
+  const GeneralEducationTabCard({Key key, this.baslikText, this.assetIconPath, this.gosterilecekListe}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -111,39 +97,7 @@ class GeneralEducationTabCard extends StatelessWidget {
             flex: 7,
             child: Padding(
               padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      baslikText,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          fontFamily: "Raleway"),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  buildRow(),
-                  Divider(),
-                  buildRow(),
-                  Divider(),
-
-                  //TODO eğitim 2 den fazla ise expandchild düşünülebilir.
-                  ExpandChild(
-                    child: Column(
-                      children: [
-                        buildRow(),
-                        Divider(),
-                        buildRow(),
-                        Divider(),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: buildBody(gosterilecekListe),
             ),
           ),
           Expanded(
@@ -155,27 +109,83 @@ class GeneralEducationTabCard extends StatelessWidget {
     );
   }
 
-  Widget buildRow() {
+  Widget buildBody(list) {
+    return Column(
+      children: [
+        Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            baslikText,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, fontFamily: "Raleway"),
+          ),
+        ),
+        SizedBox(
+          height: 15,
+        ),
+        list.asMap().containsKey(0) ? buildRow(list[0], baslikText) : Container(),
+        list.asMap().containsKey(0) ? Divider() : Container(),
+        list.asMap().containsKey(1) ? buildRow(list[1], baslikText) : Container(),
+        list.asMap().containsKey(1) ? Divider() : Container(),
+        list.length > 2 ? ExpandRowWidget(list, baslikText) : Container(),
+      ],
+    );
+  }
+
+  Widget ExpandRowWidget(list, baslikText) {
+    var myList = [...list];
+    myList.removeAt(0);
+    myList.removeAt(0);
+    return ExpandChild(
+      child: Column(
+        children: myList.map((value) {
+          return Column(
+            children: [
+              buildRow(value, baslikText),
+              Divider(),
+            ],
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget buildRow(value, baslikText) {
+    var egitimMi = baslikText == "Eğitim" ? true : false;
+
+    if (!egitimMi) {
+      print("value:" + value.toString());
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           flex: 3,
           child: Text(
-            year,
+            egitimMi ? value['yil'] ?? "" : value['yil'] ?? "",
             style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
           ),
         ),
         Expanded(
           flex: 7,
           child: Column(
             children: [
-              Text(calisilanyerText,
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(
+                egitimMi ? value['okul'] ?? "" : value['isyeri'] ?? "",
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
               SizedBox(
                 height: 5,
               ),
-              Text(calisilanbolumText),
+              Text(egitimMi ? value['bolum'] ?? "" : value['alan'] ?? "", textAlign: TextAlign.center),
+              egitimMi
+                  ? SizedBox(
+                      height: 5,
+                    )
+                  : Container(),
+              egitimMi ? Text(value['derece'] ?? "", textAlign: TextAlign.center) : Container()
             ],
           ),
         )
@@ -188,8 +198,7 @@ class GeneralTabChips extends StatelessWidget {
   final List<String> chipList;
   final String assetIconPath;
 
-  const GeneralTabChips({Key key, this.chipList, this.assetIconPath})
-      : super(key: key);
+  const GeneralTabChips({Key key, this.chipList, this.assetIconPath}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -224,101 +233,3 @@ class GeneralTabChips extends StatelessWidget {
     );
   }
 }
-
-//class GeneralExperinceTabCard extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return Card(
-//        elevation: 4,
-//        child: Column(
-//          children: [
-//            Expanded(
-//              flex: 3,
-//              child: Text(
-//                "Eğitim",
-//                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-//              ),
-//            ),
-//            Expanded(
-//              flex: 7,
-//              child: Row(
-//                children: [
-//                  Expanded(
-//                    flex: 3,
-//                    child: ImageIcon(
-//                      AssetImage("assets/images/graduate.png"),
-//                      size: 32,
-//                      color: Theme.of(context).primaryColor,
-//                    ),
-//                  ),
-//                  Expanded(
-//                    flex: 7,
-//                    child: Padding(
-//                      padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
-//                      child: Column(
-//                        children: [
-//                          Align(
-//                            alignment: Alignment.topLeft,
-//                            child: Text(
-//                              "Eğitim",
-//                              style: TextStyle(
-//                                  fontWeight: FontWeight.bold, fontSize: 20),
-//                            ),
-//                          ),
-//                          SizedBox(
-//                            height: 15,
-//                          ),
-//                          Row(
-//                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                            children: [
-//                              Text(
-//                                "2021",
-//                                style: TextStyle(fontSize: 20),
-//                              ),
-//                              Text("İstanbul Arel Üniversitesi")
-//                            ],
-//                          ),
-//                          Row(
-//                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                            children: [
-//                              Text(
-//                                "2021",
-//                                style: TextStyle(fontSize: 20),
-//                              ),
-//                              Text("İstanbul Arel Üniversitesi")
-//                            ],
-//                          ),
-//                          Row(
-//                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                            children: [
-//                              Text(
-//                                "2021",
-//                                style: TextStyle(fontSize: 20),
-//                              ),
-//                              Text("İstanbul Arel Üniversitesi")
-//                            ],
-//                          ),
-//// TODO eğitim 4 ten fazla ise expandchild düşünülebilir.
-////                  ExpandChild(
-////                    child: Row(
-////                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-////                      children: [
-////                        Text(
-////                          "2021",
-////                          style: TextStyle(fontSize: 20),
-////                        ),
-////                        Text("İstanbul Arel Üniversitesi")
-////                      ],
-////                    ),
-////                  ),
-//                        ],
-//                      ),
-//                    ),
-//                  ),
-//                ],
-//              ),
-//            ),
-//          ],
-//        ));
-//  }
-//}

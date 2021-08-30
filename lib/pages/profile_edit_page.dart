@@ -11,7 +11,6 @@ import 'package:tfinder_app/constants.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/diger_tab.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/genel_tab.dart';
 import 'package:tfinder_app/pages/profile_edit_page_tabs/program_tab.dart';
-import 'package:tfinder_app/services/firebase_storage_service.dart';
 import 'package:tfinder_app/viewmodel/profile_edit_view_model.dart';
 
 import '../model/tf_user_model.dart';
@@ -74,7 +73,7 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                 var myMap = dictForSave.map((key, value) => MapEntry(key.toString(), value));
                 var res = await _profileEditModel.updateUserToDB("", myMap);
                 if (res) {
-                  dictForSave = {};
+                  dictForSave.clear();
                   resimEklenecek = false;
                   videoEklenecek = false;
                   fileVideo = null;
@@ -87,11 +86,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
                       MotionToast.error(title: "Hata !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Kaydedilemedi !");
                   scaffoldKey.currentState.showBottomSheet((context) => message);
                 }
-                await Future.delayed(Duration(seconds: 1));
-                var count = 0;
-                Navigator.popUntil(context, (route) {
-                  return count++ == 1;
-                });
+                //await Future.delayed(Duration(seconds: 1));
+                Navigator.pop(context, res ? true : false);
               } else {
                 var message =
                     MotionToast.info(title: "Veri yok !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Kaydedilecek veri yok!");
@@ -136,7 +132,8 @@ class _ProfileEditPageState extends State<ProfileEditPage> {
           ),
           leading: IconButton(
             onPressed: () {
-              Navigator.pop(context);
+              dictForSave.clear();
+              Navigator.pop(context, false);
             },
             padding: EdgeInsets.all(0),
             icon: Icon(

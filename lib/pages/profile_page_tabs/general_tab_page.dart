@@ -14,12 +14,16 @@ class ProfileGeneralTab extends StatefulWidget {
 class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKeepAliveClientMixin {
   String _hakkindaString;
   List<String> _dersVerilenAlanlar;
+  List _egitimler;
+  List _deneyimler;
 
   @override
   void initState() {
     super.initState();
     _hakkindaString = widget.tfUser.hakkinda;
     _dersVerilenAlanlar = widget.tfUser.dersVerdigiAlanlar.cast<String>();
+    _egitimler = widget.tfUser.egitimler;
+    _deneyimler = widget.tfUser.deneyimler;
   }
 
   @override
@@ -36,21 +40,14 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
         ),
       ),
       SliverToBoxAdapter(
-        child: GeneralEducationTabCard(
-          baslikText: "Eğitim",
-          assetIconPath: "assets/images/graduate.png",
-          year: "2020",
-          calisilanyerText: "İstanbul Arel Üniversitesi",
-          calisilanbolumText: "Bilgisayar mühensiliği",
-        ),
+        child: GeneralEducationTabCard(baslikText: "Eğitim", assetIconPath: "assets/images/graduate.png", gosterilecekListe: _egitimler),
       ),
       SliverToBoxAdapter(
-        child: GeneralEducationTabCard(
-          baslikText: "İş Deneyimi",
-          assetIconPath: "assets/images/work.png",
-          year: "2021",
-          calisilanyerText: "Dia Yazılım",
-          calisilanbolumText: "Yazılım Geliştirici",
+        child: GeneralEducationTabCard(baslikText: "İş Deneyimi", assetIconPath: "assets/images/work.png", gosterilecekListe: _deneyimler),
+      ),
+      SliverToBoxAdapter(
+        child: Container(
+          height: 100,
         ),
       ),
 //      ,
@@ -60,42 +57,3 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
   @override
   bool get wantKeepAlive => true;
 }
-
-//SliverGrid.count(
-//        crossAxisCount: 1,
-//        childAspectRatio: 4 / 1.4,
-//        children: List.generate(100, (index) {
-//          return Card(
-//            margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-//            elevation: 1,
-//            shape: RoundedRectangleBorder(
-//              borderRadius: BorderRadius.circular(20),
-//            ),
-//            child: Container(
-//              height: 50,
-//              child: Center(
-//                child: Text("Some text here"),
-//              ),
-//            ),
-//          );
-//        }),
-//      )
-
-//      SliverToBoxAdapter(
-//        child: Container(
-//          //color: Colors.red,
-//          height: 80,
-//          width: 100,
-//          child: Row(
-//            children: [
-//              Expanded(
-//                flex: 2,
-//                child: CircleAvatar(
-//                    radius: 50,
-//                    backgroundImage: CachedNetworkImageProvider(_imageUrl)),
-//              ),
-//              Expanded(flex: 8, child: Container()),
-//            ],
-//          ),
-//        ),
-//      ),

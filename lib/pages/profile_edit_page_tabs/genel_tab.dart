@@ -247,6 +247,7 @@ class _ProfileEditGenelTabState extends State<ProfileEditGenelTab> with Automati
                   child: Form(
                     key: _formEmailKey,
                     child: TextFormField(
+                      enabled: false,
                       initialValue: _email,
                       onChanged: (String input) {
                         callBack(TFC.email, input);

@@ -2774,6 +2774,7 @@ List saatList = [
 ];
 
 List haftaninGunleri = ["Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar"];
+List haftaninGunleriKisa = ["P.tesi", "Salı", "Çarş.", "Perş.", "Cuma", "C.tesi", "Pazar"];
 
 checkPrms(Map<String, dynamic> map, String deger) {
   try {

@@ -22,21 +22,11 @@ class _ProfileEditProgramTabState extends State<ProfileEditProgramTab> with Auto
   void initState() {
     super.initState();
     setInitialPrms();
-    // secimler = {
-    //   "0": ["08.00", "09.00", "10.00", "11.00"],
-    //   "1": ["13.00", "14.00"],
-    //   "2": ["13.00", "14.00"],
-    //   "3": ["13.00", "14.00"],
-    //   "4": ["13.00", "14.00"],
-    //   "5": ["13.00", "14.00"],
-    //   "6": ["13.00", "14.00"],
-    // };
-    // add all düşünülebilir.
   }
 
   setInitialPrms() {
     final _profileEditModel = Provider.of<ProfileEditViewModel>(context, listen: false);
-    secimler = checkPrms(_profileEditModel.extraPrms, TFC.program);
+    secimler = new Map<String, dynamic>.from(checkPrms(_profileEditModel.extraPrms, TFC.program));
   }
 
   @override

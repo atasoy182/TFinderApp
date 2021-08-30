@@ -1,69 +1,46 @@
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:tfinder_app/widgets/icon_button.dart';
 import 'package:tfinder_app/constants.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
 
 class ProfileProgramTab extends StatefulWidget {
+  final TfUser tfUser;
+
+  const ProfileProgramTab({Key key, @required this.tfUser}) : super(key: key);
   @override
   _ProfileProgramTabState createState() => _ProfileProgramTabState();
 }
 
 class _ProfileProgramTabState extends State<ProfileProgramTab> with AutomaticKeepAliveClientMixin {
+  Map program;
+
+  @override
+  void initState() {
+    super.initState();
+    program = widget.tfUser.program;
+  }
+
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        // SliverToBoxAdapter(
-        //   child: Container(
-        //     height: 50,
-        //     margin: EdgeInsets.only(left: 8, right: 8, top: 8),
-        //     child: Row(
-        //       children: [
-        //         IconButtonWithBorder(
-        //           iconData: Icons.arrow_back_ios,
-        //           onPressed: () {},
-        //           useBorder: false,
-        //           padding: EdgeInsets.only(left: 10),
-        //         ),
-        //         IconButtonWithBorder(
-        //           iconData: Icons.arrow_forward_ios,
-        //           useBorder: false,
-        //           onPressed: () {},
-        //         ),
-        //         Spacer(),
-        //         Text(
-        //           "7-13 Haz 2021",
-        //           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-        //         ),
-        //         Spacer(),
-        //         IconButtonWithBorder(
-        //           iconData: Icons.calendar_today_rounded,
-        //           useBorder: false,
-        //           onPressed: () {},
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
-        // SliverToBoxAdapter(
-        //   child: Divider(
-        //     thickness: 2,
-        //   ),
-        // ),
         SliverList(
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
               return Card(
                 color: Colors.transparent,
-                margin: EdgeInsets.only(bottom: 5, left: 5, right: 5),
+                margin: EdgeInsets.only(bottom: 5, left: 5, right: 5, top: 10),
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   children: [
-                    ProgramRow(),
+                    ProgramRow(
+                      values: program[index.toString()],
+                      index: index,
+                    ),
                     Divider(
                       thickness: 2,
                     ),
@@ -71,7 +48,7 @@ class _ProfileProgramTabState extends State<ProfileProgramTab> with AutomaticKee
                 ),
               );
             },
-            childCount: 7, // 1000 list items
+            childCount: program.keys.length,
           ),
         ),
       ],
@@ -83,12 +60,19 @@ class _ProfileProgramTabState extends State<ProfileProgramTab> with AutomaticKee
 }
 
 class ProgramRow extends StatelessWidget {
+  final values;
+  final index;
+
   const ProgramRow({
     Key key,
+    this.values,
+    this.index,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String whichDay = haftaninGunleriKisa[index];
+
     return Card(
       color: Colors.transparent,
       elevation: 0,
@@ -103,16 +87,11 @@ class ProgramRow extends StatelessWidget {
           Expanded(
             flex: 2,
             child: Container(
-              //color: Colors.green,
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Text(
-                    "7",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    "P.tesi",
+                    whichDay,
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -122,96 +101,109 @@ class ProgramRow extends StatelessWidget {
           Expanded(
             flex: 7,
             child: Column(
-              children: [
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "08.00",
-                        style: TextStyle(color: linkColor, fontSize: 20),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "08.00",
-                        style: TextStyle(color: linkColor, fontSize: 20),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        "08.00",
-                        style: TextStyle(color: linkColor, fontSize: 20),
-                      ),
-                    ),
-                  ],
-                ),
-                ExpandChild(
-                  child: Container(
-                    width: double.infinity,
-                    child: Wrap(
-                      spacing: 0,
-                      runSpacing: 0,
-                      children: [
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(
-                            "08.00",
-                            style: TextStyle(color: linkColor, fontSize: 20),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: childrens(index, values),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  List<Widget> childrens(int index, List values) {
+    if (values != null) {
+      if (values.length <= 3) {
+        return [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              values.asMap().containsKey(0)
+                  ? TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        values[0],
+                        style: TextStyle(color: linkColor, fontSize: 20),
+                      ),
+                    )
+                  : Container(),
+              values.asMap().containsKey(1)
+                  ? TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        values[1],
+                        style: TextStyle(color: linkColor, fontSize: 20),
+                      ),
+                    )
+                  : Container(),
+              values.asMap().containsKey(2)
+                  ? TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        values[2],
+                        style: TextStyle(color: linkColor, fontSize: 20),
+                      ),
+                    )
+                  : Container(),
+            ],
+          ),
+        ];
+      } else {
+        return [
+          Row(
+            children: [
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  values[0],
+                  style: TextStyle(color: linkColor, fontSize: 20),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  values[1],
+                  style: TextStyle(color: linkColor, fontSize: 20),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: Text(
+                  values[2],
+                  style: TextStyle(color: linkColor, fontSize: 20),
+                ),
+              ),
+            ],
+          ),
+          expandChild(index, values),
+        ];
+      }
+    } else {
+      return [];
+    }
+  }
+
+  ExpandChild expandChild(int index, List values) {
+    var myList = [...values];
+    myList.removeAt(0);
+    myList.removeAt(0);
+    myList.removeAt(0);
+    return ExpandChild(
+      child: Container(
+        width: double.infinity,
+        child: Wrap(
+          spacing: 0,
+          runSpacing: 0,
+          children: myList.map((value) {
+            return TextButton(
+              onPressed: () {},
+              child: Text(
+                value,
+                style: TextStyle(color: linkColor, fontSize: 20),
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
