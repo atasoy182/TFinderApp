@@ -95,9 +95,18 @@ class _ProfilePageState extends State<ProfilePage> {
                         : Container(),
                   ],
                 ),
-                floatingActionButton: ExampleExpandableFab(
-                  tabIndex: 3,
-                )),
+                floatingActionButton: FutureBuilder<TfUser>(
+                    future: getirGosterilecekKullanici(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ExampleExpandableFab(
+                          tabIndex: 3,
+                          tfuser: snapshot.data,
+                        );
+                      } else {
+                        return Container();
+                      }
+                    })),
           )
         : CircularProgressIndicator();
   }
@@ -414,35 +423,46 @@ class ProfilPageMainInfos extends StatelessWidget {
                         style: TextStyle(fontSize: 24, color: Colors.white),
                       ),
                       Container(
-                        //color: Colors.green,
-                        //decoration: BoxDecoration(border: Border.all()),
-                        //margin: EdgeInsets.only(bottom: 20),
-                        child: Container(
-                          //color: Colors.green,
-                          height: 50,
-                          child: IconButton(
-                            padding: EdgeInsets.all(0),
-                            icon: Icon(
-                              Icons.settings,
-                              color: Colors.white,
-                              size: 32,
-                            ),
-                            onPressed: () async {
-                              // TODO drop down ile editleme,mesaj atma,tel numarası görme, alanları yapılabilir.
-                              MotionToast.info(title: "Çıkış !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Çıkış Yapılıyor")
-                                  .show(context);
-                              await Future.delayed(Duration(seconds: 1));
-                              var sonuc = await _tfUserModel.signOut();
-                              if (sonuc) {
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => LoginPage(),
-                                    ),
-                                    ModalRoute.withName("/login"));
-                              }
-                            },
+                        height: 50,
+                        child: PopupMenuButton<String>(
+                          icon: Icon(
+                            Icons.settings,
+                            color: Colors.white,
+                            size: 32,
                           ),
+                          onSelected: (String result) async {
+                            switch (result) {
+                              // case 'edit':
+                              //   print('option 1 clicked');
+                              //   break;
+                              case 'exit':
+                                // TODO drop down ile editleme,mesaj atma,tel numarası görme, alanları yapılabilir.
+                                MotionToast.info(title: "Çıkış !", titleStyle: TextStyle(fontWeight: FontWeight.bold), description: "Çıkış Yapılıyor")
+                                    .show(context);
+                                await Future.delayed(Duration(seconds: 1));
+                                var sonuc = await _tfUserModel.signOut();
+                                if (sonuc) {
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => LoginPage(),
+                                      ),
+                                      ModalRoute.withName("/login"));
+                                }
+                                break;
+                              default:
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                            // const PopupMenuItem<String>(
+                            //   value: 'edit',
+                            //   child: Text('Düzenle'),
+                            // ),
+                            const PopupMenuItem<String>(
+                              value: 'exit',
+                              child: Text('Çıkış yap'),
+                            ),
+                          ],
                         ),
                       ),
                     ],

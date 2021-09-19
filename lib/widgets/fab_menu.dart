@@ -1,15 +1,18 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
 import 'dart:math' as math;
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:tfinder_app/constants.dart';
 
 @immutable
 class ExampleExpandableFab extends StatelessWidget {
   final int tabIndex;
+  final TfUser tfuser;
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
-  const ExampleExpandableFab({Key key, @required this.tabIndex})
-      : super(key: key);
+  const ExampleExpandableFab({Key key, @required this.tabIndex, this.tfuser}) : super(key: key);
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -30,7 +33,7 @@ class ExampleExpandableFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return tabIndex == 1 ? requestPageFabs(context) : profilPageFabs(context);
+    return tabIndex == 1 ? requestPageFabs(context) : profilPageFabs(context, tfuser);
   }
 
   ExpandableFab requestPageFabs(BuildContext context) {
@@ -58,7 +61,7 @@ class ExampleExpandableFab extends StatelessWidget {
     );
   }
 
-  ExpandableFab profilPageFabs(BuildContext context) {
+  ExpandableFab profilPageFabs(BuildContext context, TfUser tfUser) {
     return ExpandableFab(
       tabIndex: tabIndex,
       distance: 112.0,
@@ -81,16 +84,93 @@ class ExampleExpandableFab extends StatelessWidget {
         ),
         ActionButton(
           tabIndex: tabIndex,
-          onPressed: () => _showAction(context, 1),
+          onPressed: () => showDialog<void>(
+            context: context,
+            builder: (context) {
+              return AlertDialog(
+                content: Container(height: 50, child: Center(child: Text("Haritaları Aç ?"))),
+                actions: [
+                  TextButton(
+                    onPressed: () => _launchMapsUrl(tfUser.locationX, tfUser.locationY),
+                    child: const Text('Evet'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Hayır'),
+                  ),
+                ],
+              );
+            },
+          ),
           icon: const Icon(Icons.location_on),
         ),
         ActionButton(
           tabIndex: tabIndex,
-          onPressed: () => _showAction(context, 1),
+          onPressed: () => showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return Scaffold(
+                  body: Container(
+                    margin: EdgeInsets.only(top: 20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(margin: EdgeInsets.only(left: 15), child: Text(tfUser.cepTel, style: TextStyle(fontSize: 20))),
+                            IconButton(
+                              onPressed: () {
+                                Clipboard.setData(ClipboardData(
+                                  text: tfUser.cepTel,
+                                ));
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Kopyalandı')));
+                              },
+                              icon: Icon(Icons.copy),
+                            )
+                          ],
+                        ),
+                        Divider(),
+                        ListTile(
+                          leading: CircleAvatar(
+                            radius: 15,
+                            backgroundImage: AssetImage("assets/images/whatsapp.png"), // no matter how big it is, it won't overflow
+                          ),
+                          title: new Text('Whatsapp ile mesaj at'),
+                          onTap: () async {
+                            var whatsappUrl = "whatsapp://send?phone=$tfUser.cepTel";
+                            await canLaunch(whatsappUrl) ? launch(whatsappUrl) : print("Merhaba numaranızı TFinder uygulamasından buldum.");
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Divider(),
+                        ListTile(
+                          leading: Icon(Icons.call, color: defaultLink),
+                          title: new Text('Ara'),
+                          onTap: () {
+                            launch("tel://$tfUser.cepTel");
+                            Navigator.pop(context);
+                          },
+                        ),
+                        Divider(),
+                      ],
+                    ),
+                  ),
+                );
+              }),
           icon: const Icon(Icons.phone),
         )
       ],
     );
+  }
+
+  void _launchMapsUrl(String lat, String lon) async {
+    final url = 'https://www.google.com/maps/search/?api=1&query=$lat,$lon';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }
 
@@ -113,8 +193,7 @@ class ExpandableFab extends StatefulWidget {
   _ExpandableFabState createState() => _ExpandableFabState();
 }
 
-class _ExpandableFabState extends State<ExpandableFab>
-    with SingleTickerProviderStateMixin {
+class _ExpandableFabState extends State<ExpandableFab> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   Animation<double> _expandAnimation;
   bool _open = false;
@@ -182,9 +261,7 @@ class _ExpandableFabState extends State<ExpandableFab>
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 Icons.close,
-                color: tabIndex == 1
-                    ? yesilDefault
-                    : Theme.of(context).primaryColor,
+                color: tabIndex == 1 ? yesilDefault : Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -197,9 +274,7 @@ class _ExpandableFabState extends State<ExpandableFab>
     final children = <Widget>[];
     final count = widget.children.length;
     final step = 90.0 / (count - 1);
-    for (var i = 0, angleInDegrees = 0.0;
-        i < count;
-        i++, angleInDegrees += step) {
+    for (var i = 0, angleInDegrees = 0.0; i < count; i++, angleInDegrees += step) {
       children.add(
         _ExpandingActionButton(
           directionInDegrees: angleInDegrees,
@@ -229,8 +304,7 @@ class _ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1.0, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
-            backgroundColor:
-                tabIndex == 1 ? yesilDefault : Theme.of(context).primaryColor,
+            backgroundColor: tabIndex == 1 ? yesilDefault : Theme.of(context).primaryColor,
             onPressed: _toggle,
             child: tabIndex == 1
                 ? const Icon(

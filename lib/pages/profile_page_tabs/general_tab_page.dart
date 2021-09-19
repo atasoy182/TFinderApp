@@ -42,37 +42,7 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
       ),
       SliverToBoxAdapter(
         child: Wrap(
-          children: getOtherChip(_dersVerilenYerler),
-        ),
-      ),
-      SliverToBoxAdapter(
-        child: Wrap(
-          children: [
-            Chip(
-              backgroundColor: Colors.transparent,
-              avatar: Icon(
-                Icons.cake,
-                color: morDefault,
-              ),
-              label: Text(
-                _yas ?? "",
-                maxLines: 1,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-            ),
-            Chip(
-              backgroundColor: Colors.transparent,
-              avatar: Icon(
-                Icons.money,
-                color: morDefault,
-              ),
-              label: Text(
-                _dersUcretAraligi ?? "",
-                maxLines: 1,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-            ),
-          ],
+          children: getOtherChip(_dersVerilenYerler, _yas ?? null, _dersUcretAraligi ?? null),
         ),
       ),
       SliverToBoxAdapter(
@@ -100,7 +70,7 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
   @override
   bool get wantKeepAlive => true;
 
-  List<Widget> getOtherChip(dersverilenYerler) {
+  List<Widget> getOtherChip(dersverilenYerler, _yas, _dersUcretAraligi) {
     List<Widget> widgetList = [];
 
     for (var i = 0; i < _dersVerilenYerler.length; i++) {
@@ -110,9 +80,38 @@ class _ProfileGeneralTabState extends State<ProfileGeneralTab> with AutomaticKee
             Icons.location_on_outlined,
             color: morDefault,
           ),
-          label: Text(_dersVerilenYerler[i].toString())));
+          label: Text(_dersVerilenYerler[i].toString(), style: TextStyle(fontSize: 15, color: Colors.black))));
     }
 
+    if (_yas != null) {
+      widgetList.add(Chip(
+        backgroundColor: Colors.transparent,
+        avatar: Icon(
+          Icons.cake,
+          color: morDefault,
+        ),
+        label: Text(
+          _yas ?? "",
+          maxLines: 1,
+          style: TextStyle(fontSize: 15, color: Colors.black),
+        ),
+      ));
+    }
+
+    if (_dersUcretAraligi != null) {
+      widgetList.add(Chip(
+        backgroundColor: Colors.transparent,
+        avatar: Icon(
+          Icons.money,
+          color: morDefault,
+        ),
+        label: Text(
+          _dersUcretAraligi ?? "",
+          maxLines: 1,
+          style: TextStyle(fontSize: 15, color: Colors.black),
+        ),
+      ));
+    }
     return widgetList;
   }
 }

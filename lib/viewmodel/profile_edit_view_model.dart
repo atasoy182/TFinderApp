@@ -10,6 +10,7 @@ enum ViewState { Idle, Busy }
 class ProfileEditViewModel with ChangeNotifier {
   TfUserRepository _tfUserRepository = locator.get<TfUserRepository>();
   Map<String, dynamic> extraPrms = {};
+  TfUser doldurulanKullanici;
 
   ViewState _state = ViewState.Idle;
 
@@ -24,6 +25,7 @@ class ProfileEditViewModel with ChangeNotifier {
     state = ViewState.Busy;
     TfUser _user = await _tfUserRepository.getCurrentUser();
     // TfUser _user = await _tfUserRepository.getCurrentTfUserDetayli(gecici.userID);
+    doldurulanKullanici = _user;
 
     extraPrms[TFC.adSoyad] = _user.adSoyad;
     extraPrms[TFC.email] = _user.email;
