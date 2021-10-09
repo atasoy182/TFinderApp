@@ -95,4 +95,21 @@ class DBFirebaseService implements DBBase {
       return false;
     }
   }
+
+  @override
+  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum) async {
+    try {
+      // TODO yorum yapıldı kullanıcı onayına gönder. Bildirim Atılır (dinleme yapıları kullanılıyorsa ekrana basılabilir. Sonra Editör Onayına gönder
+      var _messageID = _firestore.collection("comments").doc().id;
+      await _firestore
+          .collection("comments")
+          .doc(yazilanKullaniciId)
+          .collection("user_comments")
+          .doc(_messageID)
+          .set({'yazan': yazanKullaniciAdSoyad, 'yorum': yorum, 'kullaniciOnayi': "f", 'editorOnayi': "f"});
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

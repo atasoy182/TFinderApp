@@ -1,7 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
+import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
 import 'dart:math' as math;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -12,7 +14,8 @@ class ExampleExpandableFab extends StatelessWidget {
   final int tabIndex;
   final TfUser tfuser;
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
-  const ExampleExpandableFab({Key key, @required this.tabIndex, this.tfuser}) : super(key: key);
+  final TextEditingController _controller = new TextEditingController(); // Yorum yazma kısmı için
+  ExampleExpandableFab({Key key, @required this.tabIndex, this.tfuser}) : super(key: key);
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -62,6 +65,7 @@ class ExampleExpandableFab extends StatelessWidget {
   }
 
   ExpandableFab profilPageFabs(BuildContext context, TfUser tfUser) {
+    final _tfUserModel = Provider.of<TfUserViewModel>(context);
     return ExpandableFab(
       tabIndex: tabIndex,
       distance: 112.0,
@@ -73,7 +77,76 @@ class ExampleExpandableFab extends StatelessWidget {
         ),
         ActionButton(
           tabIndex: tabIndex,
-          onPressed: () => _showAction(context, 2),
+          onPressed: () => showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: Container(
+                      height: MediaQuery.of(context).size.height / 2.5,
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              children: [
+                                Text("Yorum Yaz"),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                ImageIcon(
+                                  AssetImage("assets/images/bubbleComment.png"),
+                                  size: 25,
+                                  color: morDefault,
+                                ),
+                              ],
+                              mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                          ),
+                          Expanded(
+                            flex: 9,
+                            child: Container(
+                              margin: EdgeInsets.only(top: 10, left: 20, right: 20, bottom: 20),
+                              child: Form(
+                                child: TextFormField(
+                                  controller: _controller,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLength: null,
+                                  maxLines: 7,
+                                  // onSaved: (String input) => hakkinda = input,
+                                  // onChanged: (String input) => widget.callback({TFC.hakkinda: input}),
+                                  decoration: InputDecoration(
+                                    labelText: 'Yorum Yazınız',
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(color: Colors.blueGrey, width: 1.0),
+                                    ),
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
+                  actions: [
+                    TextButton(
+                      onPressed: () async {
+                        var result = _tfUserModel.addComment("A. B.", "profil_foto", "YnuiWT6YBhRfBP9Bivj3mkoC0Og2", _controller.text);
+                        print("RESULT:" + result.toString());
+                      },
+                      child: const Text('Yayınla'),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Vazgeç'),
+                    ),
+                  ],
+                );
+              }),
           icon: Container(
             //margin: EdgeInsets.only(left: 5),
             child: const ImageIcon(

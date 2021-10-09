@@ -21,16 +21,13 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
     notifyListeners();
   }
 
-  TfUserViewModel() {
-    getCurrentUser();
-  }
-
   @override
   Future<TfUser> getCurrentUser() async {
     try {
       state = ViewState.Busy;
       //await Future.delayed(Duration(seconds: 3));
-      return await _tfUserRepository.getCurrentUser();
+      _tfUser = await _tfUserRepository.getCurrentUser();
+      return _tfUser;
     } catch (e) {
       print("View model get Current User hatası:" + e.toString());
       return null;
@@ -137,6 +134,14 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
       return null;
     } finally {
       state = ViewState.Idle;
+    }
+  }
+
+  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum) async {
+    try {
+      return await _tfUserRepository.addComment(yazanKullaniciAdSoyad, yazanProfilUrl, yazilanKullaniciId, yorum);
+    } catch (e) {
+      return false;
     }
   }
 }

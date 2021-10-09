@@ -101,6 +101,7 @@ class _LookupState extends State<Lookup> {
                               title: Align(child: Text(widget.dialogTitle)),
                               content: Container(
                                   height: MediaQuery.of(context).size.height / 2,
+                                  width: MediaQuery.of(context).size.width,
                                   //color: Colors.green,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,

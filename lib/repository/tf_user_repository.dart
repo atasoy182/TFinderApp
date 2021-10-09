@@ -4,13 +4,14 @@ import 'package:tfinder_app/locator.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/services/auth_base.dart';
 import 'package:tfinder_app/services/auth_firebase_service.dart';
+import 'package:tfinder_app/services/database_base.dart';
 import 'package:tfinder_app/services/firebase_db_service.dart';
 import 'package:tfinder_app/services/firebase_storage_service.dart';
 import 'package:tfinder_app/services/sqflite_db_service.dart';
 
 enum AppMode { DEBUG, RELEASE }
 
-class TfUserRepository implements AuthBase {
+class TfUserRepository implements AuthBase, DBBase {
   AuthFirebaseService _firebaseAuthService = locator.get<AuthFirebaseService>();
   DBFirebaseService _firebaseDBService = locator.get<DBFirebaseService>();
   FirebaseStorageService _firebaseStorageService = locator.get<FirebaseStorageService>();
@@ -142,5 +143,25 @@ class TfUserRepository implements AuthBase {
   Future<String> uploadFile(String fileType, File yeniImage) async {
     var _indirmeLinki = await _firebaseStorageService.uploadFile(currentUserID, fileType, yeniImage);
     return _indirmeLinki;
+  }
+
+  @override
+  Future<TfUser> getCurrentTfUser() {
+    // TODO: implement getCurrentTfUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> kullaniciVarMi(String userID) {
+    // TODO: implement kullaniciVarMi
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum) async {
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseDBService.addComment(yazanKullaniciAdSoyad, yazanProfilUrl, yazilanKullaniciId, yorum);
+    }
+    return null;
   }
 }

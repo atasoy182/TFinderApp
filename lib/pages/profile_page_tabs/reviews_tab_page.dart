@@ -1,13 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expand_widget/expand_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:tfinder_app/model/tf_user_model.dart';
 
 class ProfileReviewTab extends StatefulWidget {
+  final TfUser tfUser;
+
+  const ProfileReviewTab({Key key, this.tfUser}) : super(key: key);
+
   @override
   _ProfileReviewTabState createState() => _ProfileReviewTabState();
 }
 
 class _ProfileReviewTabState extends State<ProfileReviewTab> with AutomaticKeepAliveClientMixin {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // istek burdan atılacak ve pagination yapılacak.
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

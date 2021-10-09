@@ -37,4 +37,10 @@ class DBSQFLiteService implements DBBase {
     // TODO: implement updateUserToDB
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum) {
+    // TODO: implement addComment
+    throw UnimplementedError();
+  }
 }

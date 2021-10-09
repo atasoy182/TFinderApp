@@ -7,4 +7,5 @@ abstract class DBBase {
   Future<bool> kullaniciVarMi(String userID);
   Future<TfUser> getCurrentTfUser();
   Future<TfUser> getCurrentTfUserDetayli(String userID);
+  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum);
 }

@@ -141,7 +141,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                 )));
                       }
                     }),
-                ProfileReviewTab(),
+                FutureBuilder<TfUser>(
+                    future: getirGosterilecekKullanici(context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ProfileReviewTab(
+                          tfUser: snapshot.data,
+                        );
+                      } else {
+                        return Center(
+                            child: Container(
+                                height: 50,
+                                width: 50,
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.ballRotateChase,
+                                  color: turkuazDefault.withOpacity(0.4),
+                                )));
+                      }
+                    }),
                 FutureBuilder<TfUser>(
                     future: getirGosterilecekKullanici(context),
                     builder: (context, snapshot) {
@@ -506,5 +523,5 @@ class ProfilPageMainInfos extends StatelessWidget {
 
 Future<TfUser> getirGosterilecekKullanici(BuildContext context) async {
   final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
-  return await _tfUserModel.getCurrentUserWithoutState();
+  return _tfUserModel.tfUser;
 }
