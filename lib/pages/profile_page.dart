@@ -102,6 +102,8 @@ class _ProfilePageState extends State<ProfilePage> {
                         return ExampleExpandableFab(
                           tabIndex: 3,
                           tfuser: snapshot.data,
+                          callBackMessage: (message) => ScaffoldMessenger.of(context)
+                                .showSnackBar(SnackBar(content: Text(message)))
                         );
                       } else {
                         return Container();

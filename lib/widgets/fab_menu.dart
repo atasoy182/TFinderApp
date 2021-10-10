@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'package:provider/provider.dart';
 import 'package:tfinder_app/model/tf_user_model.dart';
 import 'package:tfinder_app/viewmodel/tf_user_view_model.dart';
@@ -11,11 +12,12 @@ import 'package:tfinder_app/constants.dart';
 
 @immutable
 class ExampleExpandableFab extends StatelessWidget {
+  final Function callBackMessage;
   final int tabIndex;
-  final TfUser tfuser;
+  final TfUser tfuser; // Yazılacak kullanıcı
   static const _actionTitles = ['Create Post', 'Upload Photo', 'Upload Video'];
   final TextEditingController _controller = new TextEditingController(); // Yorum yazma kısmı için
-  ExampleExpandableFab({Key key, @required this.tabIndex, this.tfuser}) : super(key: key);
+  ExampleExpandableFab({Key key, @required this.tabIndex, this.tfuser, this.callBackMessage}) : super(key: key);
 
   void _showAction(BuildContext context, int index) {
     showDialog<void>(
@@ -36,7 +38,7 @@ class ExampleExpandableFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return tabIndex == 1 ? requestPageFabs(context) : profilPageFabs(context, tfuser);
+    return tabIndex == 1 ? requestPageFabs(context) : profilPageFabs(context, tfuser, callBackMessage);
   }
 
   ExpandableFab requestPageFabs(BuildContext context) {
@@ -64,7 +66,7 @@ class ExampleExpandableFab extends StatelessWidget {
     );
   }
 
-  ExpandableFab profilPageFabs(BuildContext context, TfUser tfUser) {
+  ExpandableFab profilPageFabs(BuildContext context, TfUser tfUser, Function callBackMessage) {
     final _tfUserModel = Provider.of<TfUserViewModel>(context);
     return ExpandableFab(
       tabIndex: tabIndex,
@@ -85,21 +87,21 @@ class ExampleExpandableFab extends StatelessWidget {
                       height: MediaQuery.of(context).size.height / 2.5,
                       width: MediaQuery.of(context).size.width,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Expanded(
                             flex: 1,
                             child: Row(
                               children: [
-                                Text("Yorum Yaz"),
-                                SizedBox(
-                                  width: 15,
-                                ),
                                 ImageIcon(
                                   AssetImage("assets/images/bubbleComment.png"),
                                   size: 25,
                                   color: morDefault,
                                 ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text("Yorum Yaz"),
                               ],
                               mainAxisAlignment: MainAxisAlignment.center,
                             ),
@@ -113,7 +115,7 @@ class ExampleExpandableFab extends StatelessWidget {
                                   controller: _controller,
                                   keyboardType: TextInputType.multiline,
                                   maxLength: null,
-                                  maxLines: 7,
+                                  maxLines: 15,
                                   // onSaved: (String input) => hakkinda = input,
                                   // onChanged: (String input) => widget.callback({TFC.hakkinda: input}),
                                   decoration: InputDecoration(
@@ -135,8 +137,16 @@ class ExampleExpandableFab extends StatelessWidget {
                   actions: [
                     TextButton(
                       onPressed: () async {
-                        var result = _tfUserModel.addComment("A. B.", "profil_foto", "YnuiWT6YBhRfBP9Bivj3mkoC0Og2", _controller.text);
-                        print("RESULT:" + result.toString());
+                        if(_controller.text != ""){
+                          var result = await _tfUserModel.addComment(_tfUserModel.tfUser.adSoyad, _tfUserModel.tfUser.profilFotoURL, tfUser.userID, _controller.text);
+                          if(result){
+                            callBackMessage("Yorumunuz incelendikten sonra yayınlanacaktır.");
+                            Navigator.of(context).pop();
+                          }else {
+                            callBackMessage("Bir Hata Meydana Geldi!");
+                            Navigator.of(context).pop();
+                          }
+                        }
                       },
                       child: const Text('Yayınla'),
                     ),

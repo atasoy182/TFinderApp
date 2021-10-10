@@ -29,12 +29,8 @@ class _ProfileReviewTabState extends State<ProfileReviewTab> with AutomaticKeepA
             elevation: 0,
             color: Colors.transparent,
             child: Container(
-              height: 30,
+              height: 10,
               margin: EdgeInsets.only(left: 8, right: 8, top: 8),
-              child: Text(
-                "5 Yorum",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
             ),
           ),
         ),

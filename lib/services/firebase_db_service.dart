@@ -106,7 +106,7 @@ class DBFirebaseService implements DBBase {
           .doc(yazilanKullaniciId)
           .collection("user_comments")
           .doc(_messageID)
-          .set({'yazan': yazanKullaniciAdSoyad, 'yorum': yorum, 'kullaniciOnayi': "f", 'editorOnayi': "f"});
+          .set({'yazanProfilUrl': yazanProfilUrl,'yazan': yazanKullaniciAdSoyad, 'yorum': yorum, 'kullaniciOnayi': "f", 'editorOnayi': "f", 'olusturulma_tarihi': FieldValue.serverTimestamp(),});
       return true;
     } catch (e) {
       return false;
