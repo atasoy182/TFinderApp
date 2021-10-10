@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "1008248009092",
+    "firebase_url": "https://t-finder-a2526-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "t-finder-a2526",
     "storage_bucket": "t-finder-a2526.appspot.com"
   },
@@ -19,6 +20,14 @@
           "android_info": {
             "package_name": "com.mehmetberkayatasoy.tfinder_app",
             "certificate_hash": "4a3aacd6ae8284356604f94039808968e03f5bcb"
+          }
+        },
+        {
+          "client_id": "1008248009092-u9m796uql9ao7qemqhnmd5esa2c1pohg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mehmetberkayatasoy.tfinder_app",
+            "certificate_hash": "abb596098434903b96898936cfaf1fab4f82d2f6"
           }
         },
         {
