@@ -144,4 +144,13 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
       return false;
     }
   }
+
+  Future<List> getCommentsWithPagination(String getirilecekUserId, sonTarih, int getirilecekElemanSayisi) async {
+    try {
+      return await _tfUserRepository.getCommentsWithPagination(getirilecekUserId, sonTarih, getirilecekElemanSayisi);
+    } catch (e) {
+      print ("err " + e.toString());
+      return [];
+    }
+  }
 }

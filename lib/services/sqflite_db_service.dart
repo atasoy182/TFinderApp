@@ -43,4 +43,11 @@ class DBSQFLiteService implements DBBase {
     // TODO: implement addComment
     throw UnimplementedError();
   }
+
+  @override
+  Future<List> getCommentsWithPagination(String getirilecekUserId, sonTarih, int getirilecekElemanSayisi) {
+    // TODO: implement getCommentsWithPagination
+    throw UnimplementedError();
+  }
+
 }

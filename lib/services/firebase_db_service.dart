@@ -6,7 +6,8 @@ class DBFirebaseService implements DBBase {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   @override
-  Future<bool> saveUserToDB(TfUser tfUser, Map<String, dynamic> extraPrms) async {
+  Future<bool> saveUserToDB(
+      TfUser tfUser, Map<String, dynamic> extraPrms) async {
     Map _eklenecekMap = tfUser.toMap();
     _eklenecekMap.addAll(extraPrms);
     await _firestore.collection("users").doc(tfUser.userID).set(_eklenecekMap);
@@ -15,7 +16,11 @@ class DBFirebaseService implements DBBase {
 
   @override
   Future<bool> eMailVarMi(String email) async {
-    var users = await _firestore.collection("users").where(TFC.email, isEqualTo: email).limit(1).get();
+    var users = await _firestore
+        .collection("users")
+        .where(TFC.email, isEqualTo: email)
+        .limit(1)
+        .get();
     if (users.docs.length >= 1) {
       return true;
     } else {
@@ -25,7 +30,11 @@ class DBFirebaseService implements DBBase {
 
   @override
   Future<bool> kullaniciVarMi(String userID) async {
-    var users = await _firestore.collection("users").where(TFC.userID, isEqualTo: userID).limit(1).get();
+    var users = await _firestore
+        .collection("users")
+        .where(TFC.userID, isEqualTo: userID)
+        .limit(1)
+        .get();
     if (users.docs.length >= 1) {
       return true;
     } else {
@@ -35,7 +44,11 @@ class DBFirebaseService implements DBBase {
 
   @override
   Future<TfUser> getCurrentTfUserDetayli(String userID) async {
-    var users = await _firestore.collection("users").where(TFC.userID, isEqualTo: userID).limit(1).get();
+    var users = await _firestore
+        .collection("users")
+        .where(TFC.userID, isEqualTo: userID)
+        .limit(1)
+        .get();
     if (users.docs.length >= 1) {
       return userFromFireBase(users.docs[0]);
     } else {
@@ -87,7 +100,8 @@ class DBFirebaseService implements DBBase {
   }
 
   @override
-  Future<bool> updateUserToDB(String userID, Map<String, dynamic> extraPrms) async {
+  Future<bool> updateUserToDB(
+      String userID, Map<String, dynamic> extraPrms) async {
     try {
       await _firestore.collection("users").doc(userID).update(extraPrms);
       return true;
@@ -97,7 +111,8 @@ class DBFirebaseService implements DBBase {
   }
 
   @override
-  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum) async {
+  Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl,
+      String yazilanKullaniciId, String yorum) async {
     try {
       // TODO yorum yapıldı kullanıcı onayına gönder. Bildirim Atılır (dinleme yapıları kullanılıyorsa ekrana basılabilir. Sonra Editör Onayına gönder
       var _messageID = _firestore.collection("comments").doc().id;
@@ -106,10 +121,43 @@ class DBFirebaseService implements DBBase {
           .doc(yazilanKullaniciId)
           .collection("user_comments")
           .doc(_messageID)
-          .set({'yazanProfilUrl': yazanProfilUrl,'yazan': yazanKullaniciAdSoyad, 'yorum': yorum, 'kullaniciOnayi': "f", 'editorOnayi': "f", 'olusturulma_tarihi': FieldValue.serverTimestamp(),});
+          .set({
+        'yazanProfilUrl': yazanProfilUrl,
+        'yazan': yazanKullaniciAdSoyad,
+        'yorum': yorum,
+        'kullaniciOnayi': "f",
+        'editorOnayi': "f",
+        'olusturulma_tarihi': FieldValue.serverTimestamp(),
+      });
       return true;
     } catch (e) {
       return false;
     }
+  }
+
+  @override
+  Future<List> getCommentsWithPagination(
+      String getirilecekUserId, sonTarih, int getirilecekElemanSayisi) async {
+    QuerySnapshot _querySnapshot;
+    List _tumYorumlar = [];
+    var trueCollection = FirebaseFirestore.instance
+        .doc("comments/${getirilecekUserId}")
+        .collection("user_comments");
+    if (sonTarih == null) {
+      _querySnapshot = await trueCollection
+          .orderBy("olusturulma_tarihi", descending: true)
+          .limit(getirilecekElemanSayisi)
+          .get();
+    } else {
+      _querySnapshot = await trueCollection
+          .orderBy("olusturulma_tarihi", descending: true)
+          .startAfter([sonTarih])
+          .limit(getirilecekElemanSayisi)
+          .get();
+    }
+    for (DocumentSnapshot snap in _querySnapshot.docs) {
+      _tumYorumlar.add(snap.data());
+    }
+    return _tumYorumlar;
   }
 }

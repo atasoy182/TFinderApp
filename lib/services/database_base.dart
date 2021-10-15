@@ -8,4 +8,5 @@ abstract class DBBase {
   Future<TfUser> getCurrentTfUser();
   Future<TfUser> getCurrentTfUserDetayli(String userID);
   Future<bool> addComment(String yazanKullaniciAdSoyad, String yazanProfilUrl, String yazilanKullaniciId, String yorum);
+  Future<List> getCommentsWithPagination(String getirilecekUserId, sonTarih, int getirilecekElemanSayisi);
 }

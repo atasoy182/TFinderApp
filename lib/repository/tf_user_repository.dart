@@ -164,4 +164,12 @@ class TfUserRepository implements AuthBase, DBBase {
     }
     return null;
   }
+
+  @override
+  Future<List> getCommentsWithPagination(String getirilecekUserId, sonTarih, int getirilecekElemanSayisi) async {
+    if (_appMode == AppMode.RELEASE) {
+      return await _firebaseDBService.getCommentsWithPagination(getirilecekUserId, sonTarih, getirilecekElemanSayisi);
+    }
+    return null;
+  }
 }
