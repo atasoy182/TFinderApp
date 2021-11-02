@@ -145,15 +145,12 @@ class MapSampleState extends State<MapSample> {
           );
           //print("TEACHERS:" + teachers.toString());
           // TODO bütün öğretmenler geldi ve render edilecek, varsa render edilmesin
+          // https://www.youtube.com/watch?v=uE-KKOiua_8 bu videodaki alt kısım düşünülebilir.
           print(_tfUserModel.getlocationsWithoutState());
           await Future.delayed(Duration(seconds: 1));
           isLoading = false;
         }
-      },
-      onTap: (latLng) {
-        print("latLng.latitude:" + latLng.latitude.toString());
-        print("latLng.longitude:" + latLng.longitude.toString());
-      },
+      }
     ));
   }
 }

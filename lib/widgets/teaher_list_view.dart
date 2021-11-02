@@ -39,13 +39,15 @@ class TeacherListItem extends StatelessWidget {
                           SizedBox(
                             width: 22,
                           ),
-                          Text(
-                            "Cansın Özgör",
-                            maxLines: 1,
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          Flexible(
+                            child: Text(
+                              "Mehmet Berkay Atasoy",
+                              maxLines: 1,
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
