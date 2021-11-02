@@ -4,20 +4,20 @@
 
 # Giriş
 <p align="center">
-  <img width="220"  src="lib/ss/kayitol.jpeg">
-  <img width="220"  src="lib/ss/oturumac.jpeg">
+  <img width="180"  src="lib/ss/kayitol.jpeg">
+  <img width="180"  src="lib/ss/oturumac.jpeg">
 </p>  
 
 # Ana Sayfa
 <p align="center">
-  <img width="220"  src="lib/ss/ana_sayfa.jpeg">
-  <img width="220"  src="lib/ss/talepler.jpeg">
-  <img width="220"  src="lib/ss/yakinimda.jpeg">
-  <img width="220"  src="lib/ss/profil_sayfasi.jpeg">
+  <img width="180"  src="lib/ss/ana_sayfa.jpeg">
+  <img width="180"  src="lib/ss/talepler.jpeg">
+  <img width="180"  src="lib/ss/yakinimda.jpeg">
+  <img width="180"  src="lib/ss/profil_sayfasi.jpeg">
 </p>
 
 # Profil Düzenleme
 <p align="center">
-  <img width="220"  src="lib/ss/edit_sayfasi.jpeg">
-  <img width="220"  src="lib/ss/modalarama.jpeg">
+  <img width="180"  src="lib/ss/edit_sayfasi.jpeg">
+  <img width="180"  src="lib/ss/modalarama.jpeg">
 </p>  
