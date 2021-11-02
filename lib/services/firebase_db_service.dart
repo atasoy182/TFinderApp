@@ -160,4 +160,23 @@ class DBFirebaseService implements DBBase {
     }
     return _tumYorumlar;
   }
+
+  @override
+  Future<List> getNearTeachers(
+      String x1, String y1, String x2, String y2,  List getirilenLokasyonlar) async {
+    var notInList = [...[""], ...getirilenLokasyonlar].toSet().toList();
+    var returnList = [];
+    var query = _firestore
+        .collection("users")
+        .where(TFC.locationX, whereNotIn: notInList)
+        .where(TFC.locationX, isLessThanOrEqualTo: x1)
+        .where(TFC.locationX, isGreaterThanOrEqualTo: x2);
+    var nearTeachers = await query.get();
+    for (DocumentSnapshot snap in nearTeachers.docs) {
+      Map data = snap.data();
+      returnList.add(data[TFC.locationX].toString());
+      // print("nearTeachers FROM DB:" + data[TFC.adSoyad].toString() + data[TFC.locationX].toString() + data[TFC.locationY].toString());
+    }
+    return returnList;
+  }
 }

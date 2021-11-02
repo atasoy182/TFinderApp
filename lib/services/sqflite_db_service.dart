@@ -50,4 +50,10 @@ class DBSQFLiteService implements DBBase {
     throw UnimplementedError();
   }
 
+  @override
+  Future<List> getNearTeachers(String x1, String y1, String x2, String y2, List getirilenLokasyonlar) {
+    // TODO: implement getNearTeachers
+    throw UnimplementedError();
+  }
+
 }

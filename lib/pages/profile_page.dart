@@ -525,5 +525,5 @@ class ProfilPageMainInfos extends StatelessWidget {
 
 Future<TfUser> getirGosterilecekKullanici(BuildContext context) async {
   final _tfUserModel = Provider.of<TfUserViewModel>(context, listen: false);
-  return _tfUserModel.tfUser;
+  return _tfUserModel.getCurrentUserWithoutState();
 }

@@ -20,6 +20,7 @@ class TfUserRepository implements AuthBase, DBBase {
   TfUser girisYapilanKullanici;
   TfUser detayliGirisYapilanKullanici;
   String currentUserID;
+  List getirilenLokasyonlar = [];
 
   @override
   Future<TfUser> getCurrentUser() async {
@@ -169,6 +170,16 @@ class TfUserRepository implements AuthBase, DBBase {
   Future<List> getCommentsWithPagination(String getirilecekUserId, sonTarih, int getirilecekElemanSayisi) async {
     if (_appMode == AppMode.RELEASE) {
       return await _firebaseDBService.getCommentsWithPagination(getirilecekUserId, sonTarih, getirilecekElemanSayisi);
+    }
+    return null;
+  }
+
+  @override
+  Future<List> getNearTeachers(String x1, String y1, String x2, String y2, List lokasyon) async {
+    if (_appMode == AppMode.RELEASE) {
+      var gelenLokasyonlar =  await _firebaseDBService.getNearTeachers(x1, y1, x2, y2, getirilenLokasyonlar);
+      getirilenLokasyonlar = [...getirilenLokasyonlar, ...gelenLokasyonlar].toSet().toList();
+      return gelenLokasyonlar;
     }
     return null;
   }

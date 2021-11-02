@@ -153,4 +153,21 @@ class TfUserViewModel with ChangeNotifier implements AuthFirebaseService {
       return [];
     }
   }
+
+  Future<List> getNearTeachers(String x1, String y1, String x2, String y2, List lokasyonlar) async {
+    try {
+      return await _tfUserRepository.getNearTeachers(x1,y1,x2,y2, lokasyonlar);
+    } catch (e) {
+      print ("err " + e.toString());
+      return [];
+    }
+  }
+
+  List getlocationsWithoutState(){
+    try {
+      return _tfUserRepository.getirilenLokasyonlar;
+    } catch (e) {
+      return null;
+    }
+  }
 }
